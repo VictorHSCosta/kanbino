@@ -2,6 +2,7 @@
 
 require "gemkanbino"
 require "factory_bot"
+require_relative "factories"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
