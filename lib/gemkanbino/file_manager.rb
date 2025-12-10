@@ -5,10 +5,15 @@ require "digest"
 require "mime/types"
 require "pastel"
 require "tty/prompt"
+require_relative "file_manager/file_utils"
+require_relative "file_manager/preview_utils"
 
 module Gemkanbino
   # Manages file selection and operations
   class FileManager
+    include FileManager::FileUtils
+    include FileManager::PreviewUtils
+
     attr_reader :pastel, :prompt, :selected_files
 
     def initialize
@@ -209,61 +214,6 @@ module Gemkanbino
 
     private
 
-    def display_file_info(file_path, stat)
-      puts pastel.cyan("\n📄 File Information:")
-      puts "=" * 50
-      puts pastel.bold("Name:") + " " + File.basename(file_path)
-      puts pastel.bold("Path:") + " " + file_path
-      puts pastel.bold("Size:") + " " + format_file_size(stat.size)
-      puts pastel.bold("Type:") + " " + get_content_description(file_path)
-      puts pastel.bold("Permissions:") + " " + format_permissions(stat.mode)
-      puts pastel.bold("Created:") + " " + stat.ctime.strftime("%Y-%m-%d %H:%M:%S")
-      puts pastel.bold("Modified:") + " " + stat.mtime.strftime("%Y-%m-%d %H:%M:%S")
-      puts pastel.bold("Accessed:") + " " + stat.atime.strftime("%Y-%m-%d %H:%M:%S")
-
-      if File.size(file_path) < 1_000_000 # Less than 1MB
-        md5 = calculate_file_hash(file_path, "MD5")
-        puts pastel.bold("MD5:") + " " + md5
-      end
-
-      puts "=" * 50
-    end
-
-    def preview_text_file(file_path, lines)
-      puts pastel.cyan("\n📖 Preview: #{File.basename(file_path)}")
-      puts "-" * 50
-
-      file_lines = File.readlines(file_path, encoding: "UTF-8")
-      total_lines = file_lines.length
-      preview_lines = [lines, total_lines].min
-
-      puts pastel.dim("Showing #{preview_lines} of #{total_lines} lines:")
-      puts
-
-      file_lines.first(preview_lines).each_with_index do |line, index|
-        line_num = (index + 1).to_s.rjust(4)
-        content = line.chomp
-        puts pastel.dim(line_num + ":") + " " + content
-      end
-
-      if total_lines > lines
-        puts pastel.dim("\n... (#{total_lines - lines} more lines)")
-      end
-
-      puts "-" * 50
-    end
-
-    def preview_image_file(file_path)
-      puts pastel.cyan("\n🖼️ Image Information:")
-      puts "-" * 50
-      puts pastel.bold("File:") + " " + File.basename(file_path)
-      puts pastel.bold("Path:") + " " + file_path
-      puts pastel.bold("Size:") + " " + format_file_size(File.size(file_path))
-      puts pastel.bold("Type:") + " " + get_content_type(file_path) || "Unknown"
-      puts pastel.yellow("Image preview not available in terminal mode")
-      puts "-" * 50
-    end
-
     def get_files_for_selection(directory)
       Dir.glob("#{directory}/*")
         .select { |f| File.file?(f) }
@@ -274,81 +224,6 @@ module Gemkanbino
           }
         end
         .sort_by { |f| f[:name] }
-    end
-
-    def format_file_choice(file)
-      basename = File.basename(file)
-      size = File.size(file) rescue 0
-      size_str = format_file_size(size)
-
-      "#{basename.ljust(25)} #{size_str.rjust(8)}"
-    end
-
-    def get_content_type(file_path)
-      mime_types = MIME::Types.type_for(file_path)
-      mime_types.first&.content_type
-    end
-
-    def get_content_description(file_path)
-      content_type = get_content_type(file_path)
-      return "File" unless content_type
-
-      case content_type
-      when /^text\//
-        "Text File"
-      when /^image\//
-        "Image File"
-      when /^audio\//
-        "Audio File"
-      when /^video\//
-        "Video File"
-      when /^application\/pdf/
-        "PDF Document"
-      when /^application\/json/
-        "JSON File"
-      when /^application\/xml/
-        "XML File"
-      else
-        content_type.split("/").map(&:capitalize).join(" ")
-      end
-    end
-
-    def is_text_file?(file_path)
-      text_extensions = %w[.txt .rb .py .js .html .css .md .yml .yaml .json .xml .csv .log .conf]
-      text_extensions.include?(File.extname(file_path).downcase)
-    end
-
-    def format_permissions(mode)
-      permissions = ""
-      3.times do |i|
-        bits = (mode >> (6 - i * 3)) & 0x7
-        permissions += (bits & 4 != 0) ? "r" : "-"
-        permissions += (bits & 2 != 0) ? "w" : "-"
-        permissions += (bits & 1 != 0) ? "x" : "-"
-      end
-      permissions
-    end
-
-    def format_file_size(size)
-      require "filesize"
-      Filesize.new(size).pretty
-    rescue
-      "#{size}B"
-    end
-
-    def calculate_file_hash(file_path, algorithm)
-      case algorithm
-      when "MD5"
-        Digest::MD5.file(file_path).hexdigest
-      when "SHA1"
-        Digest::SHA1.file(file_path).hexdigest
-      when "SHA256"
-        Digest::SHA256.file(file_path).hexdigest
-      else
-        "Unknown algorithm"
-      end
-    rescue => e
-      "Error calculating hash: #{e.message}"
     end
   end
 end

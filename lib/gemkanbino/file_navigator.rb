@@ -179,6 +179,4 @@ module Gemkanbino
 
       "#{size_f.round(2)}#{units[unit_index]}"
     end
-
-      end
 end

@@ -19,5 +19,7 @@ require_relative "gemkanbino/exceptions/upload_error"
 
 module Gemkanbino
   class Error < StandardError; end
-  # Your code goes here...
+
+  # Expose version constant
+  VERSION = "0.1.0"
 end
