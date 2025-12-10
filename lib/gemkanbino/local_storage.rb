@@ -5,6 +5,8 @@ require "digest"
 require "json"
 require "date"
 require "pastel"
+require "mime/types"
+require_relative "utils/file_validator"
 
 module Gemkanbino
   # Manages local file storage with organization and metadata
@@ -228,13 +230,7 @@ module Gemkanbino
     private
 
     def get_storage_directory
-      # Try to get from config first
-      config_manager = ConfigManager.new
-      custom_path = config_manager.get_config("storage.directory")
-
-      return custom_path if custom_path && Dir.exist?(File.dirname(custom_path))
-
-      # Default locations
+      # Default locations (since ConfigManager is not implemented yet)
       default_paths = [
         File.join(Dir.home, ".gemkanbino", "storage"),
         File.join(Dir.tmpdir, "gemkanbino", "storage"),

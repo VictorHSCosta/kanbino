@@ -24,7 +24,7 @@ module Gemkanbino
     # Exception for file too large
     class FileTooLargeError < UploadError
       def initialize(file_path, size, max_size)
-        super("File too large: #{format_size(size)} (max: #{format_size(max_size)})", file_path)
+        super("File too large: #{size} bytes (max: #{max_size} bytes)", file_path)
         @max_size = max_size
       end
 

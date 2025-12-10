@@ -2,14 +2,16 @@
 
 require "fileutils"
 require "pastel"
+require "tty/prompt"
 
 module Gemkanbino
   # Handles file system navigation operations
   class FileNavigator
-    attr_reader :pastel
+    attr_reader :pastel, :prompt
 
     def initialize
       @pastel = Pastel.new
+      @prompt = TTY::Prompt.new
     end
 
     def list_files(path = ".", options = {})
@@ -78,7 +80,7 @@ module Gemkanbino
         puts pastel.cyan("\nCurrent directory: #{Dir.pwd}")
         puts pastel.yellow("Options: [cd] [ls] [pwd] [parent] [home] [quit]")
 
-        choice = prompt("Enter command: ").strip.downcase
+        choice = @prompt.ask("Enter command: ").strip.downcase
 
         case choice
         when "quit", "exit", "q"
@@ -166,15 +168,17 @@ module Gemkanbino
     end
 
     def format_file_size(size)
-      require "filesize"
-      Filesize.new(size).pretty
-    rescue
-      "#{size}B"
+      units = ["B", "KB", "MB", "GB", "TB"]
+      unit_index = 0
+      size_f = size.to_f
+
+      while size_f >= 1024 && unit_index < units.length - 1
+        size_f /= 1024
+        unit_index += 1
+      end
+
+      "#{size_f.round(2)}#{units[unit_index]}"
     end
 
-    def prompt(message)
-      print pastel.cyan(message)
-      gets
-    end
-  end
+      end
 end

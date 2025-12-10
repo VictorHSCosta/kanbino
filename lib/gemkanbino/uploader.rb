@@ -5,6 +5,7 @@ require "json"
 require "pastel"
 require "tty/prompt"
 require "tty/progressbar"
+require_relative "utils/file_validator"
 
 module Gemkanbino
   # Handles file uploads to various cloud services
@@ -28,7 +29,7 @@ module Gemkanbino
 
       puts pastel.cyan("📤 Uploading file to #{provider_name}...")
       puts pastel.dim("File: #{File.basename(file_path)}")
-      puts pastel.dim("Size: #{format_file_size(File.size(file_path))}")
+      puts pastel.dim("Size: #{format_size(File.size(file_path))}")
 
       begin
         # Show progress bar

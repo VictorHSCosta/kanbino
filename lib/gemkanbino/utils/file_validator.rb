@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "mime/types"
+
 module Gemkanbino
   module Utils
     # Utility class for file validation
