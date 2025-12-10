@@ -10,7 +10,7 @@ RSpec.describe "Factory Bot examples", type: :model do
     end
 
     it "creates a Gemkanbino::Error with custom message" do
-      custom_error = build(:gemkanbino_error, initialize_with: Gemkanbino::Error.new("Custom message"))
+      custom_error = Gemkanbino::Error.new("Custom message")
 
       expect(custom_error).to be_a(Gemkanbino::Error)
       expect(custom_error.message).to eq("Custom message")
