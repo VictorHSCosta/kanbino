@@ -17,6 +17,49 @@ RSpec.describe "Factory Bot examples", type: :model do
     end
   end
 
+  describe "file_error factory" do
+    it "creates a valid FileError instance" do
+      error = build(:file_error)
+
+      expect(error).to be_a(Gemkanbino::Exceptions::FileError)
+      expect(error.message).to eq("Test file error")
+      expect(error.file_path).to eq("/test/path")
+      expect(error.operation).to eq(:read)
+    end
+  end
+
+  describe "file_not_found_error factory" do
+    it "creates a valid FileNotFoundError instance" do
+      error = build(:file_not_found_error)
+
+      expect(error).to be_a(Gemkanbino::Exceptions::FileNotFoundError)
+      expect(error.message).to include("File not found: /test/nonexistent/file.txt")
+      expect(error.file_path).to eq("/test/nonexistent/file.txt")
+    end
+  end
+
+  describe "upload_error factory" do
+    it "creates a valid UploadError instance" do
+      error = build(:upload_error)
+
+      expect(error).to be_a(Gemkanbino::Exceptions::UploadError)
+      expect(error.message).to eq("Test upload error")
+      expect(error.file_path).to eq("/test/file.txt")
+      expect(error.provider).to eq(:test_provider)
+      expect(error.response_code).to eq(500)
+    end
+  end
+
+  describe "provider_not_found_error factory" do
+    it "creates a valid ProviderNotFoundError instance" do
+      error = build(:provider_not_found_error)
+
+      expect(error).to be_a(Gemkanbino::Exceptions::ProviderNotFoundError)
+      expect(error.message).to include("Upload provider not found: nonexistent_provider")
+      expect(error.provider).to eq("nonexistent_provider")
+    end
+  end
+
   describe "Factory Bot syntax examples" do
     it "demonstrates create vs build" do
       # Build creates object without saving (if applicable)

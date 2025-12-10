@@ -1,14 +1,21 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "digest"
 require "json"
 require "date"
 require "pastel"
+require_relative "utils/file_validator"
+require_relative "local_storage/metadata_manager"
+require_relative "local_storage/index_manager"
+require_relative "local_storage/storage_utils"
 
 module Gemkanbino
   # Manages local file storage with organization and metadata
   class LocalStorage
+    include LocalStorage::MetadataManager
+    include LocalStorage::IndexManager
+    include LocalStorage::StorageUtils
+
     attr_reader :pastel, :storage_root
 
     def initialize
@@ -227,101 +234,11 @@ module Gemkanbino
 
     private
 
-    def get_storage_directory
-      # Try to get from config first
-      config_manager = ConfigManager.new
-      custom_path = config_manager.get_config("storage.directory")
-
-      return custom_path if custom_path && Dir.exist?(File.dirname(custom_path))
-
-      # Default locations
-      default_paths = [
-        File.join(Dir.home, ".gemkanbino", "storage"),
-        File.join(Dir.tmpdir, "gemkanbino", "storage"),
-        File.join(Dir.pwd, ".gemkanbino_storage")
-      ]
-
-      default_paths.find { |path| can_create_directory?(path) } || default_paths.first
-    end
-
-    def can_create_directory?(path)
-      parent = File.dirname(path)
-      Dir.exist?(parent) && File.writable?(parent)
-    end
-
-    def ensure_storage_directory
-      FileUtils.mkdir_p(@storage_root)
-    end
-
-    def generate_target_name(file_path)
-      basename = File.basename(file_path, ".*")
-      timestamp = Time.now.strftime("%Y%m%d_%H%M%S")
-      random_suffix = (0...3).map { (65 + rand(26)).chr }.join.downcase
-
-      "#{basename}_#{timestamp}_#{random_suffix}"
-    end
-
-    def create_metadata(file_path, target_name)
-      stat = File.stat(file_path)
-      md5_hash = Digest::MD5.file(file_path).hexdigest
-
-      {
-        target_name: target_name,
-        original_path: file_path,
-        original_name: File.basename(file_path),
-        stored_at: Time.now.iso8601,
-        size: stat.size,
-        md5_hash: md5_hash,
-        content_type: get_content_type(file_path),
-        created_at: stat.ctime.iso8601,
-        modified_at: stat.mtime.iso8601,
-        tags: []
-      }
-    end
-
-    def get_content_type(file_path)
-      mime_types = MIME::Types.type_for(file_path)
-      mime_types.first&.content_type
-    end
-
-    def load_index
-      if File.exist?(@index_file)
-        begin
-          @index = JSON.parse(File.read(@index_file))
-        rescue JSON::ParserError
-          puts pastel.yellow("Warning: Corrupted index file, creating new one.")
-          @index = {}
-        end
-      else
-        @index = {}
-      end
-    end
-
-    def save_index
-      File.write(@index_file, JSON.pretty_generate(@index))
-    end
-
-    def add_to_index(name, metadata)
-      @index[name] = metadata
-      save_index
-    end
-
     def get_file_path(name)
       metadata = @index[name]
       return nil unless metadata
 
       File.join(@storage_root, name, metadata["original_name"])
-    end
-
-    def filter_files(index, filter)
-      return index unless filter
-
-      filter = filter.downcase
-      index.select do |name, metadata|
-        name.downcase.include?(filter) ||
-          metadata["original_name"].downcase.include?(filter) ||
-          metadata["content_type"]&.downcase&.include?(filter)
-      end
     end
 
     def display_stored_file(name, metadata)
@@ -332,52 +249,6 @@ module Gemkanbino
       status = File.exist?(file_path) ? pastel.green("✓") : pastel.red("✗")
 
       puts "#{status} #{name.ljust(30)} #{metadata["original_name"].ljust(25)} #{size_str.rjust(8)} #{date_str}"
-    end
-
-    def display_file_metadata(metadata)
-      puts pastel.bold("Original Name:") + " #{metadata['original_name']}"
-      puts pastel.bold("Original Path:") + " #{metadata['original_path']}"
-      puts pastel.bold("Size:") + " #{format_size(metadata['size'])}"
-      puts pastel.bold("Type:") + " #{metadata['content_type'] || 'Unknown'}"
-      puts pastel.bold("MD5:") + " #{metadata['md5_hash']}"
-      puts pastel.bold("Stored:") + " #{Date.parse(metadata['stored_at']).strftime('%Y-%m-%d %H:%M:%S')}"
-    end
-
-    def format_size(bytes)
-      require "filesize"
-      Filesize.new(bytes).pretty
-    rescue
-      "#{bytes}B"
-    end
-
-    def ask_overwrite(destination)
-      require "tty/prompt"
-      prompt = TTY::Prompt.new
-
-      prompt.yes?("File '#{File.basename(destination)}' already exists. Overwrite?")
-    end
-
-    def compress_directory(dir_path, archive_name)
-      begin
-        archive_path = File.join(@storage_root, archive_name)
-        FileUtils.cd(@storage_root) do
-          system("tar -czf #{archive_name} #{File.basename(dir_path)}")
-        end
-
-        if File.exist?(archive_path)
-          FileUtils.rm_rf(dir_path)
-          true
-        else
-          false
-        end
-      rescue => e
-        puts pastel.red("Error compressing directory: #{e.message}")
-        false
-      end
-    end
-
-    def calculate_total_size
-      @index.values.sum { |metadata| metadata["size"] || 0 }
     end
   end
 end
