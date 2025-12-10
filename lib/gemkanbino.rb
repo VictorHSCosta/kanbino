@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "yaml"
+require "pastel"
+
 require_relative "gemkanbino/version"
 require_relative "gemkanbino/cli"
 
