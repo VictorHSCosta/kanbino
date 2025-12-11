@@ -95,6 +95,35 @@ module Gemkanbino
       end
     end
 
+    desc "commits", "Show commit history"
+    option :limit, aliases: "-n", type: :numeric, desc: "Limit number of commits"
+    option :oneline, type: :boolean, desc: "Show commits in one line format"
+    option :author, aliases: "-a", desc: "Filter by author"
+    option :since, desc: "Show commits since date (e.g., '2024-01-01', '2 weeks ago')"
+    option :until, desc: "Show commits until date"
+    option :format, desc: "Custom format (short, full, stat, or custom format string)"
+    option :count, type: :boolean, desc: "Show only commit count"
+    def commits
+      commit_history = CommitHistory.new(@pastel)
+
+      begin
+        if options[:count]
+          count = commit_history.get_commit_count(options)
+          puts pastel.green("Total commits: #{count}")
+        else
+          commits = commit_history.get_commits(options)
+          if commits.empty?
+            puts pastel.yellow("No commits found")
+          else
+            puts commits
+          end
+        end
+      rescue GitError => e
+        puts pastel.red("Error: #{e.message}")
+        exit 1
+      end
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
