@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gemkanbino - Uma ferramenta CLI poderosa para gerenciamento de arquivos e navegação no terminal">
+    <meta name="keywords" content="ruby, gem, cli, terminal, files, navigation, kanbino">
+    <meta name="author" content="Victor Costa">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://victorhscosta.github.io/kanbino/">
+    <meta property="og:title" content="Gemkanbino - Ferramenta CLI para gerenciamento de arquivos">
+    <meta property="og:description" content="Uma ferramenta CLI poderosa para gerenciamento de arquivos e navegação no terminal">
+    <meta property="og:image" content="https://victorhscosta.github.io/kanbino/images/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://victorhscosta.github.io/kanbino/">
+    <meta property="twitter:title" content="Gemkanbino - Ferramenta CLI para gerenciamento de arquivos">
+    <meta property="twitter:description" content="Uma ferramenta CLI poderosa para gerenciamento de arquivos e navegação no terminal">
+    <meta property="twitter:image" content="https://victorhscosta.github.io/kanbino/images/og-image.png">
+
+    <title>Gemkanbino - Ferramenta CLI para gerenciamento de arquivos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="images/logo.svg" alt="Gemkanbino" class="logo">
+                    <h1 class="brand-name">Gemkanbino</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#features">Recursos</a></li>
+                    <li><a href="#installation">Instalação</a></li>
+                    <li><a href="#commands">Comandos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="https://github.com/VictorHSCosta/kanbino" target="_blank" rel="noopener noreferrer" class="nav-link-external">GitHub</a></li>
+                </ul>
+                <button class="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Gerenciamento de <span class="highlight">Arquivos</span> no Terminal
+                    </h1>
+                    <p class="hero-description">
+                        Uma ferramenta CLI poderosa e intuitiva para navegação, seleção e gerenciamento de arquivos diretamente do seu terminal. Organize seu fluxo de trabalho com eficiência.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#installation" class="btn btn-primary">Instalar Agora</a>
+                        <a href="#commands" class="btn btn-secondary">Ver Comandos</a>
+                    </div>
+                    <div class="hero-code">
+                        <div class="code-block">
+                            <code>gem install gemkanbino</code>
+                            <button class="copy-btn" data-clipboard-text="gem install gemkanbino" aria-label="Copy to clipboard">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-controls">
+                                <span class="terminal-control terminal-control-close"></span>
+                                <span class="terminal-control terminal-control-minimize"></span>
+                                <span class="terminal-control terminal-control-maximize"></span>
+                            </div>
+                            <div class="terminal-title">Terminal</div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command">gemkanbino ls</span>
+                            </div>
+                            <div class="terminal-output">
+                                <div>📁 Documents/</div>
+                                <div>📁 Downloads/</div>
+                                <div>📄 README.md</div>
+                                <div>📄 package.json</div>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-cursor">█</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Recursos Poderosos</h2>
+                    <p>Uma ferramenta completa para otimizar seu fluxo de trabalho no terminal</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🗂️</div>
+                        <h3>Navegação Intuitiva</h3>
+                        <p>Navegue entre diretórios com comandos familiares e interface amigável</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📋</div>
+                        <h3>Seleção de Arquivos</h3>
+                        <p>Selecione e gerencie arquivos facilmente com nosso sistema de seleção integrado</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">☁️</div>
+                        <h3>Upload para Nuvem</h3>
+                        <p>Envie arquivos diretamente para serviços como File.io e Transfer.sh</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h3>Armazenamento Local</h3>
+                        <p>Gerencie arquivos armazenados localmente com organização eficiente</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Configuração Flexível</h3>
+                        <p>Personalize a ferramenta de acordo com suas necessidades específicas</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Interface Colorida</h3>
+                        <p>Experiência visual agradável com cores e formatação inteligente</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section id="installation" class="installation">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Instalação Simples</h2>
+                    <p>Comece a usar o Gemkanbino em poucos segundos</p>
+                </div>
+                <div class="installation-content">
+                    <div class="installation-steps">
+                        <div class="installation-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Instale a Gem</h3>
+                                <div class="code-block">
+                                    <code>gem install gemkanbino</code>
+                                    <button class="copy-btn" data-clipboard-text="gem install gemkanbino" aria-label="Copy to clipboard">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="installation-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Verifique a Instalação</h3>
+                                <div class="code-block">
+                                    <code>gemkanbino --version</code>
+                                    <button class="copy-btn" data-clipboard-text="gemkanbino --version" aria-label="Copy to clipboard">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="installation-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Explore os Comandos</h3>
+                                <div class="code-block">
+                                    <code>gemkanbino --help</code>
+                                    <button class="copy-btn" data-clipboard-text="gemkanbino --help" aria-label="Copy to clipboard">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="installation-requirements">
+                        <h3>Requisitos</h3>
+                        <ul>
+                            <li>Ruby 2.7 ou superior</li>
+                            <li>Sistema operacional: macOS, Linux ou Windows (WSL)</li>
+                            <li>Terminal de linha de comando</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Commands Section -->
+        <section id="commands" class="commands">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Comandos Disponíveis</h2>
+                    <p>Explore todos os comandos e opções disponíveis</p>
+                </div>
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <h3>version</h3>
+                        <p>Exibe a versão atual do Gemkanbino</p>
+                        <div class="command-usage">
+                            <code>gemkanbino version</code>
+                        </div>
+                        <div class="command-aliases">
+                            <span class="alias">--version</span>
+                            <span class="alias">-v</span>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>pwd</h3>
+                        <p>Mostra o diretório de trabalho atual</p>
+                        <div class="command-usage">
+                            <code>gemkanbino pwd</code>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>ls</h3>
+                        <p>Lista arquivos e diretórios no caminho especificado</p>
+                        <div class="command-usage">
+                            <code>gemkanbino ls [PATH]</code>
+                        </div>
+                        <div class="command-options">
+                            <div class="option">
+                                <code>--all</code>, <code>-a</code>
+                                <span>Mostrar arquivos ocultos</span>
+                            </div>
+                            <div class="option">
+                                <code>--long</code>, <code>-l</code>
+                                <span>Usar formato de lista longa</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>cd</h3>
+                        <p>Muda o diretório atual para o caminho especificado</p>
+                        <div class="command-usage">
+                            <code>gemkanbino cd PATH</code>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>select</h3>
+                        <p>Seleciona um arquivo para operações subsequentes</p>
+                        <div class="command-usage">
+                            <code>gemkanbino select FILE</code>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>info</h3>
+                        <p>Exibe informações detalhadas sobre o arquivo selecionado ou específico</p>
+                        <div class="command-usage">
+                            <code>gemkanbino info [FILE]</code>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>copy</h3>
+                        <p>Copia o arquivo selecionado ou específico para armazenamento local</p>
+                        <div class="command-usage">
+                            <code>gemkanbino copy [FILE]</code>
+                        </div>
+                        <div class="command-options">
+                            <div class="option">
+                                <code>--target</code>, <code>-t</code>
+                                <span>Nome do diretório alvo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>upload</h3>
+                        <p>Envia o arquivo selecionado ou específico para a nuvem</p>
+                        <div class="command-usage">
+                            <code>gemkanbino upload [FILE]</code>
+                        </div>
+                        <div class="command-options">
+                            <div class="option">
+                                <code>--provider</code>, <code>-p</code>
+                                <span>Provedor de upload (fileio, transfersh)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>list</h3>
+                        <p>Lista todos os arquivos armazenados</p>
+                        <div class="command-usage">
+                            <code>gemkanbino list</code>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>config</h3>
+                        <p>Exibe ou define configurações da ferramenta</p>
+                        <div class="command-usage">
+                            <code>gemkanbino config [KEY] [VALUE]</code>
+                        </div>
+                    </div>
+                    <div class="command-card">
+                        <h3>interactive</h3>
+                        <p>Inicia o modo shell interativo</p>
+                        <div class="command-usage">
+                            <code>gemkanbino interactive</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples" class="examples">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Exemplos de Uso</h2>
+                    <p>Veja como usar o Gemkanbino em situações do dia a dia</p>
+                </div>
+                <div class="examples-content">
+                    <div class="example">
+                        <h3>Navegando e Listando Arquivos</h3>
+                        <div class="example-code">
+                            <div class="code-block">
+                                <code># Listar arquivos no diretório atual<br>gemkanbino ls<br><br># Listar com detalhes<br>gemkanbino ls -l<br><br># Mudar para diretório Documents<br>gemkanbino cd Documents<br><br># Ver onde estamos<br>gemkanbino pwd</code>
+                                <button class="copy-btn" data-clipboard-text="gemkanbino ls&#10;gemkanbino ls -l&#10;gemkanbino cd Documents&#10;gemkanbino pwd" aria-label="Copy to clipboard">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example">
+                        <h3>Gerenciando Arquivos</h3>
+                        <div class="example-code">
+                            <div class="code-block">
+                                <code># Selecionar um arquivo<br>gemkanbino select document.pdf<br><br># Ver informações do arquivo<br>gemkanbino info<br><br># Copiar para armazenamento local<br>gemkanbino copy -t backups<br><br># Upload para a nuvem<br>gemkanbino upload -p fileio</code>
+                                <button class="copy-btn" data-clipboard-text="gemkanbino select document.pdf&#10;gemkanbino info&#10;gemkanbino copy -t backups&#10;gemkanbino upload -p fileio" aria-label="Copy to clipboard">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example">
+                        <h3>Configuração e Uso Avançado</h3>
+                        <div class="example-code">
+                            <div class="code-block">
+                                <code># Ver todas as configurações<br>gemkanbino config<br><br># Definir provedor de upload padrão<br>gemkanbino config upload_provider fileio<br><br># Listar arquivos armazenados<br>gemkanbino list<br><br># Iniciar modo interativo<br>gemkanbino interactive</code>
+                                <button class="copy-btn" data-clipboard-text="gemkanbino config&#10;gemkanbino config upload_provider fileio&#10;gemkanbino list&#10;gemkanbino interactive" aria-label="Copy to clipboard">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M5.75 2a.75.75 0 00-.75.75v10.5c0 .414.336.75.75.75h6.5a.75.75 0 00.75-.75V2a.75.75 0 00-.75-.75h-6.5zM12.25 1.5H3.75a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h1.5a.75.75 0 000 1.5h-1.5A1.75 1.75 0 012 13.25V1.75C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v11.5A1.75 1.75 0 0112.25 15h-1.5a.75.75 0 000-1.5h1.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/logo.svg" alt="Gemkanbino" class="footer-logo">
+                    <h3>Gemkanbino</h3>
+                    <p>Ferramenta CLI para gerenciamento eficiente de arquivos no terminal.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="https://github.com/VictorHSCosta/kanbino" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://rubygems.org/gems/gemkanbino" target="_blank" rel="noopener noreferrer">RubyGems</a></li>
+                        <li><a href="https://github.com/VictorHSCosta/kanbino/issues" target="_blank" rel="noopener noreferrer">Reportar Issues</a></li>
+                        <li><a href="https://github.com/VictorHSCosta/kanbino/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licença MIT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-commands">
+                    <h4>Comandos Rápidos</h4>
+                    <div class="footer-command-list">
+                        <div class="footer-command">
+                            <code>gem install gemkanbino</code>
+                        </div>
+                        <div class="footer-command">
+                            <code>gemkanbino --help</code>
+                        </div>
+                        <div class="footer-command">
+                            <code>gemkanbino interactive</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Victor Costa. Desenvolvido com ❤️ para a comunidade Ruby.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
