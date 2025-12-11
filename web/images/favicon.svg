@@ -1,0 +1,28 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#gradient)"/>
+
+  <!-- Simplified kanban board -->
+  <rect x="5" y="7" width="7" height="18" rx="1" fill="white" fill-opacity="0.9"/>
+  <rect x="12.5" y="7" width="7" height="18" rx="1" fill="white" fill-opacity="0.7"/>
+  <rect x="20" y="7" width="7" height="18" rx="1" fill="white" fill-opacity="0.5"/>
+
+  <!-- Cards -->
+  <rect x="6.5" y="10" width="4" height="3" rx="0.5" fill="#2563eb"/>
+  <rect x="6.5" y="15" width="4" height="3" rx="0.5" fill="#10b981"/>
+  <rect x="6.5" y="20" width="4" height="3" rx="0.5" fill="#f59e0b"/>
+
+  <rect x="14" y="12" width="4" height="3" rx="0.5" fill="#ef4444"/>
+  <rect x="14" y="18" width="4" height="3" rx="0.5" fill="#8b5cf6"/>
+
+  <rect x="21.5" y="14" width="4" height="3" rx="0.5" fill="#06b6d4"/>
+  <rect x="21.5" y="19" width="4" height="3" rx="0.5" fill="#ec4899"/>
+
+  <!-- Gradient -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
