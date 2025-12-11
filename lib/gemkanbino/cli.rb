@@ -99,7 +99,7 @@ module Gemkanbino
     option :limit, aliases: "-n", type: :numeric, desc: "Limit number of commits"
     option :oneline, type: :boolean, desc: "Show commits in one line format"
     option :author, aliases: "-a", desc: "Filter by author"
-    option :since, desc: "Show commits since date (e.g., '2024-01-01', '2 weeks ago')"
+    option :since, desc: "Show commits since date (e.g., \"2024-01-01\", \"2 weeks ago\")"
     option :until, desc: "Show commits until date"
     option :format, desc: "Custom format (short, full, stat, or custom format string)"
     option :count, type: :boolean, desc: "Show only commit count"
