@@ -95,15 +95,53 @@ module Gemkanbino
       end
     end
 
+    desc "inicio", "Exibir página de início com mensagem de boas-vindas"
+    def inicio
+      display_welcome_message
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
       shell.start
     end
 
+    private
+
+    def display_welcome_message
+      terminal_width = get_terminal_width
+      welcome_text = "Bem-vindo"
+      decorative_line = "✨"
+
+      # Calcular centralização
+      padding = calculate_center_padding(welcome_text.length + 4, terminal_width) # +4 para os decorações
+      line_padding = calculate_center_padding(decorative_line.length * 2, terminal_width)
+
+      # Exibir mensagem centralizada
+      puts
+      puts " " * line_padding + pastel.cyan(decorative_line * 2)
+      puts " " * padding + pastel.green.bold("➤ #{welcome_text} #{decorative_line}")
+      puts " " * line_padding + pastel.cyan(decorative_line * 2)
+      puts
+      puts " " * calculate_center_padding(40, terminal_width) + pastel.dim("Use 'gemkanbino help' para ver todos os comandos")
+      puts
+    end
+
+    def get_terminal_width
+      IO.console.winsize[1] rescue 80
+    end
+
+    def calculate_center_padding(text_length, terminal_width)
+      [(terminal_width - text_length) / 2, 0].max
+    end
+
     map "--version" => :version
     map "-v" => :version
     map "--help" => :help
     map "-h" => :help
+    map "welcome" => :inicio
+    map "home" => :inicio
+    map "start" => :inicio
+    map "bemvindo" => :inicio
   end
 end
