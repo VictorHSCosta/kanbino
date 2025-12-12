@@ -10,10 +10,12 @@ require_relative "gemkanbino/local_storage"
 require_relative "gemkanbino/uploader"
 require_relative "gemkanbino/config_manager"
 require_relative "gemkanbino/interactive_shell"
+require_relative "gemkanbino/welcome_display"
 require_relative "gemkanbino/upload_providers"
 
 # Load utilities
 require_relative "gemkanbino/utils/file_validator"
+require_relative "gemkanbino/utils/terminal_helper"
 require_relative "gemkanbino/utils/completion"
 require_relative "gemkanbino/utils/history"
 
