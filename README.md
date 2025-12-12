@@ -1,28 +1,83 @@
 # Gemkanbino
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gemkanbino`. To experiment with that code, run `bin/console` for an interactive prompt.
+Gemkanbino é uma ferramenta CLI abrangente para gerenciamento de arquivos, navegação e uploads para nuvem, construída com Ruby e framework Thor. Fornece uma maneira intuitiva de gerenciar arquivos diretamente do seu terminal.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Adicione esta linha ao Gemfile da sua aplicação:
 
-Install the gem and add to the application's Gemfile by executing:
-
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```ruby
+gem 'gemkanbino'
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+E então execute:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+$ bundle install
+```
+
+Ou instale manualmente:
+
+```bash
+$ gem install gemkanbino
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Comandos Principais
+
+#### Página Inicial
+```bash
+gemkanbino inicio
+```
+Exibe uma página inicial com mensagem de boas-vindas centralizada no terminal.
+
+**Aliases disponíveis:**
+- `gemkanbino welcome`
+- `gemkanbino home`
+- `gemkanbino start`
+- `gemkanbino bemvindo`
+
+#### Navegação de Arquivos
+```bash
+gemkanbino pwd                    # Mostra diretório atual
+gemkanbino ls [caminho]           # Lista arquivos e diretórios
+gemkanbino cd <caminho>           # Muda de diretório
+gemkanbino select <arquivo>       # Seleciona um arquivo para operações
+gemkanbino info [arquivo]         # Mostra informações detalhadas
+```
+
+#### Gerenciamento de Arquivos
+```bash
+gemkanbino copy [arquivo]         # Copia arquivo para armazenamento local
+gemkanbino upload [arquivo]       # Faz upload para nuvem
+gemkanbino list                   # Lista arquivos armazenados
+```
+
+#### Configuração
+```bash
+gemkanbino config [chave] [valor] # Mostra ou define configurações
+gemkanbino version                # Exibe versão
+gemkanbino help                   # Mostra ajuda
+```
+
+#### Modo Interativo
+```bash
+gemkanbino interactive            # Inicia modo shell interativo
+```
+
+### Exemplo de Uso
+
+```bash
+# Exibir página de boas-vindas
+$ gemkanbino inicio
+
+✨✨
+➤ Bem-vindo ✨
+✨✨
+
+         Use 'gemkanbino help' para ver todos os comandos
+```
 
 ## Development
 
