@@ -11,6 +11,12 @@ require_relative "gemkanbino/uploader"
 require_relative "gemkanbino/config_manager"
 require_relative "gemkanbino/interactive_shell"
 require_relative "gemkanbino/upload_providers"
+require_relative "gemkanbino/welcome_service"
+
+# Load configuration
+require_relative "gemkanbino/config/storage_config"
+require_relative "gemkanbino/config/upload_config"
+require_relative "gemkanbino/config/welcome_config"
 
 # Load utilities
 require_relative "gemkanbino/utils/file_validator"

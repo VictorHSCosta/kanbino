@@ -3,4 +3,22 @@
 
 require_relative "../lib/gemkanbino"
 
+# Check if no arguments provided, show welcome screen
+if ARGV.empty?
+  # Check configuration and environment flags
+  if Gemkanbino::Config::WelcomeConfig.should_show_welcome?
+    begin
+      # Show welcome screen and exit
+      welcome_service = Gemkanbino::WelcomeService.new
+      format = Gemkanbino::Config::WelcomeConfig.get_welcome_format.to_sym
+      welcome_service.display_welcome(format)
+      exit 0
+    rescue => e
+      # Fallback to normal CLI if welcome fails
+      Gemkanbino::CLI.start(ARGV)
+    end
+  end
+end
+
+# Normal CLI behavior with arguments or when welcome is disabled
 Gemkanbino::CLI.start(ARGV)
