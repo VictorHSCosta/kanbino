@@ -12,6 +12,10 @@ require_relative "gemkanbino/config_manager"
 require_relative "gemkanbino/interactive_shell"
 require_relative "gemkanbino/upload_providers"
 
+# Load web components
+require_relative "gemkanbino/web/server"
+require_relative "gemkanbino/config/web_config"
+
 # Load utilities
 require_relative "gemkanbino/utils/file_validator"
 require_relative "gemkanbino/utils/completion"
@@ -21,6 +25,7 @@ require_relative "gemkanbino/utils/history"
 require_relative "gemkanbino/exceptions/file_error"
 require_relative "gemkanbino/exceptions/upload_error"
 require_relative "gemkanbino/exceptions/config_error"
+require_relative "gemkanbino/exceptions/web_error"
 
 module Gemkanbino
   class Error < StandardError; end

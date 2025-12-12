@@ -39,6 +39,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-progressbar", "~> 0.18"
   spec.add_dependency "tty-prompt", "~> 0.23"
   spec.add_dependency "filesize", "~> 0.2"
+  spec.add_dependency "sinatra", "~> 3.0"
+  spec.add_dependency "webrick", "~> 1.7"
 
   # Development dependencies
   spec.add_development_dependency "rspec", "~> 3.0"

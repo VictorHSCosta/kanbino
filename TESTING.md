@@ -179,3 +179,100 @@ bundle exec rspec spec/gemkanbino_spec.rb:5
 - [RuboCop Documentation](https://docs.rubocop.org/)
 - [Factory Bot Documentation](https://github.com/thoughtbot/factory_bot)
 - [Ruby Style Guide](https://rubystyle.guide/)
+
+## 🌐 Testando Funcionalidade Web
+
+A nova funcionalidade web requer testes específicos além dos testes CLI existentes.
+
+### Testes Automatizados
+
+```bash
+# Executar apenas testes da funcionalidade web
+bundle exec rspec spec/web/
+
+# Executar testes do servidor web
+bundle exec rspec spec/web/server_spec.rb
+
+# Executar testes de configuração web
+bundle exec rspec spec/web/web_config_spec.rb
+```
+
+### Testes Manuais
+
+1. **Iniciar Servidor Web**
+```bash
+# Porta padrão
+bundle exec exe/gemkanbino server
+
+# Porta personalizada
+bundle exec exe/gemkanbino server -p 8080
+
+# Host personalizado
+bundle exec exe/gemkanbino server -H 127.0.0.1
+```
+
+2. **Testar no Navegador**
+   - Acesse `http://localhost:4567`
+   - Verifique se a mensagem "bem vindo" aparece centralizada
+   - Teste o design responsivo redimensionando a janela
+   - Verifique se os estilos CSS carregam corretamente
+
+3. **Testar API Endpoints**
+```bash
+# Health check
+curl http://localhost:4567/health
+
+# Resposta esperada:
+# {"status":"ok","timestamp":"2024-01-01T12:00:00Z"}
+
+# Testar erro 404
+curl http://localhost:4567/nonexistent
+
+# Resposta esperada:
+# {"error":"Not Found","message":"Route not found: /nonexistent","error_code":"ROUTE_NOT_FOUND","details":{"path":"/nonexistent"}}
+```
+
+### Testes de Integração
+
+Verifique que CLI e web funcionam juntos:
+
+1. Inicie o servidor web: `bundle exec exe/gemkanbino server -p 4568`
+2. Em outro terminal, execute comandos CLI
+3. Verifique que ambos funcionam sem conflitos
+
+### Testes de Configuração
+
+```ruby
+# Testar configuração web no console Ruby
+require_relative 'lib/gemkanbino'
+
+config = Gemkanbino::Config::WebConfig.new
+puts config.host  # => "0.0.0.0"
+puts config.port  # => 4567
+puts config.server_url  # => "http://0.0.0.0:4567"
+
+# Testar salvar configuração
+config.save_config(host: 'localhost', port: 8080)
+```
+
+### Testes de Compatibilidade
+
+Teste em diferentes navegadores e dispositivos:
+
+- ✅ Chrome/Chromium
+- ✅ Firefox
+- ✅ Safari
+- ✅ Edge
+- ✅ Dispositivos móveis (design responsivo)
+
+### Testes de Performance
+
+Monitore uso de recursos durante testes:
+
+```bash
+# Monitorar uso de memória
+ps aux | grep gemkanbino
+
+# Monitorar conexões de rede
+netstat -an | grep :4567
+```
