@@ -101,6 +101,26 @@ module Gemkanbino
       shell.start
     end
 
+    desc "server", "Start web server"
+    option :port, aliases: "-p", type: :numeric, desc: "Port number (default: 4567)"
+    option :host, aliases: "-H", desc: "Host address (default: 0.0.0.0)"
+    def server
+      require_relative 'web/server'
+
+      server_options = {}
+      server_options[:port] = options[:port] if options[:port]
+      server_options[:bind] = options[:host] if options[:host]
+
+      begin
+        Web::Server.start!(server_options)
+      rescue Interrupt
+        puts pastel.yellow("\n🛑 Servidor web encerrado")
+      rescue => e
+        puts pastel.red("❌ Erro ao iniciar servidor: #{e.message}")
+        exit 1
+      end
+    end
+
     map "--version" => :version
     map "-v" => :version
     map "--help" => :help
