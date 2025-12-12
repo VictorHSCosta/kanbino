@@ -20,6 +20,25 @@ module Gemkanbino
       puts pastel.green("Gemkanbino version #{VERSION}")
     end
 
+    desc "welcome", "Exibir tela de boas-vindas e informações"
+    option :format, type: :string, default: 'auto', enum: %w[auto compact detailed minimal], desc: "Formato de exibição"
+    option :no_clear, type: :boolean, default: false, desc: "Não limpar a tela antes de exibir"
+    option :tips, type: :boolean, default: false, desc: "Exibir dicas rápidas"
+    option :help, type: :boolean, default: false, desc: "Exibir guia de primeiros passos"
+    def welcome
+      ENV['NO_CLEAR'] = 'true' if options[:no_clear]
+
+      welcome_service = WelcomeService.new(pastel)
+
+      # Determine format based on options
+      format = determine_welcome_format(options)
+      welcome_service.display_welcome(format)
+
+      # Show additional sections if requested
+      welcome_service.display_quick_tips if options[:tips]
+      welcome_service.display_getting_started if options[:help]
+    end
+
     desc "pwd", "Show current working directory"
     def pwd
       puts pastel.blue(Dir.pwd)
@@ -105,5 +124,20 @@ module Gemkanbino
     map "-v" => :version
     map "--help" => :help
     map "-h" => :help
+
+    private
+
+    def determine_welcome_format(options)
+      format = options[:format]&.to_sym
+
+      # Auto-detect format based on options
+      if options[:tips] && options[:help]
+        :detailed
+      elsif format == :auto
+        :auto
+      else
+        format
+      end
+    end
   end
 end
