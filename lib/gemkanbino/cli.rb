@@ -95,6 +95,38 @@ module Gemkanbino
       end
     end
 
+    desc "home", "Display welcome message"
+    def home
+      display_welcome_message
+    end
+
+    private
+
+    def display_welcome_message
+      # Obter dimensões do terminal
+      terminal_width = IO.console_size[1] rescue 80
+      terminal_height = IO.console_size[0] rescue 24
+
+      # Texto da mensagem
+      welcome_text = "bem vindo"
+
+      # Calcular centralização horizontal
+      padding = (terminal_width - welcome_text.length) / 2
+      padding = [padding, 0].max # Garantir que não seja negativo
+
+      # Calcular centralização vertical (deixar espaço no meio)
+      vertical_padding = terminal_height / 2 - 1
+
+      # Adicionar espaçamento vertical
+      puts "\n" * vertical_padding
+
+      # Exibir texto centralizado com cor
+      puts " " * padding + pastel.cyan.bold(welcome_text)
+
+      # Adicionar espaçamento inferior
+      puts "\n" * (vertical_padding - 1)
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
@@ -105,5 +137,8 @@ module Gemkanbino
     map "-v" => :version
     map "--help" => :help
     map "-h" => :help
+    map "welcome" => :home
+    map "start" => :home
+    map "inicio" => :home
   end
 end
