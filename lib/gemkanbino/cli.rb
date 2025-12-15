@@ -95,6 +95,13 @@ module Gemkanbino
       end
     end
 
+    desc "home", "Display welcome message with centered text"
+    def home
+      home_command = Gemkanbino::Commands::Home.new
+      result = home_command.display_welcome_message
+      result
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
@@ -105,5 +112,7 @@ module Gemkanbino
     map "-v" => :version
     map "--help" => :help
     map "-h" => :help
+    map "welcome" => :home
+    map "start" => :home
   end
 end
