@@ -148,6 +148,7 @@ gemkanbino upload /caminho/do/documento.pdf -p transfersh
 
 | Comando | Descrição | Exemplo |
 |---------|-----------|---------|
+| `home` | Exibe mensagem de boas-vindas | `gemkanbino home` |
 | `list` | Lista todos os arquivos armazenados | `gemkanbino list` |
 | `config [KEY] [VALUE]` | Mostra ou define configurações | `gemkanbino config storage.max_size 1GB` |
 | `interactive` | Inicia modo shell interativo | `gemkanbino interactive` |
@@ -337,6 +338,7 @@ gemkanbino config providers.fileio.api_key SUA_API_KEY
 ```
 gemkanbino
 ├── Comandos Principais
+│   ├── home                     # Página inicial com boas-vindas
 │   ├── pwd                      # Mostrar diretório atual
 │   ├── ls [PATH]               # Listar arquivos
 │   ├── cd PATH                 # Mudar diretório
@@ -349,8 +351,11 @@ gemkanbino
 │   ├── interactive             # Modo interativo
 │   └── version                 # Versão
 │
-└── Atalhos
-    ├── -v, --version           # Mostrar versão
+├── Atalhos (Aliases)
+│   ├── start, inicio, welcome  # Comandos alternativos para home
+│   └── -v, --version           # Mostrar versão
+│
+└── Ajuda
     ├── -h, --help              # Mostrar ajuda
     └── help [comando]          # Ajuda de comando específico
 ```
@@ -358,6 +363,11 @@ gemkanbino
 ### Atalhos
 
 ```bash
+# Página inicial
+gemkanbino start
+gemkanbino inicio
+gemkanbino welcome
+
 # Versão
 gemkanbino -v
 gemkanbino --version
