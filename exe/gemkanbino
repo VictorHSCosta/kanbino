@@ -1,6 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require "pastel"
 require_relative "../lib/gemkanbino"
 
-Gemkanbino::CLI.start(ARGV)
+# Show welcome message if no arguments provided
+if ARGV.empty?
+  pastel = Pastel.new
+  welcome = Gemkanbino::Welcome.new(pastel)
+  welcome.show
+else
+  Gemkanbino::CLI.start(ARGV)
+end

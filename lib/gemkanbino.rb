@@ -4,6 +4,7 @@ require_relative "gemkanbino/version"
 require_relative "gemkanbino/cli"
 
 # Load all components
+require_relative "gemkanbino/welcome"
 require_relative "gemkanbino/file_navigator"
 require_relative "gemkanbino/file_manager"
 require_relative "gemkanbino/local_storage"
