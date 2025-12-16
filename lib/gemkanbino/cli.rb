@@ -95,15 +95,38 @@ module Gemkanbino
       end
     end
 
+    desc "home", "Display welcome message"
+    def home
+      display_welcome_message
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
       shell.start
     end
 
+    map "start" => :home
+    map "inicio" => :home
+    map "welcome" => :home
     map "--version" => :version
     map "-v" => :version
     map "--help" => :help
     map "-h" => :help
+
+    private
+
+    def display_welcome_message
+      terminal_width = `tput cols`.to_i
+      terminal_width = 80 if terminal_width <= 0
+
+      welcome_text = "Bem Vindo"
+      padding = (terminal_width - welcome_text.length) / 2
+
+      puts "\n"
+      puts " " * padding + pastel.bold.green(welcome_text)
+      puts " " * (padding - 2) + pastel.dim("ao Gemkanbino")
+      puts "\n"
+    end
   end
 end
