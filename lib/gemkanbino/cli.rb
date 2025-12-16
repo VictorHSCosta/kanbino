@@ -101,6 +101,13 @@ module Gemkanbino
       shell.start
     end
 
+    desc "welcome", "Display welcome screen"
+    option :auto, type: :boolean, desc: "Show welcome screen automatically"
+    def welcome
+      display_utils = Gemkanbino::Utils::DisplayUtils.new
+      display_utils.show_welcome
+    end
+
     map "--version" => :version
     map "-v" => :version
     map "--help" => :help

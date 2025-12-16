@@ -60,6 +60,16 @@ gemkanbino --help
 
 ## 🏁 Tutorial Rápido: Primeiros Passos
 
+### 0. Tela de Boas-Vindas
+
+```bash
+# Iniciar o gemkanbino sem comandos para ver a tela de boas-vindas
+gemkanbino
+
+# Ou exibir a tela de boas-vindas manualmente
+gemkanbino welcome
+```
+
 ### 1. Navegação Básica
 
 ```bash
@@ -148,6 +158,7 @@ gemkanbino upload /caminho/do/documento.pdf -p transfersh
 
 | Comando | Descrição | Exemplo |
 |---------|-----------|---------|
+| `welcome` | Exibe tela de boas-vindas | `gemkanbino welcome` |
 | `list` | Lista todos os arquivos armazenados | `gemkanbino list` |
 | `config [KEY] [VALUE]` | Mostra ou define configurações | `gemkanbino config storage.max_size 1GB` |
 | `interactive` | Inicia modo shell interativo | `gemkanbino interactive` |
@@ -337,6 +348,7 @@ gemkanbino config providers.fileio.api_key SUA_API_KEY
 ```
 gemkanbino
 ├── Comandos Principais
+│   ├── welcome                  # Tela de boas-vindas
 │   ├── pwd                      # Mostrar diretório atual
 │   ├── ls [PATH]               # Listar arquivos
 │   ├── cd PATH                 # Mudar diretório
