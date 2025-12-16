@@ -95,6 +95,12 @@ module Gemkanbino
       end
     end
 
+    desc "home", "Exibir página inicial"
+    def home
+      home_command = Commands::Home.new(pastel: pastel)
+      home_command.show
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
