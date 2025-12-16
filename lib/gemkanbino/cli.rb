@@ -15,6 +15,12 @@ module Gemkanbino
       @prompt = TTY::Prompt.new
     end
 
+    desc "home", "Exibir página de boas-vindas"
+    def home
+      welcome = Welcome.new(@pastel)
+      welcome.show
+    end
+
     desc "version", "Display gemkanbino version"
     def version
       puts pastel.green("Gemkanbino version #{VERSION}")
