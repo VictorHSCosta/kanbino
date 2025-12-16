@@ -95,6 +95,11 @@ module Gemkanbino
       end
     end
 
+    desc "home", "Display welcome message"
+    def home
+      display_centered_welcome
+    end
+
     desc "interactive", "Start interactive shell mode"
     def interactive
       shell = InteractiveShell.new
@@ -105,5 +110,52 @@ module Gemkanbino
     map "-v" => :version
     map "--help" => :help
     map "-h" => :help
+
+    private
+
+    def display_centered_welcome
+      # Obter dimensões do terminal
+      terminal_width = get_terminal_width
+
+      # Mensagem de boas-vindas
+      welcome_message = "bem vindo"
+
+      # Adicionar linhas em branco para centralizar verticalmente
+      vertical_padding = get_vertical_padding
+
+      # Exibir mensagem centralizada
+      vertical_padding.times { puts }
+      puts centered_text(welcome_message, terminal_width)
+      vertical_padding.times { puts }
+    end
+
+    def get_terminal_width
+      # Tenta obter largura do terminal, fallback para 80 se não for possível
+      IO.console.winsize[1] rescue 80
+    end
+
+    def get_terminal_height
+      # Tenta obter altura do terminal, fallback para 24 se não for possível
+      IO.console.winsize[0] rescue 24
+    end
+
+    def get_vertical_padding
+      # Calcula padding vertical para centralizar (aproximadamente metade da altura)
+      (get_terminal_height / 2) - 1
+    end
+
+    def centered_text(text, width = nil)
+      width ||= get_terminal_width
+      text_length = text.length
+
+      # Se o texto for maior que a largura, retorna o texto original
+      return text if text_length >= width
+
+      # Calcula padding necessário para centralizar
+      padding = (width - text_length) / 2
+
+      # Retorna texto centralizado com cores usando pastel
+      " " * padding + pastel.green.bold(text)
+    end
   end
 end
