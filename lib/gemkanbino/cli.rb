@@ -15,6 +15,18 @@ module Gemkanbino
       @prompt = TTY::Prompt.new
     end
 
+    desc "welcome", "Show welcome screen"
+    def welcome
+      terminal_width = `tput cols`.to_i
+      width = terminal_width > 0 ? terminal_width : 80
+
+      puts pastel.blue("═" * width)
+      puts ""
+      puts pastel.green.bold("Bem Vindo".center(width))
+      puts ""
+      puts pastel.blue("═" * width)
+    end
+
     desc "version", "Display gemkanbino version"
     def version
       puts pastel.green("Gemkanbino version #{VERSION}")
