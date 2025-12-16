@@ -3,4 +3,14 @@
 
 require_relative "../lib/gemkanbino"
 
+# Show welcome screen if no arguments provided
+if ARGV.empty?
+  display_utils = Gemkanbino::Utils::DisplayUtils.new
+  display_utils.show_welcome
+  puts
+  puts "Digite 'gemkanbino help' para ver todos os comandos disponíveis."
+  puts "Pressione Enter para continuar..."
+  gets
+end
+
 Gemkanbino::CLI.start(ARGV)
