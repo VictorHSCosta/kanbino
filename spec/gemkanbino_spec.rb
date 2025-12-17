@@ -10,7 +10,7 @@ RSpec.describe Gemkanbino do
   end
 
   describe "Kibi Recipe File" do
-    let(:recipe_file_path) { File.join(Dir.pwd, 'receita_kibi.md') }
+    let(:recipe_file_path) { File.join(Dir.pwd, "receita_kibi.md") }
 
     it "exists in the project root" do
       expect(File.exist?(recipe_file_path)).to be true
