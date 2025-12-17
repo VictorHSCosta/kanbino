@@ -71,7 +71,7 @@ module Gemkanbino
             success: false,
             error: "Network error: #{e.message}"
           }
-        rescue => e
+        rescue StandardError => e
           {
             success: false,
             error: "Upload error: #{e.message}"
@@ -110,7 +110,7 @@ module Gemkanbino
       def format_size(bytes)
         require "filesize"
         Filesize.new(bytes).pretty
-      rescue
+      rescue StandardError
         "#{bytes}B"
       end
 
