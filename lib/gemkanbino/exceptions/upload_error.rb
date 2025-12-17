@@ -31,6 +31,15 @@ module Gemkanbino
       def max_size
         @max_size
       end
+
+      private
+
+      def format_size(bytes)
+        require "filesize"
+        Filesize.new(bytes).pretty
+      rescue StandardError
+        "#{bytes}B"
+      end
     end
 
     # Exception for network errors

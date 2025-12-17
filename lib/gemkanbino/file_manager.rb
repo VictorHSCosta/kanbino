@@ -161,8 +161,7 @@ module Gemkanbino
 
       @selected_files.each_with_index do |file, index|
         marker = file == @current_selection ? pastel.green("►") : " "
-        size = File.size(file) rescue StandardError
-        0
+        size = File.size(file)
         size_str = format_file_size(size)
 
         puts "#{marker} #{index + 1}. #{File.basename(file).ljust(30)} #{size_str.rjust(8)}"
@@ -279,8 +278,7 @@ module Gemkanbino
 
     def format_file_choice(file)
       basename = File.basename(file)
-      size = File.size(file) rescue StandardError
-      0
+      size = File.size(file)
       size_str = format_file_size(size)
 
       "#{basename.ljust(25)} #{size_str.rjust(8)}"

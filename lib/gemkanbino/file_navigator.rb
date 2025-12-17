@@ -130,9 +130,12 @@ module Gemkanbino
 
       entries.each do |entry|
         full_path = File.join(base_path, entry)
-        stat = File.stat(full_path)
-      rescue StandardError
-        nil
+
+        stat = begin
+                 File.stat(full_path)
+               rescue StandardError
+                 nil
+               end
 
         if stat
           type = File.directory?(full_path) ? pastel.blue("DIR ") : pastel.green("FILE")
