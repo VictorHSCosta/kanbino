@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../exceptions/file_error"
+
 module Gemkanbino
   module Utils
     # Utility class for file validation

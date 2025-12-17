@@ -174,7 +174,7 @@ module Gemkanbino
 
     def prompt(message)
       print pastel.cyan(message)
-      gets
+      gets.chomp
     end
   end
 end

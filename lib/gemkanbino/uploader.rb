@@ -19,8 +19,14 @@ module Gemkanbino
     def upload_file(file_path, provider_name = nil)
       file_path = File.expand_path(file_path)
 
-      # Validate file
-      Utils::FileValidator.validate_file_readable(file_path)
+      # Validate file exists and is readable
+      unless File.exist?(file_path)
+        raise "File does not exist: #{file_path}"
+      end
+
+      unless File.readable?(file_path)
+        raise "File is not readable: #{file_path}"
+      end
 
       # Get provider
       provider = get_provider(provider_name)
@@ -212,7 +218,7 @@ module Gemkanbino
       if provider.nil?
         puts pastel.red("Unknown provider: #{name}")
         puts "Available providers: #{providers.map(&:name).join(', ')}"
-        raise Exceptions::UploadError, "Unknown provider: #{name}"
+        raise "Unknown provider: #{name}"
       end
 
       provider

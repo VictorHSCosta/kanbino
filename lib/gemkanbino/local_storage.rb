@@ -22,8 +22,14 @@ module Gemkanbino
     def copy_file(file_path, target_name = nil)
       file_path = File.expand_path(file_path)
 
-      # Validate file
-      Utils::FileValidator.validate_file_readable(file_path)
+      # Validate file exists and is readable
+      unless File.exist?(file_path)
+        raise "File does not exist: #{file_path}"
+      end
+
+      unless File.readable?(file_path)
+        raise "File is not readable: #{file_path}"
+      end
 
       # Generate target name if not provided
       target_name ||= generate_target_name(file_path)
@@ -228,12 +234,6 @@ module Gemkanbino
     private
 
     def get_storage_directory
-      # Try to get from config first
-      config_manager = ConfigManager.new
-      custom_path = config_manager.get_config("storage.directory")
-
-      return custom_path if custom_path && Dir.exist?(File.dirname(custom_path))
-
       # Default locations
       default_paths = [
         File.join(Dir.home, ".gemkanbino", "storage"),
