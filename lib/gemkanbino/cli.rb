@@ -83,24 +83,7 @@ module Gemkanbino
       storage.list_stored_files
     end
 
-    desc "config [KEY] [VALUE]", "Show or set configuration"
-    def config(key = nil, value = nil)
-      config_manager = ConfigManager.new
-      if key.nil?
-        config_manager.show_all_config
-      elsif value.nil?
-        config_manager.show_config(key)
-      else
-        config_manager.set_config(key, value)
-      end
-    end
-
-    desc "interactive", "Start interactive shell mode"
-    def interactive
-      shell = InteractiveShell.new
-      shell.start
-    end
-
+  
     map "--version" => :version
     map "-v" => :version
     map "--help" => :help
