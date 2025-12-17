@@ -116,7 +116,7 @@ module Gemkanbino
         require "filesize"
         Filesize.new(bytes).pretty
       rescue StandardError
-            "#{bytes}B"
+        "#{bytes}B"
       end
     end
   end

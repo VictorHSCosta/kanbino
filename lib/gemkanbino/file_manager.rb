@@ -280,7 +280,7 @@ module Gemkanbino
     def format_file_choice(file)
       basename = File.basename(file)
       size = File.size(file) rescue StandardError
-        0
+      0
       size_str = format_file_size(size)
 
       "#{basename.ljust(25)} #{size_str.rjust(8)}"
@@ -335,7 +335,7 @@ module Gemkanbino
       require "filesize"
       Filesize.new(size).pretty
     rescue StandardError
-        "#{size}B"
+      "#{size}B"
     end
 
     def calculate_file_hash(file_path, algorithm)
