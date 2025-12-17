@@ -4,6 +4,14 @@ require "thor"
 require "pastel"
 require "tty/prompt"
 
+require_relative "file_navigator"
+require_relative "file_manager"
+require_relative "local_storage"
+require_relative "uploader"
+
+# Note: ConfigManager and InteractiveShell are not yet implemented
+# These classes are referenced but not available in the current codebase
+
 module Gemkanbino
   # Main CLI class using Thor framework
   class CLI < Thor
@@ -83,23 +91,23 @@ module Gemkanbino
       storage.list_stored_files
     end
 
-    desc "config [KEY] [VALUE]", "Show or set configuration"
-    def config(key = nil, value = nil)
-      config_manager = ConfigManager.new
-      if key.nil?
-        config_manager.show_all_config
-      elsif value.nil?
-        config_manager.show_config(key)
-      else
-        config_manager.set_config(key, value)
-      end
-    end
+    # desc "config [KEY] [VALUE]", "Show or set configuration"
+# def config(key = nil, value = nil)
+#   config_manager = ConfigManager.new
+#   if key.nil?
+#     config_manager.show_all_config
+#   elsif value.nil?
+#     config_manager.show_config(key)
+#   else
+#     config_manager.set_config(key, value)
+#   end
+# end
 
-    desc "interactive", "Start interactive shell mode"
-    def interactive
-      shell = InteractiveShell.new
-      shell.start
-    end
+# desc "interactive", "Start interactive shell mode"
+# def interactive
+#   shell = InteractiveShell.new
+#   shell.start
+# end
 
     map "--version" => :version
     map "-v" => :version

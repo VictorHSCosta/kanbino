@@ -46,7 +46,7 @@ module Gemkanbino
           display_upload_error(result, provider_name)
           nil
         end
-      rescue => e
+      rescue StandardError => e
         puts pastel.red("❌ Upload failed: #{e.message}")
         nil
       end
@@ -290,7 +290,7 @@ module Gemkanbino
           # Windows
           system("echo '#{text}' | clip.exe")
         end
-      rescue
+      rescue StandardError
         # Clipboard not available, ignore
       end
     end
@@ -342,8 +342,8 @@ module Gemkanbino
     def format_size(bytes)
       require "filesize"
       Filesize.new(bytes).pretty
-    rescue
-      "#{bytes}B"
+    rescue StandardError
+        "#{bytes}B"
     end
   end
 end

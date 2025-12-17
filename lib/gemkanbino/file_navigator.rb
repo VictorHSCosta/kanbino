@@ -33,7 +33,7 @@ module Gemkanbino
         end
       rescue Errno::PermissionError
         puts pastel.red("Error: Permission denied to access '#{path}'")
-      rescue => e
+      rescue StandardError => e
         puts pastel.red("Error accessing directory: #{e.message}")
       end
     end
@@ -51,7 +51,7 @@ module Gemkanbino
       rescue Errno::PermissionError
         puts pastel.red("Error: Permission denied to access '#{path}'")
         false
-      rescue => e
+      rescue StandardError => e
         puts pastel.red("Error changing directory: #{e.message}")
         false
       end
@@ -130,7 +130,9 @@ module Gemkanbino
 
       entries.each do |entry|
         full_path = File.join(base_path, entry)
-        stat = File.stat(full_path) rescue nil
+        stat = File.stat(full_path)
+      rescue StandardError
+        nil
 
         if stat
           type = File.directory?(full_path) ? pastel.blue("DIR ") : pastel.green("FILE")
@@ -168,7 +170,7 @@ module Gemkanbino
     def format_file_size(size)
       require "filesize"
       Filesize.new(size).pretty
-    rescue
+    rescue StandardError
       "#{size}B"
     end
 

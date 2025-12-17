@@ -75,7 +75,7 @@ module Gemkanbino
       begin
         stat = File.stat(file_path)
         display_file_info(file_path, stat)
-      rescue => e
+      rescue StandardError => e
         puts pastel.red("Error reading file info: #{e.message}")
       end
     end
@@ -115,7 +115,7 @@ module Gemkanbino
           puts pastel.yellow("Binary file detected. Cannot preview content.")
           display_file_info(file_path, File.stat(file_path))
         end
-      rescue => e
+      rescue StandardError => e
         puts pastel.red("Error previewing file: #{e.message}")
       end
     end
@@ -161,7 +161,8 @@ module Gemkanbino
 
       @selected_files.each_with_index do |file, index|
         marker = file == @current_selection ? pastel.green("►") : " "
-        size = File.size(file) rescue 0
+        size = File.size(file) rescue StandardError
+        0
         size_str = format_file_size(size)
 
         puts "#{marker} #{index + 1}. #{File.basename(file).ljust(30)} #{size_str.rjust(8)}"
@@ -278,7 +279,8 @@ module Gemkanbino
 
     def format_file_choice(file)
       basename = File.basename(file)
-      size = File.size(file) rescue 0
+      size = File.size(file) rescue StandardError
+        0
       size_str = format_file_size(size)
 
       "#{basename.ljust(25)} #{size_str.rjust(8)}"
@@ -332,8 +334,8 @@ module Gemkanbino
     def format_file_size(size)
       require "filesize"
       Filesize.new(size).pretty
-    rescue
-      "#{size}B"
+    rescue StandardError
+        "#{size}B"
     end
 
     def calculate_file_hash(file_path, algorithm)
@@ -347,7 +349,7 @@ module Gemkanbino
       else
         "Unknown algorithm"
       end
-    rescue => e
+    rescue StandardError => e
       "Error calculating hash: #{e.message}"
     end
   end

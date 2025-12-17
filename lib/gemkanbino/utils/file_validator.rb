@@ -100,7 +100,7 @@ module Gemkanbino
               file.read(1024) # Read first 1KB
             end
             true
-          rescue => e
+          rescue StandardError => e
             raise Exceptions::FileError, "Cannot read file content: #{e.message}"
           end
         end
@@ -157,8 +157,8 @@ module Gemkanbino
         def format_size(bytes)
           require "filesize"
           Filesize.new(bytes).pretty
-        rescue
-          "#{bytes}B"
+        rescue StandardError
+            "#{bytes}B"
         end
       end
     end

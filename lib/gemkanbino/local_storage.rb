@@ -228,11 +228,8 @@ module Gemkanbino
     private
 
     def get_storage_directory
-      # Try to get from config first
-      config_manager = ConfigManager.new
-      custom_path = config_manager.get_config("storage.directory")
-
-      return custom_path if custom_path && Dir.exist?(File.dirname(custom_path))
+      # ConfigManager not yet implemented, using default paths only
+      # TODO: Implement config management when ConfigManager is available
 
       # Default locations
       default_paths = [
@@ -346,8 +343,8 @@ module Gemkanbino
     def format_size(bytes)
       require "filesize"
       Filesize.new(bytes).pretty
-    rescue
-      "#{bytes}B"
+    rescue StandardError
+        "#{bytes}B"
     end
 
     def ask_overwrite(destination)
@@ -370,7 +367,7 @@ module Gemkanbino
         else
           false
         end
-      rescue => e
+      rescue StandardError => e
         puts pastel.red("Error compressing directory: #{e.message}")
         false
       end
