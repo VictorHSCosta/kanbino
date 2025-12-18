@@ -1,12 +1,13 @@
 # Gemkanbino
 
-Uma ferramenta CLI abrangente para gerenciamento de arquivos, navegação e uploads para nuvem. O Gemkanbino permite navegar pelo sistema de arquivos, selecionar arquivos, criar cópias locais e enviá-los para serviços de nuvem diretamente do seu terminal.
+Uma ferramenta CLI abrangente para gerenciamento de arquivos, navegação, uploads para nuvem e geração de histórias ficcionais. O Gemkanbino permite navegar pelo sistema de arquivos, selecionar arquivos, criar cópias locais, enviá-los para serviços de nuvem e gerar histórias criativas sobre a guerra dos 5 anos entre dois irmãos pelos maiores planetas do universo.
 
 ## 📋 Sumário
 
 - [Instalação](#instalação)
 - [Tutorial Rápido](#tutorial-rápido-primeiros-passos)
 - [Comandos Básicos](#comandos-básicos)
+- [Geração de Histórias](#geração-de-histórias)
 - [Gerenciamento de Armazenamento Local](#gerenciamento-de-armazenamento-local)
 - [Upload para Nuvem](#upload-para-nuvem)
 - [Exemplos Práticos](#exemplos-práticos-e-casos-de-uso)
@@ -144,6 +145,25 @@ gemkanbino upload /caminho/do/documento.pdf -p transfersh
 **Opções do comando `upload`:**
 - `-p, --provider`: Provedor de upload (fileio, transfersh)
 
+### Geração de Histórias
+
+| Comando | Descrição | Exemplo |
+|---------|-----------|---------|
+| `story` | Gera história sobre a guerra dos 5 anos | `gemkanbino story` |
+| `stories` | Gerencia histórias salvas | `gemkanbino stories --action list` |
+
+**Opções do comando `story`:**
+- `-t, --title`: Título personalizado para a história
+- `-g, --genre`: Gênero da história (sci_fi, fantasy, drama)
+- `-l, --length`: Comprimento da história (short, medium, long)
+- `-i, --interactive`: Modo interativo com personalização
+- `-s, --save`: Salvar história no armazenamento local
+- `--variation`: Nível de variação de conteúdo (none, low, medium, high)
+
+**Opções do comando `stories`:**
+- `-a, --action`: Ação a executar (list, show, delete)
+- `-t, --title`: Título da história para ações show/delete
+
 ### Utilidades
 
 | Comando | Descrição | Exemplo |
@@ -171,6 +191,124 @@ gemkanbino copy arquivo.txt
 gemkanbino copy -t "backups"
 
 # Nota: Comandos avançados de storage estarão disponíveis em versões futuras
+```
+
+## 📚 Geração de Histórias
+
+O Gemkanbino possui um gerador de histórias ficcionais criativas sobre "a guerra dos 5 anos entre dois irmãos pelos maiores planetas do mundo". Esta funcionalidade utiliza templates variados e inteligência artificial para criar narrativas únicas e envolventes.
+
+### História Padrão
+
+```bash
+# Gerar história básica
+gemkanbino story
+
+# Gerar com título personalizado
+gemkanbino story -t "A Batalha dos Titãs Cósmicos"
+
+# Gerar com gênero específico
+gemkanbino story -g fantasy
+
+# Gerar com diferentes comprimentos
+gemkanbino story -l short
+gemkanbino story -l long
+```
+
+### Modo Interativo
+
+```bash
+# Iniciar modo interativo com personalização
+gemkanbino story -i
+
+# O modo interativo solicitará:
+# - Nome do irmão mais velho
+# - Nome do irmão mais novo
+# - Nome do primeiro planeta
+# - Nome do segundo planeta
+# - Nome da galáxia
+```
+
+### Variação de Conteúdo
+
+```bash
+# Gerar história com baixa variação
+gemkanbino story --variation low
+
+# Gerar com alta variação (mais diferente)
+gemkanbino story --variation high
+
+# Sem variação (reproduzível)
+gemkanbino story --variation none
+```
+
+### Salvar e Gerenciar Histórias
+
+```bash
+# Gerar e salvar automaticamente
+gemkanbino story -s -t "Minha História Épica"
+
+# Listar todas as histórias salvas
+gemkanbino stories --action list
+
+# Visualizar uma história específica
+gemkanbino stories --action show -t "Minha História Épica"
+
+# Excluir uma história
+gemkanbino stories --action delete -t "História Antiga"
+```
+
+### Estrutura da História Gerada
+
+Cada história gerada segue uma estrutura narrativa completa:
+
+1. **Introdução** - Contexto inicial do universo
+2. **Personagens** - Dois irmãos com descrições detalhadas
+3. **Cenário** - Planetas, galáxia e período temporal
+4. **O Conflito** - Causa, escalada e consequências
+5. **Desenvolvimento** - Cronologia dos 5 anos de guerra
+6. **O Clímax** - Momento decisivo da narrativa
+7. **Resolução** - Desfecho do conflito
+8. **Epílogo** - Reflexão final e consequências
+
+### Formatos de Saída
+
+As histórias são geradas em formato Markdown com:
+
+- **Títulos e subtítulos** hierarquicamente organizados
+- **Metadados** completos (gênero, data de criação, tags)
+- **Índice** navegável
+- **Formatação** profissional com negritos e listas
+- **Rodapé** com informações de autoria
+
+### Exemplo de Uso Completo
+
+```bash
+# Workflow completo de criação de história
+gemkanbino story \
+  -t "A Guerra dos Planetas Gêmeos" \
+  -g sci_fi \
+  -l medium \
+  --variation high \
+  -s
+
+# Gerenciar história criada
+gemkanbino stories --action list
+gemkanbino stories --action show -t "A Guerra dos Planetas Gêmeos"
+```
+
+### Configuração de Histórias
+
+As configurações do gerador de histórias podem ser personalizadas:
+
+```bash
+# Ver configurações de histórias
+gemkanbino config
+
+# Definir gênero padrão
+gemkanbino config general.default_genre fantasy
+
+# Configurar diretório de histórias
+gemkanbino config storage.stories_directory /path/to/stories
 ```
 
 ## ☁️ Upload para Nuvem
@@ -345,9 +483,24 @@ gemkanbino
 │   ├── copy [FILE]             # Copiar para armazenamento
 │   ├── upload [FILE]           # Upload para nuvem
 │   ├── list                    # Listar arquivos armazenados
+│   ├── story                   # Gerar história fictícia
+│   ├── stories                 # Gerenciar histórias salvas
 │   ├── config [KEY] [VALUE]    # Configurações
 │   ├── interactive             # Modo interativo
 │   └── version                 # Versão
+│
+├── Gerador de Histórias
+│   ├── story -t TITLE          # Gerar com título personalizado
+│   ├── story -g GENRE          # Especificar gênero (sci_fi, fantasy, drama)
+│   ├── story -l LENGTH         # Comprimento (short, medium, long)
+│   ├── story -i                # Modo interativo
+│   ├── story -s                # Salvar história
+│   ├── story --variation LEVEL # Nível de variação (none, low, medium, high)
+│   │
+│   └── stories --action ACTION # Gerenciar histórias
+│       ├── list               # Listar histórias salvas
+│       ├── show -t TITLE      # Mostrar história específica
+│       └── delete -t TITLE    # Excluir história
 │
 └── Atalhos
     ├── -v, --version           # Mostrar versão

@@ -16,7 +16,10 @@ module Gemkanbino
       @storage_root = get_storage_directory
       ensure_storage_directory
       @index_file = File.join(@storage_root, "index.json")
+      @stories_dir = File.join(@storage_root, "stories")
+      ensure_stories_directory
       load_index
+      load_stories_index
     end
 
     def copy_file(file_path, target_name = nil)
@@ -225,6 +228,100 @@ module Gemkanbino
       puts pastel.green("✓ Compression completed. Archived #{compressed_count} files.")
     end
 
+    # Story-specific methods
+    def save_generated_story(title, filename, content, metadata = {})
+      # Create stories directory structure
+      story_dir = File.join(@stories_dir, filename.gsub('.md', ''))
+      FileUtils.mkdir_p(story_dir)
+
+      # Save markdown content
+      story_file = File.join(story_dir, filename)
+      File.write(story_file, content)
+
+      # Create story metadata
+      story_metadata = create_story_metadata(title, filename, metadata)
+
+      # Save metadata
+      metadata_file = File.join(story_dir, "metadata.json")
+      File.write(metadata_file, JSON.pretty_generate(story_metadata))
+
+      # Update stories index
+      add_to_stories_index(title, story_metadata)
+
+      puts pastel.green("✓ Story saved: #{title}")
+      puts pastel.dim("Location: #{story_file}")
+
+      true
+    end
+
+    def list_stories
+      if @stories_index.empty?
+        []
+      else
+        @stories_index.map do |title, metadata|
+          {
+            title: title,
+            created_at: metadata[:created_at],
+            word_count: metadata[:word_count] || 0,
+            genre: metadata[:genre],
+            tags: metadata[:tags] || []
+          }
+        end.sort_by { |s| s[:created_at] }.reverse
+      end
+    end
+
+    def get_story_content(title)
+      metadata = @stories_index[title]
+      return nil unless metadata
+
+      story_file = File.join(@stories_dir, metadata[:filename])
+      return nil unless File.exist?(story_file)
+
+      File.read(story_file)
+    end
+
+    def get_story_metadata(title)
+      @stories_index[title]
+    end
+
+    def delete_story(title)
+      metadata = @stories_index[title]
+      return false unless metadata
+
+      # Remove story directory
+      story_dir = File.join(@stories_dir, metadata[:filename].gsub('.md', ''))
+      if File.exist?(story_dir)
+        FileUtils.rm_rf(story_dir)
+        puts pastel.yellow("🗑️ Deleted story: #{title}")
+      end
+
+      # Remove from stories index
+      @stories_index.delete(title)
+      save_stories_index
+
+      true
+    end
+
+    def get_stories_stats
+      {
+        total_stories: @stories_index.length,
+        total_words: @stories_index.values.sum { |m| m[:word_count] || 0 },
+        genres: @stories_index.values.map { |m| m[:genre] }.compact.uniq,
+        latest_story: @stories_index.values.map { |m| m[:created_at] }.max
+      }
+    end
+
+    def search_stories(query)
+      return [] if @stories_index.empty? || query.nil? || query.empty?
+
+      query = query.downcase
+      @stories_index.select do |title, metadata|
+        title.downcase.include?(query) ||
+          (metadata[:tags] && metadata[:tags].any? { |tag| tag.downcase.include?(query) }) ||
+          (metadata[:genre] && metadata[:genre].downcase.include?(query))
+      end
+    end
+
     private
 
     def get_storage_directory
@@ -378,6 +475,56 @@ module Gemkanbino
 
     def calculate_total_size
       @index.values.sum { |metadata| metadata["size"] || 0 }
+    end
+
+    # Story-specific private methods
+    def ensure_stories_directory
+      FileUtils.mkdir_p(@stories_dir)
+    end
+
+    def load_stories_index
+      @stories_index_file = File.join(@stories_dir, "stories_index.json")
+      if File.exist?(@stories_index_file)
+        begin
+          @stories_index = JSON.parse(File.read(@stories_index_file))
+        rescue JSON::ParserError
+          puts pastel.yellow("Warning: Corrupted stories index file, creating new one.")
+          @stories_index = {}
+        end
+      else
+        @stories_index = {}
+      end
+    end
+
+    def save_stories_index
+      File.write(@stories_index_file, JSON.pretty_generate(@stories_index))
+    end
+
+    def add_to_stories_index(title, metadata)
+      @stories_index[title] = metadata
+      save_stories_index
+    end
+
+    def create_story_metadata(title, filename, additional_metadata = {})
+      # Calculate word count
+      content_file = File.join(@stories_dir, filename.gsub('.md', ''), filename)
+      word_count = 0
+      if File.exist?(content_file)
+        content = File.read(content_file)
+        word_count = content.split.length
+      end
+
+      {
+        title: title,
+        filename: filename,
+        created_at: Time.now.iso8601,
+        word_count: word_count,
+        genre: additional_metadata[:genre] || 'ficção científica',
+        tags: additional_metadata[:tags] || [],
+        length: additional_metadata[:length] || 'medium',
+        theme: additional_metadata[:theme] || 'guerra, família, redenção',
+        language: additional_metadata[:language] || 'pt-BR'
+      }.merge(additional_metadata)
     end
   end
 end
