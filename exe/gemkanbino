@@ -3,4 +3,11 @@
 
 require_relative "../lib/gemkanbino"
 
+# Show welcome message when no arguments provided
+if ARGV.empty?
+  welcome_cmd = Gemkanbino::Commands::Welcome.new
+  welcome_cmd.show_welcome
+  exit 0
+end
+
 Gemkanbino::CLI.start(ARGV)

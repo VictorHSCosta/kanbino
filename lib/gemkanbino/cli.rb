@@ -101,6 +101,12 @@ module Gemkanbino
       shell.start
     end
 
+    desc "welcome", "Display welcome message"
+    def welcome
+      welcome_cmd = Commands::Welcome.new
+      welcome_cmd.show_welcome
+    end
+
     map "--version" => :version
     map "-v" => :version
     map "--help" => :help

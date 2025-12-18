@@ -22,6 +22,9 @@ require_relative "gemkanbino/exceptions/file_error"
 require_relative "gemkanbino/exceptions/upload_error"
 require_relative "gemkanbino/exceptions/config_error"
 
+# Load commands
+require_relative "gemkanbino/commands/welcome"
+
 module Gemkanbino
   class Error < StandardError; end
   # Your code goes here...

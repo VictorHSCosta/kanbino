@@ -56,6 +56,12 @@ gemkanbino version
 
 # Verificar ajuda
 gemkanbino --help
+
+# Ver mensagem de boas-vindas
+gemkanbino welcome
+
+# Ou simplesmente execute sem argumentos
+gemkanbino
 ```
 
 ## 🏁 Tutorial Rápido: Primeiros Passos
@@ -151,6 +157,7 @@ gemkanbino upload /caminho/do/documento.pdf -p transfersh
 | `list` | Lista todos os arquivos armazenados | `gemkanbino list` |
 | `config [KEY] [VALUE]` | Mostra ou define configurações | `gemkanbino config storage.max_size 1GB` |
 | `interactive` | Inicia modo shell interativo | `gemkanbino interactive` |
+| `welcome` | Exibe mensagem de boas-vindas | `gemkanbino welcome` |
 | `version` | Mostra versão do gemkanbino | `gemkanbino version` |
 
 ## 💾 Gerenciamento de Armazenamento Local
@@ -347,6 +354,7 @@ gemkanbino
 │   ├── list                    # Listar arquivos armazenados
 │   ├── config [KEY] [VALUE]    # Configurações
 │   ├── interactive             # Modo interativo
+│   ├── welcome                 # Mensagem de boas-vindas
 │   └── version                 # Versão
 │
 └── Atalhos
