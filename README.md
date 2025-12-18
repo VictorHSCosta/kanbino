@@ -1,6 +1,6 @@
 # Gemkanbino
 
-Uma ferramenta CLI abrangente para gerenciamento de arquivos, navegação e uploads para nuvem. O Gemkanbino permite navegar pelo sistema de arquivos, selecionar arquivos, criar cópias locais e enviá-los para serviços de nuvem diretamente do seu terminal.
+Uma ferramenta CLI abrangente para gerenciamento de arquivos, navegação, uploads para nuvem e criação de histórias. O Gemkanbino permite navegar pelo sistema de arquivos, selecionar arquivos, criar cópias locais, enviá-los para serviços de nuvem e criar histórias fictícias diretamente do seu terminal.
 
 ## 📋 Sumário
 
@@ -9,6 +9,7 @@ Uma ferramenta CLI abrangente para gerenciamento de arquivos, navegação e uplo
 - [Comandos Básicos](#comandos-básicos)
 - [Gerenciamento de Armazenamento Local](#gerenciamento-de-armazenamento-local)
 - [Upload para Nuvem](#upload-para-nuvem)
+- [Criação de Histórias](#criação-de-histórias)
 - [Exemplos Práticos](#exemplos-práticos-e-casos-de-uso)
 - [Configuração Avançada](#configuração-avançada)
 - [Referência de Comandos](#referência-de-comandos)
@@ -115,6 +116,32 @@ gemkanbino upload -p fileio
 gemkanbino upload /caminho/do/documento.pdf -p transfersh
 ```
 
+### 5. Criação de Histórias
+
+```bash
+# Criar história com template padrão
+gemkanbino create_story "A Guerra dos Irmãos"
+
+# Criar história com template específico
+gemkanbino create_story "Aventura Espacial" -t guerra_irmaos_planetas
+
+# Criar história em modo interativo
+gemkanbino create_story -i
+
+# Listar histórias criadas
+gemkanbino list_stories
+
+# Mostrar uma história completa
+gemkanbino show_story "A Guerra dos Irmãos"
+
+# Buscar histórias por conteúdo
+gemkanbino search_stories "planetas"
+
+# Exportar história para diferentes formatos
+gemkanbino export_story "A Guerra dos Irmãos" -f markdown
+gemkanbino export_story "A Guerra dos Irmãos" -f pdf -d ./exports/
+```
+
 ## 📂 Comandos Básicos
 
 ### Navegação
@@ -144,6 +171,32 @@ gemkanbino upload /caminho/do/documento.pdf -p transfersh
 **Opções do comando `upload`:**
 - `-p, --provider`: Provedor de upload (fileio, transfersh)
 
+### Criação de Histórias
+
+| Comando | Descrição | Exemplo |
+|---------|-----------|---------|
+| `create_story TITLE` | Cria uma nova história | `gemkanbino create_story "Minha História"` |
+| `list_stories [FILTER]` | Lista todas as histórias armazenadas | `gemkanbino list_stories` |
+| `show_story TITLE` | Mostra uma história completa | `gemkanbino show_story "Minha História"` |
+| `delete_story TITLE` | Remove uma história | `gemkanbino delete_story "Velha História"` |
+| `search_stories QUERY` | Busca histórias por conteúdo | `gemkanbino search_stories "guerra"` |
+| `export_story TITLE` | Exporta história em diferentes formatos | `gemkanbino export_story "Minha História" -f pdf` |
+| `list_templates` | Lista templates disponíveis | `gemkanbino list_templates` |
+| `story_info TITLE` | Mostra informações detalhadas da história | `gemkanbino story_info "Minha História"` |
+| `story_stats` | Exibe estatísticas do armazenamento de histórias | `gemkanbino story_stats` |
+
+**Opções do comando `create_story`:**
+- `-t, --template`: Template da história (padrão: guerra_irmaos_planetas)
+- `-i, --interactive`: Modo de criação interativo
+
+**Opções do comando `show_story`:**
+- `-p, --preview`: Mostra apenas preview
+- `-l, --lines`: Número de linhas do preview (padrão: 20)
+
+**Opções do comando `export_story`:**
+- `-f, --format`: Formato de exportação (markdown, html, pdf, txt)
+- `-d, --destination`: Diretório ou arquivo de destino
+
 ### Utilidades
 
 | Comando | Descrição | Exemplo |
@@ -152,6 +205,7 @@ gemkanbino upload /caminho/do/documento.pdf -p transfersh
 | `config [KEY] [VALUE]` | Mostra ou define configurações | `gemkanbino config storage.max_size 1GB` |
 | `interactive` | Inicia modo shell interativo | `gemkanbino interactive` |
 | `version` | Mostra versão do gemkanbino | `gemkanbino version` |
+| `cleanup_stories` | Limpa armazenamento de histórias | `gemkanbino cleanup_stories` |
 
 ## 💾 Gerenciamento de Armazenamento Local
 
@@ -206,6 +260,113 @@ gemkanbino upload /caminho/arquivo.txt -p transfersh
 
 **Nota:** Funcionalidades avançadas como upload em lote, histórico e estatísticas estarão disponíveis em versões futuras.
 
+## 📖 Criação de Histórias
+
+O Gemkanbino inclui um sistema completo de criação de histórias fictícias com templates personalizáveis. A funcionalidade principal atualmente disponível é o template "Guerra dos Irmãos".
+
+### Template: Guerra dos Irmãos
+
+Cria uma história fictícia sobre dois irmãos que brigaram por 5 anos pelo controle dos maiores planetas do universo.
+
+```bash
+# Criar história básica
+gemkanbino create_story "A Guerra dos Planetas"
+
+# Criar com opções personalizadas em modo interativo
+gemkanbino create_story -i
+
+# Ver templates disponíveis
+gemkanbino list_templates
+```
+
+### Características do Template
+
+- **5 Capítulos**: Cada capítulo representa um ano da guerra
+- **Personagens Personalizáveis**: Nomes dos irmãos e planetas
+- **Múltiplos Finais**: Escolha entre reconciliação, vitória, tragédia ou mistério
+- **Gênero**: Ficção Científica, Drama, Guerra
+- **Word Count**: ~5000 palavras
+
+### Workflow Completo de Criação
+
+```bash
+# 1. Listar templates disponíveis
+gemkanbino list_templates
+
+# 2. Criar história em modo interativo
+gemkanbino create_story -i
+# Ou criar diretamente com template padrão
+gemkanbino create_story "Minha Guerra Espacial"
+
+# 3. Listar todas as histórias
+gemkanbino list_stories
+
+# 4. Ver preview de uma história
+gemkanbino show_story "Minha Guerra Espacial" -p -l 10
+
+# 5. Ler a história completa
+gemkanbino show_story "Minha Guerra Espacial"
+
+# 6. Buscar histórias por conteúdo
+gemkanbino search_stories "irmãos"
+gemkanbino search_stories "planetas"
+
+# 7. Ver informações detalhadas
+gemkanbino story_info "Minha Guerra Espacial"
+
+# 8. Exportar para diferentes formatos
+gemkanbino export_story "Minha Guerra Espacial" -f markdown
+gemkanbino export_story "Minha Guerra Espacial" -f html
+gemkanbino export_story "Minha Guerra Espacial" -f pdf -d ./exports/
+
+# 9. Ver estatísticas do armazenamento
+gemkanbino story_stats
+
+# 10. Limpar histórias corrompidas (se necessário)
+gemkanbino cleanup_stories
+```
+
+### Formatos de Exportação
+
+| Formato | Extensão | Descrição |
+|---------|----------|-----------|
+| `markdown` | `.md` | Formato Markdown ideal para leitura |
+| `html` | `.html` | Página web com formatação avançada |
+| `pdf` | `.pdf` | Documento PDF (requere ferramentas adicionais) |
+| `txt` | `.txt` | Texto puro sem formatação |
+
+### Estrutura de Armazenamento
+
+As histórias são salvas em `~/.gemkanbino/stories/` com a seguinte estrutura:
+
+```
+~/.gemkanbino/stories/
+├── stories_index.json          # Índice de todas as histórias
+└── minha_guerra_espacial/     # Diretório da história
+    ├── minha_guerra_espacial.md    # Versão Markdown
+    ├── metadata.json               # Metadados da história
+    └── story_data.json             # Dados estruturados
+```
+
+### Configurações de Histórias
+
+```bash
+# Ver configurações de histórias
+gemkanbino config stories
+
+# Configurar diretório de armazenamento
+gemkanbino config stories.directory /custom/stories/path
+
+# Definir template padrão
+gemkanbino config stories.default_template guerra_irmaos_planetas
+
+# Configurar formato de exportação padrão
+gemkanbino config stories.export_format pdf
+
+# Limitar tamanho do título
+gemkanbino config stories.max_title_length 100
+```
+
 ## 🎯 Exemplos Práticos e Casos de Uso
 
 ### Workflow de Backup
@@ -251,6 +412,53 @@ gemkanbino copy -t "backups_2024"
 gemkanbino info
 ```
 
+### Criação de Histórias
+
+```bash
+# Criar história rápida
+gemkanbino create_story "A Batalha de Andrômeda"
+
+# Criar história personalizada
+gemkanbino create_story "Guerra dos Gêmeos" -i
+
+# Ver todas as histórias
+gemkanbino list_stories
+
+# Buscar histórias sobre guerra
+gemkanbino search_stories "guerra"
+
+# Ler uma história
+gemkanbino show_story "A Batalha de Andrômeda"
+
+# Exportar história para PDF
+gemkanbino export_story "A Batalha de Andrômeda" -f pdf -d ./exports/
+```
+
+### Workflow de Escrita Criativa
+
+```bash
+# 1. Explorar templates disponíveis
+gemkanbino list_templates
+
+# 2. Criar múltiplas histórias com variações
+gemkanbino create_story "Versão 1: Reconciliação"
+gemkanbino create_story "Versão 2: Tragédia"
+
+# 3. Comparar histórias
+gemkanbino list_stories -f detailed
+
+# 4. Preview das histórias
+gemkanbino show_story "Versão 1: Reconciliação" -p -l 15
+gemkanbino show_story "Versão 2: Tragédia" -p -l 15
+
+# 5. Exportar para diferentes formatos
+gemkanbino export_story "Versão 1: Reconciliação" -f html
+gemkanbino export_story "Versão 2: Tragédia" -f markdown
+
+# 6. Ver estatísticas
+gemkanbino story_stats
+```
+
 ### Modo Interativo
 
 ```bash
@@ -263,6 +471,9 @@ gemkanbino interactive
 > select arquivo.txt     # Seleciona arquivo
 > info                   # Mostra informações
 > upload -p fileio       # Faz upload
+> create_story "Nova"    # Cria nova história
+> list_stories           # Lista histórias
+> show_story "História"  # Mostra história
 > exit                   # Sai do modo interativo
 ```
 
@@ -349,6 +560,18 @@ gemkanbino
 │   ├── interactive             # Modo interativo
 │   └── version                 # Versão
 │
+├── Comandos de Histórias
+│   ├── create_story TITLE      # Criar nova história
+│   ├── list_stories [FILTER]   # Listar histórias
+│   ├── show_story TITLE        # Mostrar história
+│   ├── delete_story TITLE      # Deletar história
+│   ├── search_stories QUERY    # Buscar histórias
+│   ├── export_story TITLE      # Exportar história
+│   ├── list_templates          # Listar templates
+│   ├── story_info TITLE        # Informações da história
+│   ├── story_stats             # Estatísticas de histórias
+│   └── cleanup_stories         # Limpar armazenamento
+│
 └── Atalhos
     ├── -v, --version           # Mostrar versão
     ├── -h, --help              # Mostrar ajuda
@@ -414,6 +637,43 @@ df -h
 
 # Limpar arquivos antigos manualmente se necessário
 rm -rf ~/.gemkanbino/storage/*
+```
+
+#### 5. Problemas com Criação de Histórias
+
+```bash
+# Ver se templates estão carregados
+gemkanbino list_templates
+
+# Verificar armazenamento de histórias
+gemkanbino story_stats
+
+# Limpar histórias corrompidas
+gemkanbino cleanup_stories
+
+# Verificar permissões do diretório de histórias
+ls -la ~/.gemkanbino/stories/
+
+# Recriar diretório se necessário
+mkdir -p ~/.gemkanbino/stories
+chmod 755 ~/.gemkanbino/stories
+```
+
+#### 6. Erro na Exportação de Histórias
+
+```bash
+# Para PDF export, verificar se há ferramentas instaladas
+which wkhtmltopdf
+which pandoc
+which chrome
+
+# Instalar ferramentas se necessário (ex: Ubuntu/Debian)
+sudo apt update
+sudo apt install wkhtmltopdf pandoc
+
+# Tentar exportar em outro formato
+gemkanbino export_story "Minha História" -f markdown
+gemkanbino export_story "Minha História" -f html
 ```
 
 ### Modo Verbose
