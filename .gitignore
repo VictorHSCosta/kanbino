@@ -9,6 +9,9 @@ dist/
 build/
 *.tsbuildinfo
 
+# Frontend build output
+src/public/css/
+
 # Environment variables
 .env
 .env.local
