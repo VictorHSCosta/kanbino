@@ -7,6 +7,7 @@
 
 import { logger } from './utils/logger.js';
 import { config } from './config/index.js';
+import { startServer } from './server.js';
 
 /**
  * Main application function
@@ -20,25 +21,10 @@ async function main(): Promise<void> {
     logger.info(`Node version: ${process.version}`);
     logger.info(`Port: ${config.port}`);
 
-    // TODO: Initialize your application logic here
-    // Examples:
-    // - Connect to database
-    // - Start HTTP server
-    // - Initialize message queues
-    // - Setup cron jobs
+    // Start HTTP server
+    await startServer();
 
     logger.info('Kanbino application started successfully!');
-
-    // Graceful shutdown handling
-    process.on('SIGTERM', () => {
-      logger.info('SIGTERM signal received. Closing application gracefully...');
-      process.exit(0);
-    });
-
-    process.on('SIGINT', () => {
-      logger.info('SIGINT signal received. Closing application gracefully...');
-      process.exit(0);
-    });
 
   } catch (error) {
     logger.error('Failed to start application:', error);
