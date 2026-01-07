@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
+import TelaInicial from './components/TelaInicial'
 import { apiService } from './services/api'
 import type { StatusResponse, DataResponse } from './types/api.types'
 
@@ -35,6 +36,8 @@ function App() {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-8">
+            <TelaInicial />
+
             <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
               Kanbino Project
             </div>
