@@ -5,7 +5,11 @@ export default {
     "./frontend/index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Arial', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
