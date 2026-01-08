@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
+import Navbar from './components/Navbar'
+import PricingPage from './pages/PricingPage'
 import { apiService } from './services/api'
 import type { StatusResponse, DataResponse } from './types/api.types'
 
 function App() {
+  const [currentView, setCurrentView] = useState<'home' | 'pricing'>('home')
   const [apiStatus, setApiStatus] = useState<string>('Conectando...')
   const [status, setStatus] = useState<StatusResponse | null>(null)
   const [data, setData] = useState<DataResponse | null>(null)
@@ -32,7 +35,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <Navbar currentView={currentView} onViewChange={setCurrentView} />
+
+      {currentView === 'pricing' ? (
+        <PricingPage />
+      ) : (
+        <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-8">
             <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
@@ -98,6 +106,7 @@ function App() {
           </div>
         </div>
       </div>
+      )}
     </div>
   )
 }

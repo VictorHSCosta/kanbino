@@ -18,6 +18,11 @@ interface AppConfig {
     baseUrl: string;
     timeout: number;
   };
+  pricing?: {
+    premiumMonthlyPrice: number;
+    currency: string;
+    locale: string;
+  };
 }
 
 function loadConfig(): AppConfig {
@@ -38,6 +43,7 @@ function loadConfig(): AppConfig {
       baseUrl: process.env.API_BASE_URL || 'http://localhost:3000',
       timeout: parseInt(process.env.API_TIMEOUT || '30000', 10),
     },
+    pricing: pricingConfig,
   };
 }
 
