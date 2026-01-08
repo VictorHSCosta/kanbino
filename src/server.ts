@@ -6,6 +6,8 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import apiRoutes from './routes/api.routes.js';
+import productRoutes from './routes/product.routes.js';
+import subscriptionRoutes from './routes/subscription.routes.js';
 import { logger } from './utils/logger.js';
 import { config } from './config/index.js';
 
@@ -25,6 +27,8 @@ export function createServer(): Application {
 
   // API Routes
   app.use('/api', apiRoutes);
+  app.use('/api/products', productRoutes);
+  app.use('/api/subscriptions', subscriptionRoutes);
 
   // Health check endpoint
   app.get('/health', (req: Request, res: Response) => {
