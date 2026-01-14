@@ -9,26 +9,26 @@ const ExampleComponent = ({ title = 'Componentes React' }: ExampleComponentProps
 
   return (
     <div className="mt-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">{title}</h2>
+      <h2 className="text-lg font-semibold text-tech-text mb-4">{title}</h2>
 
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => setCount(count + 1)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          className="bg-tech-cta hover:bg-tech-cta/90 text-tech-dark font-bold py-2 px-4 rounded transition-colors"
         >
           Botão Primário ({count})
         </button>
-        <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors">
+        <button className="bg-tech-highlight/20 hover:bg-tech-highlight/30 text-tech-text font-bold py-2 px-4 rounded transition-colors border border-tech-highlight/50">
           Botão Secundário
         </button>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-blue-500 text-white p-4 rounded hover:bg-blue-600 transition-colors cursor-pointer">
+        <div className="bg-tech-highlight text-tech-dark p-4 rounded hover:bg-tech-highlight/90 transition-colors cursor-pointer">
           <div className="font-semibold">Box 1</div>
           <div className="text-sm opacity-80">React + Tailwind</div>
         </div>
-        <div className="bg-green-500 text-white p-4 rounded hover:bg-green-600 transition-colors cursor-pointer">
+        <div className="bg-tech-cta text-tech-dark p-4 rounded hover:bg-tech-cta/90 transition-colors cursor-pointer">
           <div className="font-semibold">Box 2</div>
           <div className="text-sm opacity-80">TypeScript</div>
         </div>
@@ -38,9 +38,9 @@ const ExampleComponent = ({ title = 'Componentes React' }: ExampleComponentProps
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-100 rounded">
-        <p className="text-sm text-gray-600">
-          contador: <span className="font-bold text-indigo-600">{count}</span>
+      <div className="mt-6 p-4 bg-tech-dark/50 rounded border border-tech-muted/10">
+        <p className="text-sm text-tech-muted">
+          contador: <span className="font-bold text-tech-highlight">{count}</span>
         </p>
       </div>
     </div>
