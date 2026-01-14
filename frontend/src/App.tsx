@@ -31,14 +31,14 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200">
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="max-w-4xl mx-auto bg-white/95 rounded-xl shadow-md overflow-hidden border border-slate-200">
           <div className="p-8">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+            <div className="uppercase tracking-wide text-sm text-tech-primary font-semibold">
               Kanbino Project
             </div>
-            <h1 className="block mt-1 text-3xl leading-tight font-bold text-black">
+            <h1 className="block mt-1 text-3xl leading-tight font-bold text-slate-900">
               React + Node.js + Tailwind CSS
             </h1>
             <p className="mt-4 text-gray-500">
@@ -46,9 +46,9 @@ function App() {
             </p>
 
             <div className={`mt-4 p-3 rounded ${
-              error ? 'bg-red-50 border border-red-200' : 'bg-green-50 border border-green-200'
+              error ? 'bg-red-50 border border-red-200' : 'bg-emerald-50 border border-emerald-200'
             }`}>
-              <p className={`text-sm font-semibold ${error ? 'text-red-700' : 'text-green-700'}`}>
+              <p className={`text-sm font-semibold ${error ? 'text-red-700' : 'text-emerald-700'}`}>
                 Status da API: {apiStatus}
               </p>
               {error && (
@@ -57,24 +57,24 @@ function App() {
             </div>
 
             {status && (
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h2 className="text-lg font-semibold text-gray-800 mb-3">Informações do Sistema</h2>
+              <div className="mt-6 p-4 bg-slate-50 rounded-lg">
+                <h2 className="text-lg font-semibold text-slate-800 mb-3">Informações do Sistema</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Status:</p>
-                    <p className="font-semibold text-gray-800">{status.status}</p>
+                    <p className="text-sm text-slate-600">Status:</p>
+                    <p className="font-semibold text-slate-800">{status.status}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Versão:</p>
-                    <p className="font-semibold text-gray-800">{status.version}</p>
+                    <p className="text-sm text-slate-600">Versão:</p>
+                    <p className="font-semibold text-slate-800">{status.version}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Frontend:</p>
-                    <p className="font-semibold text-gray-800">{status.features.frontend}</p>
+                    <p className="text-sm text-slate-600">Frontend:</p>
+                    <p className="font-semibold text-slate-800">{status.features.frontend}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Backend:</p>
-                    <p className="font-semibold text-gray-800">{status.features.backend}</p>
+                    <p className="text-sm text-slate-600">Backend:</p>
+                    <p className="font-semibold text-slate-800">{status.features.backend}</p>
                   </div>
                 </div>
               </div>
@@ -82,12 +82,12 @@ function App() {
 
             {data && (
               <div className="mt-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-3">Dados do Backend</h2>
+                <h2 className="text-lg font-semibold text-slate-800 mb-3">Dados do Backend</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {data.items.map((item) => (
-                    <div key={item.id} className="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                      <p className="font-semibold text-indigo-900">{item.name}</p>
-                      <p className="text-sm text-indigo-600 capitalize">{item.type}</p>
+                    <div key={item.id} className="p-3 bg-sky-50 rounded-lg border border-sky-100">
+                      <p className="font-semibold text-sky-900">{item.name}</p>
+                      <p className="text-sm text-sky-600 capitalize">{item.type}</p>
                     </div>
                   ))}
                 </div>
