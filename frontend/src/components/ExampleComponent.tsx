@@ -9,16 +9,16 @@ const ExampleComponent = ({ title = 'Componentes React' }: ExampleComponentProps
 
   return (
     <div className="mt-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">{title}</h2>
+      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">{title}</h2>
 
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => setCount(count + 1)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          className="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded transition-colors"
         >
           Botão Primário ({count})
         </button>
-        <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors">
+        <button className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded transition-colors">
           Botão Secundário
         </button>
       </div>
@@ -38,9 +38,9 @@ const ExampleComponent = ({ title = 'Componentes React' }: ExampleComponentProps
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-100 rounded">
-        <p className="text-sm text-gray-600">
-          contador: <span className="font-bold text-indigo-600">{count}</span>
+      <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          contador: <span className="font-bold text-indigo-600 dark:text-indigo-400">{count}</span>
         </p>
       </div>
     </div>

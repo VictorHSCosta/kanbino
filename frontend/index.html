@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanbino - React + Tailwind CSS</title>
+  <script>
+    // Script inline para prevenir flash de tema incorreto
+    (function() {
+      const theme = localStorage.getItem('kanbino-theme') || 'system';
+      const isDark = theme === 'dark' ||
+        (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      }
+
+      // Marcar que tema foi carregado
+      document.documentElement.classList.add('theme-loaded');
+    })();
+  </script>
 </head>
 <body>
   <div id="root"></div>

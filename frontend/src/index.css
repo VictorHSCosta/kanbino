@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Prevenir flash de tema incorreto */
+@layer base {
+  /* Esconder conteúdo até tema ser determinado */
+  html:not(.theme-loaded) body {
+    visibility: hidden;
+  }
+
+  /* Mostrar conteúdo quando tema estiver carregado */
+  html.theme-loaded body {
+    visibility: visible;
+  }
+}
+
+/* Transições suaves para mudança de tema */
+@layer base {
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  html {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  body {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}
+
+/* Estilos específicos para dark mode */
+@layer base {
+  .dark body {
+    @apply bg-gray-900 text-gray-50;
+  }
+
+  .light body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
