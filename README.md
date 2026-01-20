@@ -6,695 +6,1034 @@
 [![React](https://img.shields.io/badge/React-18.2-cyan)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.0-646cff)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8)](https://tailwindcss.com/)
+[![Jest](https://img.shields.io/badge/Jest-29.7-c21325)](https://jestjs.io/)
 
-Professional full-stack Node.js project with TypeScript, React, Vite, and comprehensive testing suite.
+Boilerplate fullstack profissional com Node.js/Express, React/Vite, Tailwind CSS, autenticação OAuth e suite completa de testes.
 
-## Table of Contents
+## Índice
 
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
+- [Visão Geral](#visão-geral)
+- [Características Principais](#características-principais)
+- [Stack Tecnológico](#stack-tecnológico)
+- [Pré-requisitos](#pré-requisitos)
 - [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Project Structure](#project-structure)
-- [Development](#development)
-- [Available Scripts](#available-scripts)
-- [Testing](#testing)
-- [Building for Production](#building-for-production)
-- [Deployment](#deployment)
+- [Instalação Detalhada](#instalação-detalhada)
+- [Configuração de Ambiente](#configuração-de-ambiente)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Guia de Desenvolvimento](#guia-de-desenvolvimento)
+- [Endpoints da API](#endpoints-da-api)
+- [Testes](#testes)
+- [Deploy](#deploy)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [Additional Resources](#additional-resources)
-- [License](#license)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+- [Links Úteis](#links-úteis)
 
-## Overview
+## Visão Geral
 
-Kanbino is a professional full-stack application built with modern technologies and best practices. It provides a solid foundation for building scalable web applications with TypeScript, React, and Node.js.
+Kanbino é uma aplicação fullstack moderna construída com as melhores práticas de desenvolvimento. Fornece uma base sólida para criar aplicações web escaláveis com TypeScript em todo o código, React no frontend e Express.js no backend.
 
-### Key Features
+### Arquitetura
 
-- Full-stack TypeScript for type safety across the entire codebase
-- Modern React 18 with Vite for fast development experience
-- Tailwind CSS for utility-first styling
-- Comprehensive testing suite with Jest (unit, integration, e2e)
-- Hot module replacement for rapid development
-- ESLint and Prettier for code quality
-- Husky git hooks for automated checks
-- ESM modules for modern JavaScript support
+O projeto segue uma arquitetura em camadas com separação clara de responsabilidades:
 
-## Tech Stack
+- **Backend**: API REST com Node.js, Express e TypeScript
+- **Frontend**: SPA (Single Page Application) com React 18 e Vite
+- **Autenticação**: OAuth 2.0 com Google e LinkedIn
+- **Testes**: Estratégia completa com unitários, integração e e2e
+- **Estilização**: Tailwind CSS com PostCSS
+
+## Características Principais
+
+- ✨ **TypeScript Fullstack**: Tipagem estática em todo o códigobase
+- ⚛️ **React 18**: Hooks modernos e componentes funcionais
+- ⚡ **Vite**: Desenvolvimento extremamente rápido com HMR
+- 🎨 **Tailwind CSS**: Estilização utility-first
+- 🧪 **Jest**: Suite completa de testes com 80% de cobertura
+- 🔐 **OAuth 2.0**: Autenticação com Google e LinkedIn
+- 🔒 **Express Sessions**: Gerenciamento de sessões seguro
+- 🚀 **Hot Reload**: Desenvolvimento rápido com recarga automática
+- 📦 **ESLint + Prettier**: Código limpo e formatado automaticamente
+- 🪝 **Husky**: Git hooks para validação automática
+- 🌐 **CORS Configurado**: Comunicação frontend-backend otimizada
+- 📊 **Graceful Shutdown**: Desligamento elegante do servidor
+
+## Stack Tecnológico
 
 ### Backend
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
+| Tecnologia | Versão | Propósito |
+|-----------|--------|-----------|
 | Node.js | >= 20.0.0 | Runtime environment |
-| TypeScript | 5.6+ | Type-safe JavaScript |
-| Express | 4.18+ | Web framework |
-| Jest | 29.7+ | Testing framework |
-| ts-node | 10.9+ | TypeScript execution |
+| TypeScript | 5.6.3 | Type-safe JavaScript |
+| Express | 4.18.2 | Web framework |
+| Passport | 0.7.0 | Autenticação |
+| Passport Google OAuth | 2.0.0 | Autenticação Google |
+| Passport LinkedIn OAuth | 2.0.0 | Autenticação LinkedIn |
+| Express Session | 1.18.1 | Gerenciamento de sessões |
+| CORS | 2.8.5 | Cross-origin resource sharing |
+| dotenv | 16.4.5 | Variáveis de ambiente |
 
 ### Frontend
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| React | 18.2+ | UI library |
-| Vite | 5.0+ | Build tool and dev server |
-| TypeScript | 5.6+ | Type-safe JavaScript |
-| Tailwind CSS | 3.4+ | Utility-first CSS framework |
-| PostCSS | 8.4+ | CSS processing |
+| Tecnologia | Versão | Propósito |
+|-----------|--------|-----------|
+| React | 18.2.0 | Biblioteca UI |
+| Vite | 5.0.0 | Build tool e dev server |
+| TypeScript | 5.6.3 | Type-safe JavaScript |
+| Tailwind CSS | 3.4.17 | Framework CSS utility-first |
+| PostCSS | 8.4.49 | Processamento CSS |
+| Autoprefixer | 10.4.20 | Prefixos CSS automáticos |
 
-### Development Tools
+### Testes
 
-- **ESLint**: JavaScript/TypeScript linting
-- **Prettier**: Code formatting
-- **Husky**: Git hooks automation
-- **Nodemon**: Auto-restart on file changes
-- **Concurrently**: Run multiple commands simultaneously
+| Tecnologia | Versão | Propósito |
+|-----------|--------|-----------|
+| Jest | 29.7.0 | Framework de testes |
+| ts-jest | 29.2.5 | TypeScript preprocessor |
+| Coverage Threshold | 80% | Cobertura mínima obrigatória |
 
-## Architecture
+### Desenvolvimento
 
-Kanbino follows a monorepo structure with separate backend and frontend applications:
+| Tecnologia | Versão | Propósito |
+|-----------|--------|-----------|
+| ESLint | 9.17.0 | Linting de código |
+| Prettier | 3.4.2 | Formatação de código |
+| Husky | 9.1.7 | Git hooks |
+| Nodemon | 3.1.9 | Auto-restart em desenvolvimento |
+| Concurrently | 8.2.2 | Execução paralela de comandos |
+| ts-node | 10.9.2 | Execução TypeScript |
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                     Kanbino Project                      │
-├─────────────────────────────────────────────────────────┤
-│                                                           │
-│  ┌──────────────────┐         ┌──────────────────┐      │
-│  │   Backend (3000) │         │  Frontend (5173) │      │
-│  │                  │         │                  │      │
-│  │  • Node.js 20+   │         │  • React 18      │      │
-│  │  • Express       │         │  • Vite          │      │
-│  │  • TypeScript    │◄────────┤  • TypeScript    │      │
-│  │  • Jest Tests    │ API     │  • Tailwind CSS  │      │
-│  │                  │         │                  │      │
-│  └──────────────────┘         └──────────────────┘      │
-│                                                           │
-│  API Proxy: Vite proxies /api → http://localhost:3000    │
-│                                                           │
-└─────────────────────────────────────────────────────────┘
-```
+## Pré-requisitos
 
-### Architecture Patterns
+Antes de começar, certifique-se de ter instalado:
 
-- **ESM Modules**: Uses ES modules (`"type": "module"` in package.json)
-- **Path Aliases**: Clean imports with `@/*` for both backend and frontend
-- **Separation of Concerns**: Distinct backend and frontend with clear API boundaries
-- **Testing Pyramid**: Unit, integration, and e2e tests with 80% coverage threshold
-- **Hot Reload**: Development servers with auto-reload capabilities
-
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-### Required
+### Obrigatório
 
 - **Node.js** >= 20.0.0
-- **npm** >= 9.0.0 (comes with Node.js)
-- **Git** (for cloning the repository)
+  - [Download](https://nodejs.org/)
+  - Recomendado usar [nvm](https://github.com/nvm-sh/nvm) (Linux/macOS) ou [nvm-windows](https://github.com/coreybutler/nvm-windows) para gerenciar versões
 
-### Installing Node.js
+- **npm** >= 9.0.0 (vem com o Node.js)
+  - Verificar: `npm --version`
 
-**Linux (Ubuntu/Debian):**
+- **Git**
+  - [Download](https://git-scm.com/)
+  - Verificar: `git --version`
+
+### Editor de Código Recomendado
+
+- **VS Code** com as seguintes extensões:
+  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - [TypeScript Importer](https://marketplace.visualstudio.com/items?itemName=pmneo.tsimporter)
+  - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+  - [React DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/)
+
+### Verificar Instalação
+
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt-get install -y nodejs
+node --version    # v20.0.0 ou superior
+npm --version     # 9.0.0 ou superior
+git --version     # 2.x.x
 ```
 
-**macOS (using Homebrew):**
-```bash
-brew install node@20
-```
+### Sistemas Operacionais Suportados
 
-**Windows:**
-Download and install from [nodejs.org](https://nodejs.org/)
-
-### Verify Installation
-
-```bash
-node --version  # Should be v20.0.0 or higher
-npm --version   # Should be 9.0.0 or higher
-git --version   # Should show git version
-```
-
-### Important Notes
-
-- Node.js 20+ is required for ESM module support
-- The project uses ES modules, so all imports must use `.js` extensions
-- Both backend and frontend use TypeScript with strict mode enabled
+- Linux (Ubuntu, Debian, Fedora, etc)
+- macOS (10.15+)
+- Windows (10/11 com WSL recomendado)
 
 ## Quick Start
 
-Get up and running in minutes:
+Configure e inicie o projeto em menos de 5 minutos:
 
 ```bash
-# Clone the repository
+# 1. Clone o repositório
 git clone https://github.com/VictorHSCosta/kanbino.git
 cd kanbino
 
-# Install all dependencies
+# 2. Instale as dependências
 npm install
 
-# Set up environment files
+# 3. Configure as variáveis de ambiente
 cp .env.example .env
-cp frontend/.env.example frontend/.env.development
+cp frontend/.env.example frontend/.env
 
-# Start both backend and frontend
+# 4. Inicie backend e frontend simultaneamente
 npm run dev:all
 ```
 
-Your application will be available at:
+Seu aplicativo estará disponível em:
 - **Backend API**: http://localhost:3000
 - **Frontend**: http://localhost:5173
 
-## Installation
+## Instalação Detalhada
 
-### 1. Clone Repository
+### 1. Clonar o Repositório
 
 ```bash
+# Via HTTPS
 git clone https://github.com/VictorHSCosta/kanbino.git
+cd kanbino
+
+# Ou via SSH (se configurado)
+git clone git@github.com:VictorHSCosta/kanbino.git
 cd kanbino
 ```
 
-### 2. Install Dependencies
+### 2. Instalar Dependências
 
 ```bash
 npm install
 ```
 
-This installs all dependencies for both backend and frontend.
+Isso instala todas as dependências de desenvolvimento e produção para backend e frontend.
 
-### 3. Set Up Environment Variables
+**Tempo estimado**: 2-5 minutos dependendo da conexão
 
-#### Backend Environment Variables
+### 3. Configurar Variáveis de Ambiente
+
+#### Backend (.env)
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and configure the variables (see [Configuration](#configuration)).
+Edite o arquivo `.env` conforme necessário (veja [Configuração de Ambiente](#configuração-de-ambiente)).
 
-#### Frontend Environment Variables
+#### Frontend (frontend/.env)
 
 ```bash
-cp frontend/.env.example frontend/.env.development
+cp frontend/.env.example frontend/.env
 ```
 
-Edit `frontend/.env.development` as needed.
-
-### 4. Verify Installation
+### 4. Verificar Instalação
 
 ```bash
-# Check TypeScript compilation
+# Verificar compilação TypeScript
 npm run type-check
 
-# Run tests
+# Executar testes
 npm test
 
-# Start development server
+# Iniciar servidor de desenvolvimento
 npm run dev
 ```
 
-## Configuration
+## Configuração de Ambiente
 
-### Backend Environment Variables
+### Variáveis de Ambiente do Backend (.env)
 
-Create a `.env` file in the root directory with the following variables:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```bash
-# Application Environment
-NODE_ENV=development        # development, production, or test
+# ===== Ambiente da Aplicação =====
+NODE_ENV=development          # development, production, test
+PORT=3000                     # Porta do servidor HTTP
 
-# Server Configuration
-PORT=3000                   # HTTP server port
+# ===== Logging =====
+LOG_LEVEL=info               # debug, info, warn, error
 
-# Logging Configuration
-LOG_LEVEL=info             # debug, info, warn, or error
-
-# Database Configuration (Optional - uncomment if needed)
+# ===== Database (Opcional) =====
 # DATABASE_HOST=localhost
 # DATABASE_PORT=5432
 # DATABASE_USERNAME=user
 # DATABASE_PASSWORD=
 # DATABASE_NAME=kanbino
 
-# API Configuration
+# ===== API Configuration =====
 API_BASE_URL=http://localhost:3000
-API_TIMEOUT=30000          # API timeout in milliseconds
+API_TIMEOUT=30000            # Timeout em milissegundos
+
+# ===== Google OAuth =====
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+
+# ===== LinkedIn OAuth =====
+LINKEDIN_CLIENT_ID=your_linkedin_client_id
+LINKEDIN_CLIENT_SECRET=your_linkedin_client_secret
+LINKEDIN_CALLBACK_URL=http://localhost:3000/api/auth/linkedin/callback
+
+# ===== Session Configuration =====
+SESSION_SECRET=your_secure_session_secret_change_in_production
+SESSION_NAME=kanbino.sid
+SESSION_MAX_AGE=604800000    # 7 dias em milissegundos
 ```
 
-### Frontend Environment Variables
+### Variáveis de Ambiente do Frontend (frontend/.env)
 
-Create `frontend/.env.development` with:
+Crie um arquivo `frontend/.env`:
 
 ```bash
-# API Configuration
-VITE_API_BASE_URL=/api     # Proxied to http://localhost:3000/api
+# ===== API Configuration =====
+VITE_API_BASE_URL=/api       # Proxied para http://localhost:3000/api
 ```
 
-### Environment-Specific Values
+**Importante**: Variáveis do frontend Vite DEVEM começar com `VITE_`
 
-| Variable | Development | Production | Test |
+### Configurar Google OAuth (Opcional)
+
+1. Acesse [Google Cloud Console](https://console.cloud.google.com/)
+2. Crie um novo projeto ou selecione um existente
+3. Habilite "Google+ API"
+4. Crie credenciais OAuth 2.0
+5. Adicione URLs autorizadas:
+   - http://localhost:3000/api/auth/google/callback (desenvolvimento)
+   - https://seudominio.com/api/auth/google/callback (produção)
+6. Copie Client ID e Client Secret para `.env`
+
+### Configurar LinkedIn OAuth (Opcional)
+
+1. Acesse [LinkedIn Developers](https://www.linkedin.com/developers/)
+2. Crie um novo aplicativo
+3. Configure OAuth 2.0 redirect URLs:
+   - http://localhost:3000/api/auth/linkedin/callback (desenvolvimento)
+   - https://seudominio.com/api/auth/linkedin/callback (produção)
+4. Copie Client ID e Client Secret para `.env`
+
+### Valores por Ambiente
+
+| Variável | Development | Production | Test |
 |----------|-------------|------------|------|
 | NODE_ENV | development | production | test |
 | LOG_LEVEL | debug | warn | error |
-| PORT | 3000 | 80 or 443 | 3001 |
+| PORT | 3000 | 80 ou 443 | 3001 |
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 kanbino/
-├── src/                          # Backend source code
-│   ├── config/                   # Configuration files
-│   ├── controllers/              # Route controllers (MVC)
-│   ├── middleware/               # Express middleware
-│   ├── models/                   # Data models and schemas
-│   ├── routes/                   # API route definitions
-│   ├── services/                 # Business logic layer
-│   ├── utils/                    # Utility functions
-│   ├── styles/                   # Tailwind CSS source
-│   │   └── input.css             # CSS with Tailwind directives
-│   ├── public/                   # Static assets
+├── src/                            # Backend TypeScript
+│   ├── config/                     # Configurações da aplicação
+│   │   └── index.ts                # Config central
+│   ├── controllers/                # Controllers da API (MVC)
+│   │   ├── api.controller.ts       # API endpoints
+│   │   └── auth.controller.ts      # Auth endpoints
+│   ├── middleware/                 # Middleware Express
+│   │   ├── auth.middleware.ts      # Passport auth
+│   │   └── session.config.ts       # Session config
+│   ├── models/                     # Models de dados
+│   ├── routes/                     # Rotas da API
+│   │   ├── api.routes.ts           # API routes
+│   │   └── auth.routes.ts          # Auth routes
+│   ├── services/                   # Lógica de negócio
+│   ├── utils/                      # Utilitários
+│   │   └── logger.ts               # Logger Winston
+│   ├── auth/                       # Autenticação
+│   │   ├── google.strategy.ts      # Google OAuth
+│   │   └── linkedin.strategy.ts    # LinkedIn OAuth
+│   ├── styles/                     # CSS source
+│   │   └── input.css               # Tailwind directives
+│   ├── public/                     # Arquivos estáticos
 │   │   └── css/
-│   │       └── output.css        # Compiled CSS (auto-generated)
-│   ├── index.ts                  # Backend entry point
-│   └── server.ts                 # Express server setup
+│   │       └── output.css          # CSS compilado (gerado)
+│   ├── index.ts                    # Entry point
+│   └── server.ts                   # Configuração Express
 │
-├── frontend/                     # Frontend application
+├── frontend/                       # Frontend React
 │   ├── src/
-│   │   ├── components/           # React components
-│   │   ├── services/             # API services
-│   │   ├── types/                # TypeScript type definitions
-│   │   ├── App.tsx               # Root React component
-│   │   └── main.tsx              # React entry point
-│   ├── index.html                # HTML template
-│   ├── .env.development          # Frontend env variables
-│   └── dist/                     # Built frontend (generated)
+│   │   ├── components/             # Componentes React
+│   │   ├── services/               # Services API
+│   │   ├── types/                  # TypeScript types
+│   │   ├── App.tsx                 # Componente principal
+│   │   ├── main.tsx                # Entry point React
+│   │   └── index.css               # Estilos globais
+│   ├── index.html                  # HTML template
+│   ├── .env.example                # Variáveis ambiente frontend
+│   └── dist/                       # Build output (gerado)
 │
-├── tests/                        # Test files
-│   ├── unit/                     # Unit tests
-│   ├── integration/              # Integration tests
-│   ├── e2e/                      # End-to-end tests
-│   ├── fixtures/                 # Test fixtures and data
-│   ├── helpers/                  # Test helper functions
-│   └── mocks/                    # Mocks and stubs
+├── tests/                          # Testes
+│   ├── unit/                       # Testes unitários
+│   ├── integration/                # Testes de integração
+│   ├── e2e/                        # Testes end-to-end
+│   ├── fixtures/                   # Fixtures de teste
+│   ├── helpers/                    # Helpers de teste
+│   └── mocks/                      # Mocks
 │
-├── docs/                         # Additional documentation
-│
-├── .env.example                  # Backend environment template
-├── .eslintrc.js                  # ESLint configuration
-├── .prettierrc                   # Prettier configuration
-├── .gitignore                    # Git ignore rules
-├── package.json                  # Root package.json
-├── tsconfig.json                 # Backend TypeScript config
-├── frontend/tsconfig.json        # Frontend TypeScript config
-├── vite.config.ts                # Vite configuration
-├── tailwind.config.js            # Tailwind CSS configuration
-├── postcss.config.js             # PostCSS configuration
-├── jest.config.js                # Jest testing configuration
-└── README.md                     # This file
+├── dist/                           # Build output backend (gerado)
+├── node_modules/                   # Dependências (gerado)
+├── .env.example                    # Variáveis ambiente backend
+├── .eslintrc.js                    # Config ESLint
+├── .prettierrc                     # Config Prettier
+├── .gitignore                      # Git ignore rules
+├── package.json                    # Config npm
+├── tsconfig.json                   # Config TypeScript backend
+├── frontend/tsconfig.json          # Config TypeScript frontend
+├── vite.config.ts                  # Config Vite (proxy)
+├── jest.config.js                  # Config Jest
+├── tailwind.config.js              # Config Tailwind
+├── postcss.config.js               # Config PostCSS
+└── README.md                       # Esta documentação
 ```
 
-### Key Directories Explained
+### Diretórios Principais Explicados
 
-- **src/**: Backend TypeScript source code with Express server
-- **frontend/**: React frontend built with Vite
-- **tests/**: Comprehensive test suite organized by type
-- **src/styles/**: Tailwind CSS source files
-- **src/public/**: Static assets served by Express
+- **src/**: Código fonte backend TypeScript com servidor Express
+- **frontend/**: Aplicação React construída com Vite
+- **tests/**: Suite de testes completa organizada por tipo
+- **src/styles/**: Arquivos fonte Tailwind CSS
+- **src/public/**: Assets estáticos servidos pelo Express
 
-## Development
+## Scripts Disponíveis
 
-### Development Workflows
-
-#### Workflow 1: Full Stack Development (Backend + Frontend)
-
-Start both backend and frontend concurrently:
+### Desenvolvimento
 
 ```bash
-npm run dev:all
+npm run dev              # Inicia backend (nodemon + ts-node)
+npm run dev:frontend     # Inicia frontend (Vite)
+npm run dev:all          # Inicia backend e frontend simultaneamente
 ```
 
-This starts:
-- Backend on http://localhost:3000
-- Frontend on http://localhost:5173
-- Vite proxies `/api` requests to backend
+**Portas padrão**:
+- Backend: http://localhost:3000
+- Frontend: http://localhost:5173
 
-#### Workflow 2: Backend Development Only
-
-```bash
-npm run dev
-```
-
-Backend runs on http://localhost:3000 with hot reload.
-
-#### Workflow 3: Frontend Development Only
-
-```bash
-npm run dev:frontend
-```
-
-Frontend runs on http://localhost:5173 with API proxy to backend.
-
-#### Workflow 4: CSS Development with Watch Mode
-
-For focused Tailwind CSS development:
-
-```bash
-# Terminal 1: Watch CSS compilation
-npm run build:css:watch
-
-# Terminal 2: Run application
-npm run dev
-```
-
-#### Workflow 5: TDD (Test-Driven Development)
-
-```bash
-# Terminal 1: Test watch mode
-npm run test:watch
-
-# Terminal 2: Development
-npm run dev:all
-```
-
-### Hot Module Replacement
-
-Both development servers support hot reload:
-- **Backend**: Automatically restarts on file changes (via Nodemon)
-- **Frontend**: Instant HMR for React components and styles
-
-## Available Scripts
-
-### Development
-
-```bash
-npm run dev              # Start backend in development mode
-npm run dev:frontend     # Start frontend in development mode
-npm run dev:all          # Start both backend and frontend
-```
+**Recomendação**: Use `npm run dev:all` para desenvolvimento fullstack
 
 ### Build
 
 ```bash
-npm run build            # Compile TypeScript for backend
-npm run build:frontend   # Build frontend for production
-npm run build:all        # Build both backend and frontend
-npm run build:css        # Compile Tailwind CSS (development)
-npm run build:css:prod   # Compile Tailwind CSS (production, minified)
+npm run build            # Compila backend TypeScript
+npm run build:frontend   # Compila frontend TypeScript + bundle Vite
+npm run build:all        # Compila backend e frontend
+npm run build:css        # Compila CSS Tailwind (desenvolvimento)
+npm run build:css:prod   # Compila CSS otimizado (produção)
 npm run build:css:watch  # Watch CSS compilation
 ```
 
-### Production
+### Produção
 
 ```bash
-npm start                # Start compiled backend
-npm run preview:frontend # Preview built frontend
+npm start                # Inicia backend compilado
+npm run start:dev        # Inicia backend com ts-node
+npm run preview:frontend # Preview do build frontend
 ```
 
-### Testing
+### Testes
 
 ```bash
-npm test                 # Run all tests
-npm run test:unit        # Run unit tests only
-npm run test:integration # Run integration tests only
-npm run test:e2e         # Run end-to-end tests only
-npm run test:coverage    # Run tests with coverage report
-npm run test:watch       # Run tests in watch mode
-npm run test:ci          # Run tests for CI/CD
-npm run test:debug       # Run tests with debugger
-npm run test:verbose     # Run tests with verbose output
-npm run test:silent      # Run tests with minimal output
+npm test                 # Executa todos os testes
+npm run test:unit        # Testes unitários apenas
+npm run test:integration # Testes de integração apenas
+npm run test:e2e         # Testes e2e apenas
+npm run test:watch       # Modo watch interativo
+npm run test:watch:all   # Watch mode para todos os testes
+npm run test:coverage    # Com relatório de cobertura (threshold: 80%)
+npm run test:coverage:watch # Coverage com watch
+npm run test:ci          # Para ambientes CI/CD
+npm run test:debug       # Debug mode com inspector
+npm run test:verbose     # Output verbose
+npm run test:silent      # Output minimal
 ```
 
-### Code Quality
+### Qualidade de Código
 
 ```bash
-npm run lint             # Check for linting issues
-npm run lint:fix         # Fix linting issues automatically
-npm run format           # Format code with Prettier
-npm run format:check     # Check code formatting
-npm run type-check       # Check TypeScript types (backend)
-npm run type-check:frontend # Check TypeScript types (frontend)
+npm run lint             # Verifica problemas ESLint
+npm run lint:fix         # Corrige problemas automaticamente
+npm run format           # Formata código com Prettier
+npm run format:check     # Verifica formatação
+npm run type-check       # Verifica tipos TypeScript backend
+npm run type-check:frontend # Verifica tipos TypeScript frontend
 ```
 
 ### Git Hooks
 
 ```bash
-npm run prepare          # Install Husky git hooks
+npm run prepare          # Instala git hooks Husky
 ```
 
-## Testing
+## Guia de Desenvolvimento
 
-### Testing Strategy
+### Fluxo de Trabalho Recomendado
 
-Kanbino uses a three-tier testing approach:
+1. **Crie uma branch** a partir de `main`
+   ```bash
+   git checkout -b feature/nova-feature
+   ```
 
-1. **Unit Tests**: Test individual functions and classes in isolation
-2. **Integration Tests**: Test interactions between components
-3. **E2E Tests**: Test complete user flows
+2. **Inicie o desenvolvimento**:
+   ```bash
+   npm run dev:all
+   ```
+   - Backend em http://localhost:3000
+   - Frontend em http://localhost:5173
+   - Hot reload habilitado em ambos
 
-### Coverage Requirements
+3. **Faça alterações e teste**
 
-The project enforces **80% minimum code coverage** across:
-- Statements
-- Branches
-- Functions
-- Lines
+4. **Execute verificações** antes de commit:
+   ```bash
+   npm run lint           # Verifica linting
+   npm run type-check     # Verifica tipos
+   npm test               # Executa testes
+   ```
 
-### Running Tests
+5. **Commit com mensagem clara**:
+   ```bash
+   git add .
+   git commit -m "feat: adicionar nova funcionalidade"
+   ```
+
+6. **Husky hooks** executam testes automaticamente no pre-commit
+
+### Desenvolvimento Backend
+
+#### Adicionar Novos Controllers
+
+```typescript
+// src/controllers/meu-controller.ts
+import { Request, Response } from 'express';
+
+export const minhaFuncao = (req: Request, res: Response): void => {
+  // Sua lógica aqui
+  res.json({ message: 'Olá do controller!' });
+};
+```
+
+#### Adicionar Novas Rotas
+
+```typescript
+// src/routes/minha-rota.ts
+import { Router } from 'express';
+import * as meuController from '../controllers/meu-controller.js';
+
+const router = Router();
+
+router.get('/endpoint', meuController.minhaFuncao);
+
+export default router;
+```
+
+#### Registrar Rota no Server
+
+```typescript
+// src/server.ts
+import minhaRota from './routes/minha-rota.js';
+
+app.use('/api/minha-rota', minhaRota);
+```
+
+#### Convenções Backend
+
+- Use `@/` para imports relativos a `src/`
+- TypeScript strict mode habilitado
+- Logger disponível em `src/utils/logger.ts`
+- Adicione testes para cada novo controller
+- Use JSDoc para funções exportadas
+
+### Desenvolvimento Frontend
+
+#### Estrutura de Componentes
+
+```typescript
+// frontend/src/components/MeuComponente.tsx
+interface MeuComponenteProps {
+  titulo: string;
+  aoClicar?: () => void;
+}
+
+export function MeuComponente({ titulo, aoClicar }: MeuComponenteProps) {
+  return (
+    <div className="p-4 bg-white rounded-lg shadow">
+      <h2 className="text-xl font-bold">{titulo}</h2>
+      <button onClick={aoClicar}>Clique aqui</button>
+    </div>
+  );
+}
+```
+
+#### Services API
+
+```typescript
+// frontend/src/services/api.ts
+import axios from 'axios';
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+export const api = axios.create({
+  baseURL: API_BASE,
+  timeout: 10000,
+});
+
+export const fetchData = async () => {
+  const response = await api.get('/data');
+  return response.data;
+};
+```
+
+#### Estilos com Tailwind
+
+```tsx
+// Classes utilitárias Tailwind
+<div className="flex items-center justify-between p-4 bg-blue-500 text-white rounded-lg">
+  <h1 className="text-2xl font-bold">Título</h1>
+  <button className="px-4 py-2 bg-white text-blue-500 rounded hover:bg-blue-50">
+    Botão
+  </button>
+</div>
+```
+
+#### Convenções Frontend
+
+- Componentes em `frontend/src/components/`
+- Services API em `frontend/src/services/`
+- Types TypeScript em `frontend/src/types/`
+- Use Tailwind CSS para estilos
+- CSS customizado em `frontend/src/index.css`
+- API calls via `frontend/src/services/api.ts`
+- Proxy configurado: `/api` → `http://localhost:3000`
+
+### Convenções de Código
+
+#### TypeScript/JavaScript
+
+- Sempre use TypeScript strict mode
+- Prefira `const` sobre `let`
+- Use arrow functions para callbacks
+- Use tipos explícitos para parâmetros e retornos
+- Adicione JSDoc para funções complexas
+
+#### React
+
+- Use componentes funcionais com hooks
+- Prefira composição sobre herança
+- Use TypeScript para props
+- Mantenha componentes pequenos e focados
+- Use hooks customizados para lógica reutilizável
+
+#### Nomes de Arquivos
+
+- Componentes: `PascalCase.tsx` (ex: `MeuComponente.tsx`)
+- Utilitários: `camelCase.ts` (ex: `meuUtilitario.ts`)
+- Types: `camelCase.types.ts`
+- Testes: `*.test.ts` ou `*.spec.ts`
+
+#### Commits
+
+Use convenção de commits semântica:
+- `feat:` nova funcionalidade
+- `fix:` correção de bug
+- `docs:` documentação
+- `style:` formatação
+- `refactor:` refatoração
+- `test:` testes
+- `chore:` manutenção
+
+## Endpoints da API
+
+### Endpoints Disponíveis
+
+#### Health Check
+
+```http
+GET /health
+```
+
+**Response 200**:
+```json
+{
+  "status": "ok",
+  "timestamp": "2025-01-20T12:00:00.000Z",
+  "uptime": 123.456,
+  "environment": "development"
+}
+```
+
+#### Status da Aplicação
+
+```http
+GET /api/status
+```
+
+**Response 200**:
+```json
+{
+  "status": "running",
+  "version": "1.0.0",
+  "features": {
+    "frontend": "React + Vite + TypeScript",
+    "backend": "Node.js + Express + TypeScript",
+    "styling": "Tailwind CSS"
+  }
+}
+```
+
+#### Dados de Exemplo
+
+```http
+GET /api/data
+```
+
+**Response 200**:
+```json
+{
+  "message": "Data from backend",
+  "items": [
+    { "id": 1, "name": "React", "type": "frontend" },
+    { "id": 2, "name": "Node.js", "type": "backend" },
+    { "id": 3, "name": "TypeScript", "type": "language" }
+  ],
+  "timestamp": "2025-01-20T12:00:00.000Z"
+}
+```
+
+### Autenticação OAuth
+
+#### Google OAuth
+
+```http
+GET /api/auth/google
+```
+Inicia fluxo de autenticação Google. Redireciona para Google.
+
+```http
+GET /api/auth/google/callback
+```
+Callback OAuth do Google. Redireciona para `/api/auth/success` ou `/api/auth/failure`.
+
+#### LinkedIn OAuth
+
+```http
+GET /api/auth/linkedin
+```
+Inicia fluxo de autenticação LinkedIn.
+
+```http
+GET /api/auth/linkedin/callback
+```
+Callback OAuth do LinkedIn.
+
+#### Status de Autenticação
+
+```http
+GET /api/auth/status
+```
+
+**Response 200**:
+```json
+{
+  "authenticated": true,
+  "provider": "google"
+}
+```
+
+#### Usuário Atual
+
+```http
+GET /api/auth/me
+```
+
+**Response 200**:
+```json
+{
+  "id": "123456789",
+  "displayName": "John Doe",
+  "email": "john@example.com",
+  "provider": "google"
+}
+```
+
+#### Logout
+
+```http
+POST /api/auth/logout
+```
+
+**Response 200**:
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+### Códigos de Status
+
+| Código | Descrição |
+|--------|-----------|
+| 200 | Success |
+| 401 | Unauthorized |
+| 404 | Not Found |
+| 500 | Internal Server Error |
+
+### CORS
+
+CORS está configurado para permitir requests do frontend em desenvolvimento:
+
+```typescript
+// src/server.ts
+origin: ['http://localhost:5173', 'http://localhost:3000']
+```
+
+**Produção**: Configure origins específicas em `src/server.ts`.
+
+## Testes
+
+### Estrutura de Testes
+
+Kanbino usa uma estratégia de três camadas:
+
+1. **Unitários** (`tests/unit/`): Testam funções/classes isoladas
+2. **Integração** (`tests/integration/`): Testam interações entre componentes
+3. **E2E** (`tests/e2e/`): Testam fluxos completos de usuário
+
+### Executar Testes
 
 ```bash
-# Run all tests
+# Todos os testes
 npm test
 
-# Run specific test suite
+# Por tipo
 npm run test:unit
 npm run test:integration
 npm run test:e2e
 
-# Watch mode (interactive)
+# Watch mode (interativo)
 npm run test:watch
 
-# Generate coverage report
+# Coverage (80% mínimo)
 npm run test:coverage
+
+# CI/CD
+npm run test:ci
 ```
 
-### Writing Tests
+### Escrever Testes
 
-#### Test File Naming
+#### Nome do Arquivo
+
+Use sufixo `.test.ts` ou `.spec.ts`:
 
 ```
-tests/unit/example.test.ts
+tests/unit/utils.test.ts
 tests/integration/api.test.ts
 tests/e2e/user-flow.test.ts
 ```
 
-#### Example Test Structure
+#### Estrutura de Teste
 
 ```typescript
-describe('MyFunction', () => {
-  it('should return expected value', () => {
+import { minhaFuncao } from '@/utils/minha-funcao.js';
+
+describe('minhaFuncao', () => {
+  it('deve retornar o valor esperado', () => {
     // Arrange
-    const input = 'test';
+    const input = 'teste';
 
     // Act
-    const result = myFunction(input);
+    const result = minhaFuncao(input);
 
     // Assert
-    expect(result).toBe('expected');
+    expect(result).toBe('valor-esperado');
   });
 
-  it('should handle errors', () => {
-    expect(() => myFunction(null)).toThrow();
+  it('deve lançar erro com input inválido', () => {
+    expect(() => minhaFuncao('')).toThrow();
   });
 });
 ```
 
-### Best Practices
+### Configuração Jest
 
-- Follow the AAA pattern: Arrange, Act, Assert
-- Write descriptive test names
-- Mock external dependencies
-- Test edge cases and error scenarios
-- Keep tests independent and isolated
-- Use fixtures for test data
+O projeto usa Jest com suporte ESM:
 
-## Building for Production
+- **Arquivo**: `jest.config.js`
+- **Preset**: `ts-jest/presets/default-esm`
+- **Path mapping**: `@/` → `src/`, `@tests/` → `tests/`
+- **Timeout**: 10000ms
+- **Coverage threshold**: 80%
 
-### Pre-Build Checklist
+### Melhores Práticas
 
-Before building for production:
+- Siga padrão AAA: Arrange, Act, Assert
+- Use nomes descritivos para testes
+- Mock dependências externas
+- Test edge cases e cenários de erro
+- Mantenha testes independentes
+- Use fixtures para dados de teste
+- Mantém coverage acima de 80%
+
+### Fixtures e Helpers
+
+Use fixtures e helpers disponíveis:
+
+```typescript
+// tests/fixtures/test-data.ts
+export const mockUser = {
+  id: '123',
+  name: 'Test User',
+  email: 'test@example.com'
+};
+
+// tests/helpers/test-setup.ts
+export const setupTestApp = async () => {
+  const app = createTestServer();
+  return app;
+};
+```
+
+## Deploy
+
+### Build para Produção
+
+#### Checklist Pré-Build
 
 ```bash
-# 1. Check TypeScript types
+# 1. Verificar tipos TypeScript
 npm run type-check
 npm run type-check:frontend
 
-# 2. Run linter
+# 2. Verificar linting
 npm run lint
 
-# 3. Run all tests
+# 3. Executar testes
 npm test
 
-# 4. Check test coverage
+# 4. Verificar coverage
 npm run test:coverage
 ```
 
-### Build Process
-
-#### 1. Set Production Environment
+#### Processo de Build
 
 ```bash
-# Linux/macOS
-export NODE_ENV=production
-
-# Windows (Command Prompt)
-set NODE_ENV=production
-
-# Windows (PowerShell)
-$env:NODE_ENV="production"
-```
-
-#### 2. Build Backend
-
-```bash
-npm run build
-```
-
-This compiles TypeScript to JavaScript in the `dist/` directory.
-
-#### 3. Build Frontend
-
-```bash
-npm run build:frontend
-```
-
-This creates an optimized production build in `frontend/dist/`.
-
-#### 4. Build All
-
-```bash
+# Build completo (backend + frontend)
 npm run build:all
+
+# Ou separadamente
+npm run build           # Backend
+npm run build:frontend  # Frontend
+npm run build:css:prod  # CSS otimizado
 ```
 
-This builds both backend and frontend in one command.
+#### Output do Build
 
-### Build Output
+- **Backend**: `dist/` com JavaScript compilado
+- **Frontend**: `frontend/dist/` com assets otimizados
+- **CSS**: `src/public/css/output.css` (minificado)
 
-- **Backend**: `dist/` directory with compiled JavaScript
-- **Frontend**: `frontend/dist/` directory with minified assets
-- **CSS**: `src/public/css/output.css` (minified in production)
+### Variáveis de Produção
 
-### Running Production Build
-
-```bash
-# Start backend
-NODE_ENV=production npm start
-
-# Or serve frontend static files
-npm run preview:frontend
-```
-
-## Deployment
-
-### Production Environment Variables
-
-Configure these in your hosting environment:
+Configure no ambiente de hosting:
 
 ```bash
 NODE_ENV=production
 LOG_LEVEL=warn
 PORT=3000
 
-# Database (if applicable)
-DATABASE_HOST=your-db-host
-DATABASE_PORT=5432
-DATABASE_USERNAME=your-user
-DATABASE_PASSWORD=your-password
-DATABASE_NAME=kanbino
+# Google OAuth (se usado)
+GOOGLE_CLIENT_ID=seu_client_id
+GOOGLE_CLIENT_SECRET=seu_client_secret
+GOOGLE_CALLBACK_URL=https://seudominio.com/api/auth/google/callback
 
-# API
-API_BASE_URL=https://your-domain.com
-API_TIMEOUT=30000
+# LinkedIn OAuth (se usado)
+LINKEDIN_CLIENT_ID=seu_client_id
+LINKEDIN_CLIENT_SECRET=seu_client_secret
+LINKEDIN_CALLBACK_URL=https://seudominio.com/api/auth/linkedin/callback
+
+# Session
+SESSION_SECRET=string_segura_aleatória_muito_longa
 ```
 
-### Security Considerations
+### Executar em Produção
 
-#### Critical Security Practices
-
-1. **Never commit `.env` files** - Use environment variables in your hosting platform
-2. **Use HTTPS in production** - Required for secure data transmission
-3. **Configure CORS properly** - Whitelist allowed origins only
-4. **Enable security headers** - Use Helmet.js or similar middleware
-5. **Keep dependencies updated** - Run `npm audit` regularly
-6. **Rate limiting** - Implement API rate limiting
-7. **Input validation** - Validate all user inputs
-8. **SQL Injection prevention** - Use parameterized queries
-
-### Deployment Options
-
-#### Backend Deployment
-
-**Recommended Platforms:**
-- AWS EC2 or ECS
-- Heroku
-- Railway
-- Render
-- DigitalOcean App Platform
-
-**Process:**
-1. Push code to repository
-2. Connect hosting platform to GitHub
-3. Configure environment variables
-4. Deploy automatically on push to main branch
-
-#### Frontend Deployment
-
-**Recommended Platforms:**
-- Vercel (optimized for React/Vite)
-- Netlify
-- AWS S3 + CloudFront
-- Cloudflare Pages
-
-**Process:**
-1. Build frontend: `npm run build:frontend`
-2. Deploy `frontend/dist/` directory
-3. Configure build settings if using platform's CI
-
-#### Monorepo vs Separate Deployment
-
-You can deploy:
-- **Together**: Deploy backend and frontend as one unit
-- **Separately**: Deploy backend and frontend independently (recommended for scalability)
-
-### Health Checks
-
-Implement a health check endpoint:
-
-```typescript
-// Backend health endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy', timestamp: new Date() });
-});
+```bash
+# Iniciar servidor
+NODE_ENV=production npm start
 ```
 
-Configure monitoring for:
-- Application uptime
-- Response times
-- Error rates
-- Database connectivity
+O servidor irá:
+- Servir frontend estático em `/`
+- API disponível em `/api`
+- Health check em `/health`
+- SPA fallback para rotas React
 
-### CI/CD Pipeline
+### Considerações de Produção
 
-Example GitHub Actions workflow:
+#### Segurança
+
+1. **Variáveis de ambiente**: Nunca commit `.env` files
+2. **HTTPS**: Sempre use HTTPS em produção
+3. **CORS**: Configure origins específicas em `src/server.ts`
+4. **Security headers**: Considere usar Helmet.js
+5. **Rate limiting**: Implemente rate limiting para API
+6. **Input validation**: Valide todos os inputs de usuário
+7. **Session secret**: Use string forte e aleatória
+8. **Dependencies**: Execute `npm audit` regularmente
+
+#### Performance
+
+1. **CDN**: Use CDN para assets estáticos
+2. **Compression**: Habilite gzip/brotli
+3. **Caching**: Configure cache headers apropriadas
+4. **Database**: Use connection pooling
+5. **Monitoring**: Configure monitoring e alertas
+
+#### Process Managers
+
+Recomendado usar process manager:
+
+**PM2**:
+```bash
+npm install -g pm2
+pm2 start dist/index.js --name kanbino
+pm2 startup
+pm2 save
+```
+
+**Systemd** (Linux):
+```ini
+[Unit]
+Description=Kanbino Application
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/kanbino
+ExecStart=/usr/bin/node /var/www/kanbino/dist/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Plataformas de Deploy
+
+#### Backend
+
+- **AWS**: EC2, ECS, Elastic Beanstalk
+- **Heroku**: Configurar buildpack Node.js
+- **Railway**: Deploy automático do GitHub
+- **Render**: Web service com PostgreSQL
+- **DigitalOcean**: App Platform
+
+#### Frontend
+
+- **Vercel**: Otimizado para React/Vite
+- **Netlify**: Deploy contínuo com preview
+- **AWS S3 + CloudFront**: Hosting estático
+- **Cloudflare Pages**: CDN global
+
+#### Monorepo vs Deploy Separado
+
+- **Junto**: Backend e frontend em um servidor
+- **Separado** (recomendado): Backend em um serviço, frontend em outro
+
+### CI/CD
+
+#### GitHub Actions Example
 
 ```yaml
 name: CI/CD
-on: [push, pull_request]
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
@@ -705,131 +1044,76 @@ jobs:
         with:
           node-version: '20'
       - run: npm install
+      - run: npm run lint
+      - run: npm run type-check
       - run: npm test
       - run: npm run build:all
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to production
+        run: |
+          # Comandos de deploy
 ```
+
+### Health Checks
+
+Configure monitoramento para:
+
+- Uptime da aplicação
+- Tempo de resposta
+- Taxa de erros
+- Conectividade de database (se aplicável)
+- Uso de memória e CPU
+
+Endpoint de health: `GET /health`
 
 ## Troubleshooting
 
-### Common Issues and Solutions
+### Problemas Comuns
 
-#### Issue: Port Already in Use
+#### Backend não inicia
 
-**Error:**
-```
-Error: listen EADDRINUSE: address already in use :::3000
-```
+**Sintomas**: Porta em uso, erro ao conectar
 
-**Solutions:**
+**Soluções**:
 
-**Option 1: Kill process on port**
-```bash
-# Linux/macOS
-lsof -ti:3000 | xargs kill -9
-
-# Windows (Command Prompt)
-netstat -ano | findstr :3000
-taskkill /PID <PID> /F
-
-# Windows (PowerShell)
-Get-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess | Stop-Process
-```
-
-**Option 2: Change port in `.env`**
-```bash
-# Edit .env
-PORT=3001
-```
-
-#### Issue: Module Not Found
-
-**Error:**
-```
-Cannot find module 'module-name'
-```
-
-**Solution:**
-```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
-npm install
-
-# If using frontend
-cd frontend
-rm -rf node_modules package-lock.json
-npm install
-```
-
-#### Issue: TypeScript Compilation Errors
-
-**Error:**
-```
-TS2307: Cannot find module '...'
-```
-
-**Solutions:**
-
-1. **Check imports use `.js` extensions** (required for ESM):
-   ```typescript
-   import { myFunc } from './utils.js';  // ✅
-   import { myFunc } from './utils';     // ❌
-   ```
-
-2. **Rebuild TypeScript:**
+1. Verifique se porta 3000 está livre:
    ```bash
-   npm run build
+   # Linux/macOS
+   lsof -ti:3000 | xargs kill -9
+
+   # Windows
+   netstat -ano | findstr :3000
+   taskkill /PID <PID> /F
    ```
 
-3. **Clear TypeScript cache:**
+2. Verifique `.env`:
    ```bash
-   rm -rf dist
-   npm run build
+   cat .env
    ```
 
-#### Issue: Tailwind CSS Not Working
-
-**Symptoms:**
-- Styles not applied
-- No classes generated
-
-**Solutions:**
-
-1. **Verify CSS compilation:**
+3. Verifique NODE_ENV:
    ```bash
-   npm run build:css
+   echo $NODE_ENV
    ```
 
-2. **Check output file exists:**
+#### Frontend não conecta ao backend
+
+**Sintomas**: 404, CORS errors, network errors
+
+**Soluções**:
+
+1. Inicie o backend:
    ```bash
-   ls -la src/public/css/output.css
+   npm run dev
    ```
 
-3. **Verify Tailwind directives in `src/styles/input.css`:**
-   ```css
-   @tailwind base;
-   @tailwind components;
-   @tailwind utilities;
-   ```
-
-4. **Rebuild CSS with watch mode:**
-   ```bash
-   npm run build:css:watch
-   ```
-
-#### Issue: Vite Proxy Not Working
-
-**Symptoms:**
-- API calls failing with 404
-- CORS errors in browser console
-
-**Solutions:**
-
-1. **Verify backend is running:**
-   ```bash
-   curl http://localhost:3000
-   ```
-
-2. **Check `vite.config.ts` proxy configuration:**
+2. Verifique proxy em `vite.config.ts`:
    ```typescript
    server: {
      proxy: {
@@ -841,268 +1125,468 @@ TS2307: Cannot find module '...'
    }
    ```
 
-3. **Verify frontend env variable:**
+3. Verifique se backend está respondendo:
    ```bash
-   # frontend/.env.development
-   VITE_API_BASE_URL=/api
+   curl http://localhost:3000/health
    ```
 
-#### Issue: Tests Failing with Import Errors
+#### Módulo não encontrado
 
-**Error:**
+**Erro**: `Cannot find module 'module-name'`
+
+**Solução**:
+```bash
+# Limpe cache e reinstale
+rm -rf node_modules package-lock.json
+npm install
 ```
-Jest encountered an unexpected token
-```
 
-**Solutions:**
+#### Erros de TypeScript
 
-1. **Check Jest configuration** supports ESM in `jest.config.js`:
-   ```javascript
-   export default {
-     preset: 'ts-jest/presets/default-esm',
-     globals: {
-       'ts-jest': {
-         useESM: true,
-       },
-     },
-   };
-   ```
+**Erro**: `TS2307: Cannot find module`
 
-2. **Use `.js` extensions in test imports:**
+**Soluções**:
+
+1. Use extensões `.js` em imports (ESM):
    ```typescript
-   import { myFunc } from '../src/utils.js';
+   import { myFunc } from './utils.js';  // ✅
+   import { myFunc } from './utils';     // ❌
    ```
 
-#### Issue: Husky Hooks Not Running
-
-**Symptoms:**
-- Pre-commit hooks not executing
-- Lint not running on commit
-
-**Solutions:**
-
-1. **Reinstall Husky:**
+2. Rebuild TypeScript:
    ```bash
-   npm run prepare
-   # or
-   npx husky install
+   npm run build
    ```
 
-2. **Check git hooks permissions:**
+3. Limpe cache TypeScript:
    ```bash
-   ls -la .git/hooks/
+   rm -rf dist
+   npm run build
    ```
 
-3. **Verify Husky is installed:**
+#### Tailwind CSS não funciona
+
+**Sintomas**: Estilos não aplicados, classes não geradas
+
+**Soluções**:
+
+1. Verifique compilação CSS:
    ```bash
-   npm ls husky
+   npm run build:css
    ```
 
-#### Issue: ESLint/Prettier Conflicts
-
-**Symptoms:**
-- Code formatting inconsistencies
-- Linting errors after formatting
-
-**Solutions:**
-
-1. **Run both commands in order:**
+2. Verifique arquivo de output:
    ```bash
-   npm run format
-   npm run lint:fix
+   ls -la src/public/css/output.css
    ```
 
-2. **Check configurations are compatible** in `.eslintrc.js` and `.prettierrc`
-
-3. **Disable specific Prettier rules in ESLint:**
-   ```javascript
-   // .eslintrc.js
-   {
-     rules: {
-       'prettier/prettier': 'error',
-     },
-   }
+3. Verifique diretivas em `src/styles/input.css`:
+   ```css
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
    ```
 
-#### Issue: Build Fails in Production
+4. Use watch mode:
+   ```bash
+   npm run build:css:watch
+   ```
 
-**Error:**
+#### Hot reload não funciona
+
+**Sintomas**: Alterações não refletem automaticamente
+
+**Soluções**:
+
+1. Verifique instalação:
+   ```bash
+   npm ls nodemon vite
+   ```
+
+2. Reinicie servidores:
+   ```bash
+   # Pare e inicie novamente
+   npm run dev:all
+   ```
+
+3. Limpe cache do Vite:
+   ```bash
+   rm -rf frontend/node_modules/.vite
+   ```
+
+#### Erro de CORS
+
+**Sintomas**: CORS errors no console do browser
+
+**Soluções**:
+
+1. Verifique configuração CORS em `src/server.ts`:
+   ```typescript
+   app.use(cors({
+     origin: ['http://localhost:5173', 'http://localhost:3000'],
+     credentials: true,
+   }));
+   ```
+
+2. Adicione origin se necessário:
+   ```typescript
+   origin: ['http://localhost:5173', 'http://seu-dominio.com']
+   ```
+
+#### Testes falham
+
+**Sintomas**: Testes quebram, errors de import
+
+**Soluções**:
+
+1. Verifique se backend está rodando (para integration tests):
+   ```bash
+   npm run dev
+   ```
+
+2. Verifique mocks:
+   ```bash
+   cat tests/mocks/*.ts
+   ```
+
+3. Execute em modo debug:
+   ```bash
+   npm run test:debug
+   ```
+
+#### Porta já em uso
+
+**Erro**: `EADDRINUSE: address already in use :::3000`
+
+**Soluções**:
+
+1. Mude a porta em `.env`:
+   ```bash
+   PORT=3001
+   ```
+
+2. Ou mate o processo:
+   ```bash
+   # Linux/macOS
+   lsof -ti:3000 | xargs kill -9
+
+   # Windows PowerShell
+   Get-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess | Stop-Process
+   ```
+
+#### OAuth não funciona
+
+**Sintomas**: Callback errors, authentication fails
+
+**Soluções**:
+
+1. Verifique variáveis `.env`:
+   ```bash
+   cat .env | grep GOOGLE
+   ```
+
+2. Verifique URLs de callback no console do provider:
+   - Development: `http://localhost:3000/api/auth/google/callback`
+   - Production: `https://seudominio.com/api/auth/google/callback`
+
+3. Verifique se `SESSION_SECRET` está definido
+
+### Logs e Debugging
+
+#### Logger
+
+O projeto usa um logger configurável em `src/utils/logger.ts`:
+
+```typescript
+import { logger } from '@/utils/logger.js';
+
+logger.debug('Mensagem de debug');
+logger.info('Mensagem informativa');
+logger.warn('Aviso');
+logger.error('Erro', error);
 ```
-Build failed with exit code 1
+
+#### Nível de Log
+
+Configure em `.env`:
+```bash
+LOG_LEVEL=debug    # Development
+LOG_LEVEL=info     # Production
+LOG_LEVEL=error    # Test
 ```
 
-**Solutions:**
+#### Debug Mode
 
-1. **Set NODE_ENV correctly:**
+```bash
+# Ativar debug mode
+NODE_ENV=development npm run dev
+
+# Com logs verbose
+LOG_LEVEL=debug npm run dev
+```
+
+### Recursos de Ajuda
+
+Se encontrar problemas não documentados:
+
+1. **GitHub Issues**: https://github.com/VictorHSCosta/kanbino/issues
+2. **Documentação**:
+   - [Node.js Docs](https://nodejs.org/docs)
+   - [React Docs](https://react.dev)
+   - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+   - [Vite Guide](https://vitejs.dev/guide/)
+   - [Tailwind Docs](https://tailwindcss.com/docs)
+
+3. **Stack Overflow** (tags: `nodejs`, `react`, `typescript`, `express`)
+
+4. **Discord Communities**:
+   - [TypeScript Discord](https://discord.gg/typescript)
+   - [React Discord](https://discord.gg/react)
+
+Ao criar uma issue, inclua:
+- Mensagem de erro completa
+- Passos para reproduzir
+- Ambiente (OS, Node version)
+- Comportamento esperado vs atual
+
+## Contribuição
+
+Contribuições são bem-vindas! Por favor, siga estas diretrizes.
+
+### Como Contribuir
+
+1. **Fork o repositório**
    ```bash
-   export NODE_ENV=production
+   # Clique em "Fork" no GitHub
    ```
 
-2. **Check all environment variables are set:**
+2. **Clone seu fork**
    ```bash
-   cat .env
-   ```
-
-3. **Verify TypeScript compiles:**
-   ```bash
-   npm run type-check
-   ```
-
-4. **Check disk space:**
-   ```bash
-   df -h
-   ```
-
-### Getting Help
-
-If you encounter issues not covered here:
-
-1. Check the [GitHub Issues](https://github.com/VictorHSCosta/kanbino/issues)
-2. Review the [Additional Resources](#additional-resources)
-3. Create a new issue with:
-   - Error message
-   - Steps to reproduce
-   - Environment details (OS, Node version)
-   - Expected vs actual behavior
-
-## Contributing
-
-We welcome contributions! Please follow these guidelines.
-
-### Contribution Workflow
-
-1. **Fork the repository**
-   ```bash
-   # Click "Fork" button on GitHub
-   ```
-
-2. **Clone your fork**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/kanbino.git
+   git clone https://github.com/SEU_USUARIO/kanbino.git
    cd kanbino
    ```
 
-3. **Create a feature branch**
+3. **Crie uma branch para sua feature**
    ```bash
-   git checkout -b feature/amazing-feature
+   git checkout -b feature/nova-feature
    ```
 
-   Branch naming convention:
-   - `feature/` - New features
-   - `fix/` - Bug fixes
-   - `docs/` - Documentation changes
-   - `refactor/` - Code refactoring
-   - `test/` - Adding or updating tests
+   Convenções de nome:
+   - `feature/` - Novas funcionalidades
+   - `fix/` - Correções de bugs
+   - `docs/` - Mudanças na documentação
+   - `refactor/` - Refatoração de código
+   - `test/` - Adicionar ou atualizar testes
 
-4. **Make your changes**
-   - Write clean code following project conventions
-   - Add tests for new functionality
-   - Update documentation as needed
+4. **Faça suas alterações**
+   - Escreva código limpo seguindo convenções do projeto
+   - Adicione testes para novas funcionalidades
+   - Atualize documentação se necessário
 
-5. **Commit your changes**
+5. **Commit suas mudanças**
    ```bash
    git add .
-   git commit -m "feat: add amazing feature"
+   git commit -m "feat: adicionar nova funcionalidade"
    ```
 
-   Commit message format:
-   - `feat:` - New feature
-   - `fix:` - Bug fix
-   - `docs:` - Documentation changes
-   - `style:` - Code style changes (formatting)
-   - `refactor:` - Code refactoring
-   - `test:` - Adding or updating tests
-   - `chore:` - Maintenance tasks
-
-6. **Push to your fork**
+6. **Push para seu fork**
    ```bash
-   git push origin feature/amazing-feature
+   git push origin feature/nova-feature
    ```
 
-7. **Create a Pull Request**
-   - Go to GitHub and click "Compare & pull request"
-   - Provide a clear description of changes
-   - Link any related issues
-   - Ensure all CI checks pass
+7. **Crie um Pull Request**
+   - Vá ao GitHub e clique em "Compare & pull request"
+   - Forneça descrição clara das mudanças
+   - Link issues relacionadas se houver
+   - Certifique-se que todos os checks CI passam
 
-### Code Style Guidelines
+### Convenções de Commit
+
+Use [conventional commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Types**:
+- `feat`: Nova funcionalidade
+- `fix`: Correção de bug
+- `docs`: Mudanças na documentação
+- `style`: Formatação, missing semicolons, etc
+- `refactor`: Refatoração de código
+- `test`: Adicionar ou atualizar testes
+- `chore`: Tarefas de manutenção
+
+**Exemplos**:
+```
+feat(auth): adicionar suporte a LinkedIn OAuth
+
+Implementa autenticação OAuth 2.0 com LinkedIn usando Passport.
+
+Closes #123
+```
+
+```
+fix(api): corrigir erro de parsing no endpoint /data
+
+Corrige bug que causava crash quando recebia dados vazios.
+```
+
+### Requisitos para Pull Request
+
+Antes de submeter um PR, verifique:
+
+- [ ] Código segue estilo do projeto (ESLint + Prettier)
+- [ ] Testes passam localmente (`npm test`)
+- [ ] Linting passa (`npm run lint`)
+- [ ] TypeScript compila (`npm run type-check`)
+- [ ] Coverage mantém 80%+ (`npm run test:coverage`)
+- [ ] Novas funcionalidades incluem testes
+- [ ] Documentação atualizada se necessário
+- [ ] Commits seguem convenção
+- [ ] PR descreve claramente as mudanças
+
+### Processo de Review
+
+1. **CI Checks**:
+   - Linting automático
+   - Testes executados
+   - Type checking
+
+2. **Code Review**:
+   - Mantenedores revisam em até 48 horas
+   - Feedback construtivo é bem-vindo
+   - Mantenha discussões profissionais
+
+3. **Aprovação**:
+   - Mínimo uma aprovação necessária
+   - Todas as checks CI devem passar
+   - Resolva todos os comments solicitados
+
+### Estilo de Código
 
 #### TypeScript/JavaScript
 
-- Use TypeScript strict mode
-- Prefer `const` over `let`
-- Use arrow functions for callbacks
-- Follow ESLint rules (`npm run lint`)
+```typescript
+// ✅ Bom
+interface UserProps {
+  name: string;
+  age: number;
+}
+
+export function User({ name, age }: UserProps) {
+  return <div>{name}: {age}</div>;
+}
+
+// ❌ Ruim
+export function User(props: any) {
+  return <div>{props.name}: {props.age}</div>;
+}
+```
 
 #### React
 
-- Use functional components with hooks
-- Prefer composition over inheritance
-- Use TypeScript for props
-- Keep components small and focused
+```typescript
+// ✅ Bom - Componente funcional com hooks
+export function Counter() {
+  const [count, setCount] = useState(0);
 
-#### Testing
+  return (
+    <button onClick={() => setCount(c => c + 1)}>
+      Count: {count}
+    </button>
+  );
+}
 
-- Maintain test coverage above 80%
-- Write tests for new features
-- Follow AAA pattern (Arrange, Act, Assert)
-- Use descriptive test names
+// ❌ Ruim - Class component desnecessário
+export class Counter extends Component {
+  // ...
+}
+```
 
-#### Git Workflow
+#### Testes
 
-- Keep commits atomic (one logical change per commit)
-- Write clear, descriptive commit messages
-- Squash related commits before submitting PR
-- Resolve merge conflicts using `git rebase`
+```typescript
+// ✅ Bom - AAA pattern claro
+describe('add', () => {
+  it('deve somar dois números', () => {
+    // Arrange
+    const a = 2;
+    const b = 3;
 
-### Pull Request Checklist
+    // Act
+    const result = add(a, b);
 
-Before submitting a PR, ensure:
+    // Assert
+    expect(result).toBe(5);
+  });
+});
+```
 
-- [ ] Code follows project style guidelines
-- [ ] Tests pass locally (`npm test`)
-- [ ] Linting passes (`npm run lint`)
-- [ ] TypeScript compiles (`npm run type-check`)
-- [ ] New features include tests
-- [ ] Documentation is updated
-- [ ] Commit messages follow conventions
-- [ ] PR description clearly explains changes
+### Direitos e Responsabilidades
 
-### Review Process
+- **Respeito**: Mantenha discussões profissionais e respeitosas
+- **Colaboração**: Trabalhe junto com mantenedores e outros contribuidores
+- **Qualidade**: Mantenha padrões altos de código e documentação
+- **Testes**: Sempre adicione testes para novas funcionalidades
+- **Documentação**: Atualize docs quando mudar comportamento
 
-1. Automated CI checks run on all PRs
-2. Maintainers review code within 48 hours
-3. Address review feedback promptly
-4. PRs require at least one approval to merge
+## Licença
 
-## Additional Resources
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
-### Official Documentation
+**Resumo**:
+- ✅ Uso comercial permitido
+- ✅ Modificação permitida
+- ✅ Distribuição permitida
+- ✅ Uso privado permitido
+- ⚠️ Licença e copyright notice devem ser incluídos
+
+## Links Úteis
+
+### Repositório e Issues
+
+- **GitHub Repository**: https://github.com/VictorHSCosta/kanbino
+- **Issue Tracker**: https://github.com/VictorHSCosta/kanbino/issues
+- **Pull Requests**: https://github.com/VictorHSCosta/kanbino/pulls
+
+### Documentação Oficial
 
 - [Node.js Documentation](https://nodejs.org/docs)
+- [React Documentation](https://react.dev)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [React Documentation](https://react.dev/)
 - [Vite Guide](https://vitejs.dev/guide/)
 - [Tailwind CSS Docs](https://tailwindcss.com/docs)
 - [Express.js Guide](https://expressjs.com/en/guide/routing.html)
 - [Jest Documentation](https://jestjs.io/docs/getting-started)
+- [Passport.js](http://www.passportjs.org/docs/)
 
-### Recommended Tutorials
+### OAuth Providers
+
+- [Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2)
+- [LinkedIn Authentication](https://learn.microsoft.com/en-us/linkedin/shared/references/v2/authentication)
+
+### Tutoriais Recomendados
 
 - [TypeScript Best Practices](https://github.com/typescript-cheatsheets/react)
 - [React Hooks Guide](https://react.dev/reference/react)
-- [Testing React Components](https://testing-library.com/docs/react-testing-library/intro/)
+- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [ESLint Configuration](https://eslint.org/docs/latest/use/configure/)
 - [Prettier Configuration](https://prettier.io/docs/en/configuration.html)
 
-### Community Resources
+### Comunidade
 
 - [Stack Overflow - Node.js](https://stackoverflow.com/questions/tagged/node.js)
 - [Stack Overflow - React](https://stackoverflow.com/questions/tagged/react)
+- [Stack Overflow - TypeScript](https://stackoverflow.com/questions/tagged/typescript)
 - [TypeScript Community Discord](https://discord.gg/typescript)
 - [React Discord](https://discord.gg/react)
 
-### Tools and Extensions
+### Ferramentas
 
 #### VS Code Extensions
 
@@ -1110,24 +1594,17 @@ Before submitting a PR, ensure:
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [TypeScript Importer](https://marketplace.visualstudio.com/items?itemName=pmneo.tsimporter)
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [React DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/)
 
 #### Browser Extensions
 
 - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/)
 - [Tailwind DevTools](https://chrome.google.com/webstore/detail/tailwind-devtools/)
 
-### Related Projects
-
-- [Create React App](https://create-react-app.dev/)
-- [Next.js](https://nextjs.org/)
-- [NestJS](https://nestjs.com/)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
 
-**Made with ❤️ by the Kanbino Team**
+**Última atualização**: Janeiro 2025
 
-For more information, visit [GitHub Repository](https://github.com/VictorHSCosta/kanbino)
+**Feito com ❤️ pela equipe Kanbino**
+
+Para mais informações, visite [GitHub Repository](https://github.com/VictorHSCosta/kanbino)
