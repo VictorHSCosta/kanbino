@@ -45,8 +45,10 @@ export function authSuccess(req: Request, res: Response): void {
 
   logger.info(`User authenticated: ${user.email} via ${user.provider}`);
 
-  // In production, redirect to frontend
-  res.redirect('/dashboard');
+  // Redirect to frontend dashboard
+  // In production, use environment variable for frontend URL
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  res.redirect(`${frontendUrl}/dashboard`);
 }
 
 // Failure redirect handler
