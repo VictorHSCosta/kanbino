@@ -37,3 +37,22 @@ export interface ApiError {
   message?: string;
   path?: string;
 }
+
+// Profile types
+export interface ProfilePhotoResponse {
+  success: boolean;
+  photoUrl: string;
+  message?: string;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  displayName: string;
+  firstName: string;
+  lastName: string;
+  photo?: string;
+  provider: string;
+  profileUrl?: string;
+  createdAt: string;
+}

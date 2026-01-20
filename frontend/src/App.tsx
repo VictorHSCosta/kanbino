@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
+import ProfilePage from './pages/ProfilePage'
 import { apiService } from './services/api'
 import type { StatusResponse, DataResponse } from './types/api.types'
 
@@ -8,6 +9,7 @@ function App() {
   const [status, setStatus] = useState<StatusResponse | null>(null)
   const [data, setData] = useState<DataResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState<'home' | 'profile'>('home')
 
   useEffect(() => {
     const fetchApiData = async () => {
@@ -29,6 +31,11 @@ function App() {
 
     fetchApiData()
   }, [])
+
+  // Show profile page
+  if (currentPage === 'profile') {
+    return <ProfilePage onBack={() => setCurrentPage('home')} />
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
