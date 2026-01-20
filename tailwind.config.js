@@ -5,7 +5,16 @@ export default {
     "./frontend/index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        tech: {
+          bg: '#0f172a',
+          card: 'rgba(30, 41, 59, 0.8)',
+          accent: '#6366f1',
+          text: '#f1f5f9',
+        }
+      }
+    },
   },
   plugins: [],
 }
