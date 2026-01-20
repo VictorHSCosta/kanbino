@@ -5,13 +5,19 @@
 
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import apiRoutes from './routes/api.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import profileRoutes from './routes/profile.routes.js';
 import { logger } from './utils/logger.js';
 import { config } from './config/index.js';
 import { initializePassport, passportSession } from './middleware/auth.middleware.js';
 import { initializeSession } from './middleware/session.config.js';
 import { passport } from './auth/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function createServer(): Application {
   const app: Application = express();
@@ -39,11 +45,17 @@ export function createServer(): Application {
     next();
   });
 
+  // Serve uploaded files
+  app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
+
   // API Routes
   app.use('/api', apiRoutes);
 
   // Auth routes
   app.use('/api/auth', authRoutes);
+
+  // Profile routes
+  app.use('/api/profile', profileRoutes);
 
   // Health check endpoint
   app.get('/health', (req: Request, res: Response) => {

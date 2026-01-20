@@ -37,3 +37,37 @@ export interface ApiError {
   message?: string;
   path?: string;
 }
+
+/**
+ * Profile Types
+ */
+
+export type AuthProvider = 'google' | 'linkedin';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  displayName: string;
+  firstName: string;
+  lastName: string;
+  photo?: string;
+  provider: AuthProvider;
+  profileUrl?: string;
+  createdAt: Date;
+}
+
+export interface UpdatePhotoResponse {
+  success: boolean;
+  photoUrl: string;
+  message: string;
+}
+
+export interface DeletePhotoResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface AuthResponse {
+  authenticated: boolean;
+  user?: UserProfile;
+}

@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
+import ProfilePage from './pages/ProfilePage'
 import { apiService } from './services/api'
-import type { StatusResponse, DataResponse } from './types/api.types'
+import type { StatusResponse, DataResponse, UserProfile } from './types/api.types'
+
+type Page = 'home' | 'profile'
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('home')
   const [apiStatus, setApiStatus] = useState<string>('Conectando...')
   const [status, setStatus] = useState<StatusResponse | null>(null)
   const [data, setData] = useState<DataResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [user, setUser] = useState<UserProfile | null>(null)
 
   useEffect(() => {
     const fetchApiData = async () => {
@@ -30,14 +35,69 @@ function App() {
     fetchApiData()
   }, [])
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const authData = await apiService.checkAuth()
+        if (authData.authenticated && authData.user) {
+          setUser(authData.user)
+        }
+      } catch (err) {
+        console.error('Failed to fetch user data:', err)
+      }
+    }
+
+    fetchUserData()
+  }, [currentPage])
+
+  const handleNavigateToProfile = () => {
+    setCurrentPage('profile')
+  }
+
+  const handleBackToHome = () => {
+    setCurrentPage('home')
+    // Reload user data when returning to home
+    apiService.checkAuth().then(authData => {
+      if (authData.authenticated && authData.user) {
+        setUser(authData.user)
+      }
+    }).catch(err => {
+      console.error('Failed to refresh user data:', err)
+    })
+  }
+
+  if (currentPage === 'profile') {
+    return <ProfilePage onBack={handleBackToHome} />
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-8">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-              Kanbino Project
+            <div className="flex items-center justify-between mb-4">
+              <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+                Kanbino Project
+              </div>
+              {user && (
+                <div className="flex items-center space-x-4">
+                  {user.photo && (
+                    <img
+                      src={user.photo}
+                      alt="Foto de perfil"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-indigo-200"
+                    />
+                  )}
+                  <button
+                    onClick={handleNavigateToProfile}
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
+                  >
+                    Meu Perfil
+                  </button>
+                </div>
+              )}
             </div>
+
             <h1 className="block mt-1 text-3xl leading-tight font-bold text-black">
               React + Node.js + Tailwind CSS
             </h1>
