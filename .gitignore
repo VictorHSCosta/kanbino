@@ -12,6 +12,9 @@ build/
 # Frontend build output
 src/public/css/
 
+# User uploaded files
+src/public/uploads/
+
 # Environment variables
 .env
 .env.local

@@ -46,3 +46,6 @@ export function findOrCreateUser(profile: GoogleProfile | LinkedInProfile, provi
 export function getUserById(id: string): User | undefined {
   return users.get(id);
 }
+
+// Export users map for profile updates
+export { users };

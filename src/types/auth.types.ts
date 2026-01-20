@@ -60,3 +60,14 @@ export interface LinkedInProfile {
   provider: string;
   _json: any;
 }
+
+// Profile update types
+export interface UpdateProfilePhotoRequest {
+  photoUrl: string;
+}
+
+export interface UpdateProfilePhotoResponse {
+  success: boolean;
+  photoUrl: string;
+  message?: string;
+}
