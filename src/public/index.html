@@ -3,39 +3,220 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanbino - Tailwind CSS Setup</title>
+  <title>Kanbino - Gerenciamento de Projetos Moderno</title>
   <link href="./css/output.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50">
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-      <div class="md:flex">
-        <div class="p-8">
-          <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            Kanbino Project
+<body class="bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-50">
+  <!-- Header -->
+  <header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12">
+              <circle cx="24" cy="24" r="24" fill="url(#gradient1)" />
+              <rect x="12" y="14" width="8" height="20" rx="2" fill="white" opacity="0.95" />
+              <rect x="22" y="10" width="8" height="24" rx="2" fill="white" opacity="0.85" />
+              <rect x="32" y="16" width="8" height="18" rx="2" fill="white" opacity="0.95" />
+              <defs>
+                <linearGradient id="gradient1" x1="0" y1="0" x2="48" y2="48">
+                  <stop offset="0%" stopColor="#6366f1" />
+                  <stop offset="50%" stopColor="#8b5cf6" />
+                  <stop offset="100%" stopColor="#a855f7" />
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
-          <h1 class="block mt-1 text-2xl leading-tight font-bold text-black">
-            Tailwind CSS Instalado com Sucesso!
-          </h1>
-          <p class="mt-4 text-gray-500">
-            Este é um arquivo de exemplo demonstrando que o Tailwind CSS está configurado corretamente.
-          </p>
-          <div class="mt-6 flex gap-4">
-            <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-              Botão Primário
-            </button>
-            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">
-              Botão Secundário
-            </button>
+          <div class="flex flex-col">
+            <span class="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Kanbino
+            </span>
+            <span class="text-xs text-gray-500 font-medium tracking-wide">
+              Project Management
+            </span>
           </div>
-          <div class="mt-6 grid grid-cols-3 gap-4">
-            <div class="bg-blue-500 text-white p-4 rounded">Box 1</div>
-            <div class="bg-green-500 text-white p-4 rounded">Box 2</div>
-            <div class="bg-purple-500 text-white p-4 rounded">Box 3</div>
+        </div>
+        <!-- Navigation -->
+        <nav class="flex gap-6">
+          <a href="#features" class="text-gray-600 hover:text-indigo-600 transition-colors font-medium">
+            Funcionalidades
+          </a>
+          <a href="#demo" class="text-gray-600 hover:text-indigo-600 transition-colors font-medium">
+            Demo
+          </a>
+          <a href="#docs" class="text-gray-600 hover:text-indigo-600 transition-colors font-medium">
+            Documentação
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-20 pb-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-5xl font-bold text-gray-900 mb-6">
+        Gerencie seus Projetos com
+        <span class="block mt-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          Eficiência e Estilo
+        </span>
+      </h1>
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        Plataforma moderna de gerenciamento de projetos construída com as melhores tecnologias do mercado.
+        Simples, poderosa e elegante.
+      </p>
+      <div class="flex gap-4 justify-center">
+        <button class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all shadow-lg hover:shadow-xl">
+          Começar Agora
+        </button>
+        <button class="bg-white hover:bg-gray-50 text-gray-800 font-bold py-3 px-8 rounded-lg transition-all border border-gray-300 shadow-md hover:shadow-lg">
+          Saiba Mais
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+    <!-- Demo Card -->
+    <div id="demo" class="bg-white rounded-2xl shadow-xl overflow-hidden mb-20">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Demonstração do Tailwind CSS</h2>
+        <p class="text-gray-600 mb-8">
+          Este é um arquivo de exemplo demonstrando que o Tailwind CSS está configurado corretamente no projeto.
+        </p>
+
+        <!-- Buttons Demo -->
+        <div class="flex gap-4 mb-8">
+          <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors">
+            Botão Primário
+          </button>
+          <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors">
+            Botão Secundário
+          </button>
+          <button class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-2 px-4 rounded transition-all">
+            Botão Gradiente
+          </button>
+        </div>
+
+        <!-- Cards Demo -->
+        <div class="grid grid-cols-3 gap-4">
+          <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:shadow-lg transition-shadow">
+            <div class="font-semibold text-lg">Quadros Kanban</div>
+            <div class="text-sm opacity-90 mt-2">Organize visualmente</div>
+          </div>
+          <div class="bg-gradient-to-br from-purple-500 to-pink-600 text-white p-6 rounded-xl hover:shadow-lg transition-shadow">
+            <div class="font-semibold text-lg">Colaboração</div>
+            <div class="text-sm opacity-90 mt-2">Trabalhe em equipe</div>
+          </div>
+          <div class="bg-gradient-to-br from-pink-500 to-rose-600 text-white p-6 rounded-xl hover:shadow-lg transition-shadow">
+            <div class="font-semibold text-lg">Analytics</div>
+            <div class="text-sm opacity-90 mt-2">Métricas detalhadas</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- Features Section -->
+    <div id="features" class="mt-20">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+        Funcionalidades Principais
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Quadros Kanban</h3>
+          <p class="text-gray-600">Organize tarefas visualmente em quadros personalizáveis com drag and drop.</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Colaboração</h3>
+          <p class="text-gray-600">Trabalhe em equipe com atualizações em tempo real e notificações.</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Analytics</h3>
+          <p class="text-gray-600">Acompanhe o progresso com métricas detalhadas e relatórios.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack Section -->
+    <section class="mt-20 bg-white rounded-2xl shadow-xl p-8">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Stack Tecnológico</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-blue-600">⚛️</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">React</h3>
+          <p class="text-sm text-gray-500">Frontend Framework</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-green-600">🟢</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">Node.js</h3>
+          <p class="text-sm text-gray-500">Backend Runtime</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-cyan-600">🎨</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">Tailwind</h3>
+          <p class="text-sm text-gray-500">CSS Framework</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-blue-600">📘</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">TypeScript</h3>
+          <p class="text-sm text-gray-500">Type Safety</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 py-8">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="w-8 h-8">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8">
+            <circle cx="24" cy="24" r="24" fill="url(#gradient2)" />
+            <rect x="12" y="14" width="8" height="20" rx="2" fill="white" opacity="0.95" />
+            <rect x="22" y="10" width="8" height="24" rx="2" fill="white" opacity="0.85" />
+            <rect x="32" y="16" width="8" height="18" rx="2" fill="white" opacity="0.95" />
+            <defs>
+              <linearGradient id="gradient2" x1="0" y1="0" x2="48" y2="48">
+                <stop offset="0%" stopColor="#6366f1" />
+                <stop offset="50%" stopColor="#8b5cf6" />
+                <stop offset="100%" stopColor="#a855f7" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="font-bold text-gray-900">Kanbino</span>
+      </div>
+      <p class="text-gray-500 text-sm">
+        © 2026 Kanbino. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
