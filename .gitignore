@@ -12,6 +12,10 @@ build/
 # Frontend build output
 src/public/css/
 
+# Uploads de imagem (exceto .gitkeep)
+src/public/uploads/*/
+!src/public/uploads/*/.gitkeep
+
 # Environment variables
 .env
 .env.local
