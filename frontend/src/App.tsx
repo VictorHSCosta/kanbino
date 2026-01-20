@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
+import Logo from './components/Logo'
 import { apiService } from './services/api'
 import type { StatusResponse, DataResponse } from './types/api.types'
 
@@ -31,17 +32,23 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50">
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="p-8">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-              Kanbino Project
+            {/* Header com Logo */}
+            <div className="flex flex-col items-center mb-6 sm:mb-8">
+              <Logo variant="full" className="mb-3 sm:mb-4 logo-animate" />
+              <div className="uppercase tracking-wide text-xs sm:text-sm text-indigo-500 font-semibold text-center">
+                TaskFlow Pro
+              </div>
             </div>
-            <h1 className="block mt-1 text-3xl leading-tight font-bold text-black">
-              React + Node.js + Tailwind CSS
+
+            {/* Título principal */}
+            <h1 className="block mt-2 sm:mt-4 text-2xl sm:text-3xl md:text-4xl leading-tight font-bold text-black text-center">
+              Plataforma de Gerenciamento de Fluxos
             </h1>
-            <p className="mt-4 text-gray-500">
+            <p className="mt-4 text-gray-500 text-center">
               Frontend React configurado com Vite e TypeScript, integrado com backend Node.js/Express.
             </p>
 
