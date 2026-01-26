@@ -38,6 +38,9 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:verbose": "jest --verbose",
     "test:silent": "jest --silent",
+    "setup": "bash scripts/setup-env.sh",
+    "verify:oauth": "bash scripts/verify-oauth.sh",
+    "generate:secret": "bash scripts/generate-secret.sh",
     "prepare": "husky install"
   },
   "repository": {
