@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
 import ProfilePage from './pages/ProfilePage'
+import ProjectsDashboardPage from './pages/ProjectsDashboardPage'
+import KanbanBoardPage from './pages/KanbanBoardPage'
 import { apiService } from './services/api'
 import type { StatusResponse, DataResponse } from './types/api.types'
 
@@ -9,7 +11,8 @@ function App() {
   const [status, setStatus] = useState<StatusResponse | null>(null)
   const [data, setData] = useState<DataResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState<'home' | 'profile'>('home')
+  const [currentPage, setCurrentPage] = useState<'home' | 'profile' | 'projects' | 'kanban'>('home')
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchApiData = async () => {
@@ -35,6 +38,32 @@ function App() {
   // Show profile page
   if (currentPage === 'profile') {
     return <ProfilePage onBack={() => setCurrentPage('home')} />
+  }
+
+  // Show projects dashboard
+  if (currentPage === 'projects') {
+    return (
+      <ProjectsDashboardPage
+        onBack={() => setCurrentPage('home')}
+        onSelectProject={(projectId) => {
+          setSelectedProjectId(projectId)
+          setCurrentPage('kanban')
+        }}
+      />
+    )
+  }
+
+  // Show kanban board
+  if (currentPage === 'kanban' && selectedProjectId) {
+    return (
+      <KanbanBoardPage
+        onBack={() => {
+          setSelectedProjectId(null)
+          setCurrentPage('projects')
+        }}
+        projectId={selectedProjectId}
+      />
+    )
   }
 
   return (
@@ -102,6 +131,16 @@ function App() {
             )}
 
             <ExampleComponent />
+
+            {/* Add navigation to Projects */}
+            <div className="mt-6">
+              <button
+                onClick={() => setCurrentPage('projects')}
+                className="w-full px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-200 shadow-md"
+              >
+                Gerenciar Projetos
+              </button>
+            </div>
           </div>
         </div>
       </div>
