@@ -3,16 +3,19 @@
  * HTTP server setup with middleware and routes
  */
 
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import apiRoutes from './routes/api.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import profileRoutes from './routes/profile.routes.js';
+import projectRoutes from './routes/project.routes.js';
+import taskRoutes from './routes/task.routes.js';
 import { logger } from './utils/logger.js';
 import { config } from './config/index.js';
 import { initializePassport, passportSession } from './middleware/auth.middleware.js';
 import { initializeSession } from './middleware/session.config.js';
 import { passport } from './auth/index.js';
+import { errorHandler } from './middleware/error.middleware.js';
 
 export function createServer(): Application {
   const app: Application = express();
@@ -48,6 +51,12 @@ export function createServer(): Application {
 
   // Profile routes
   app.use('/api/profile', profileRoutes);
+
+  // Project routes
+  app.use('/api/projects', projectRoutes);
+
+  // Task routes
+  app.use('/api/projects', taskRoutes);
 
   // Serve static files (uploads)
   app.use('/uploads', express.static('src/public/uploads'));
