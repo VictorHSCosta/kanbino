@@ -9,6 +9,8 @@
 
 Professional full-stack Node.js project with TypeScript, React, Vite, and comprehensive testing suite.
 
+**📚 Documentation:** [English](README.md) | [Português](GUIA-DE-CONFIGURACAO.md) - Quick setup guide in Portuguese
+
 ## Table of Contents
 
 - [Overview](#overview)
