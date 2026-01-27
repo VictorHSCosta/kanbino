@@ -5,7 +5,13 @@ export default {
     "./frontend/index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'tech-blue': '#0f172a',
+        'tech-cyan': '#06b6d4',
+        'tech-purple': '#8b5cf6',
+      },
+    },
   },
   plugins: [],
 }
