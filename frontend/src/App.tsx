@@ -42,7 +42,7 @@ function App() {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-8">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+            <div className="uppercase tracking-wide text-sm text-tech-500 font-semibold">
               Kanbino Project
             </div>
             <h1 className="block mt-1 text-3xl leading-tight font-bold text-black">
@@ -92,9 +92,9 @@ function App() {
                 <h2 className="text-lg font-semibold text-gray-800 mb-3">Dados do Backend</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {data.items.map((item) => (
-                    <div key={item.id} className="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                      <p className="font-semibold text-indigo-900">{item.name}</p>
-                      <p className="text-sm text-indigo-600 capitalize">{item.type}</p>
+                    <div key={item.id} className="p-3 bg-tech-50 rounded-lg border border-tech-100">
+                      <p className="font-semibold text-tech-900">{item.name}</p>
+                      <p className="text-sm text-tech-600 capitalize">{item.type}</p>
                     </div>
                   ))}
                 </div>
