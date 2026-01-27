@@ -89,7 +89,7 @@ export default function ProfilePhotoUploader({
     <div className="flex flex-col items-center space-y-4">
       {/* Photo preview/current photo */}
       <div className="relative">
-        <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 border-4 border-white shadow-lg">
+        <div className="w-32 h-32 rounded-full overflow-hidden bg-secondary-200 border-4 border-white shadow-lg">
           {displayPhoto ? (
             <img
               src={displayPhoto}
@@ -97,7 +97,7 @@ export default function ProfilePhotoUploader({
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400">
+            <div className="w-full h-full flex items-center justify-center text-secondary-400">
               <svg
                 className="w-16 h-16"
                 fill="currentColor"
@@ -127,7 +127,7 @@ export default function ProfilePhotoUploader({
         />
         <label
           htmlFor="photo-upload"
-          className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer transition-colors ${
+          className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 cursor-pointer transition-colors ${
             uploading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
@@ -167,7 +167,7 @@ export default function ProfilePhotoUploader({
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className={`flex-1 px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors ${
+            className={`flex-1 px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-success hover:bg-success-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success transition-colors ${
               uploading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
@@ -176,7 +176,7 @@ export default function ProfilePhotoUploader({
           <button
             onClick={handleCancel}
             disabled={uploading}
-            className={`flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors ${
+            className={`flex-1 px-4 py-2 border border-secondary-300 rounded-lg shadow-sm text-sm font-medium text-secondary-700 bg-white hover:bg-secondary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors ${
               uploading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
@@ -187,13 +187,13 @@ export default function ProfilePhotoUploader({
 
       {/* Error message */}
       {error && (
-        <div className="w-full p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-600">{error}</p>
+        <div className="w-full p-3 bg-error-light border border-error-light rounded-lg">
+          <p className="text-sm text-error">{error}</p>
         </div>
       )}
 
       {/* Info text */}
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-secondary-500 text-center">
         Formatos aceitos: JPEG, PNG, WEBP, GIF
         <br />
         Tamanho máximo: 5MB
