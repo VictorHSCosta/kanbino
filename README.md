@@ -286,6 +286,9 @@ kanbino/
 ├── frontend/                     # Frontend application
 │   ├── src/
 │   │   ├── components/           # React components
+│   │   │   └── landing/          # Landing page components
+│   │   ├── pages/                # Page components
+│   │   │   └── LandingPage.tsx   # Main landing page
 │   │   ├── services/             # API services
 │   │   ├── types/                # TypeScript type definitions
 │   │   ├── App.tsx               # Root React component
@@ -325,6 +328,45 @@ kanbino/
 - **tests/**: Comprehensive test suite organized by type
 - **src/styles/**: Tailwind CSS source files
 - **src/public/**: Static assets served by Express
+
+## Landing Page
+
+The application includes a modern, responsive landing page built with React and Tailwind CSS.
+
+### Routes
+
+- **/ (root)**: Landing page with hero, features, about, and tech stack sections
+- **/app**: Main application dashboard
+
+### Landing Page Components
+
+The landing page is composed of modular components located in `frontend/src/components/landing/`:
+
+- **Navigation**: Sticky navbar with smooth scroll navigation
+- **HeroSection**: Main hero section with gradient background and CTAs
+- **FeaturesSection**: Grid of feature cards showcasing project capabilities
+- **AboutSection**: Project description with architecture overview
+- **TechStackSection**: Technology showcase organized by category
+- **CTASection**: Call-to-action section with links to app and GitHub
+- **Footer**: Footer with links, copyright, and technology badges
+
+### Customization
+
+To customize the landing page content:
+
+1. **Text Content**: Edit text directly in component files
+2. **Features**: Modify the `features` array in `FeaturesSection.tsx`
+3. **Tech Stack**: Update the `techStack` array in `TechStackSection.tsx`
+4. **Colors**: Adjust Tailwind classes for custom theming
+5. **SEO**: Update metadata in `frontend/index.html`
+
+### Styling
+
+The landing page uses Tailwind CSS utility classes:
+- Mobile-first responsive design (`sm:`, `md:`, `lg:` breakpoints)
+- Smooth animations and transitions
+- Gradient backgrounds and modern UI patterns
+- Consistent spacing and typography scale
 
 ## Development
 
