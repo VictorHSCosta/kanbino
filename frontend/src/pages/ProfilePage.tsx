@@ -55,10 +55,10 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando perfil...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary-600 mx-auto"></div>
+          <p className="mt-4 text-gray-700 font-medium">Carregando perfil...</p>
         </div>
       </div>
     );
@@ -66,11 +66,11 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-rose-100">
           <div className="text-center">
             <svg
-              className="mx-auto h-12 w-12 text-red-500"
+              className="mx-auto h-12 w-12 text-rose-500"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -86,7 +86,7 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
             <p className="mt-2 text-gray-600">{error}</p>
             <button
               onClick={onBack}
-              className="mt-6 w-full inline-flex justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-6 w-full inline-flex justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
             >
               Voltar
             </button>
@@ -101,13 +101,13 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Header with back button */}
         <div className="mb-6">
           <button
             onClick={onBack}
-            className="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+            className="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors"
           >
             <svg
               className="mr-2 h-5 w-5"
@@ -128,10 +128,10 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
         {/* Success message */}
         {successMessage && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-accent-50 border-2 border-accent-200 rounded-xl">
             <div className="flex">
               <svg
-                className="h-5 w-5 text-green-400"
+                className="h-5 w-5 text-accent-500"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -141,7 +141,7 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
                   clipRule="evenodd"
                 />
               </svg>
-              <p className="ml-3 text-sm font-medium text-green-800">
+              <p className="ml-3 text-sm font-medium text-accent-800">
                 {successMessage}
               </p>
             </div>
@@ -149,11 +149,11 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
         )}
 
         {/* Profile card */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-purple-100">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-8">
+          <div className="bg-gradient-to-r from-primary-600 via-purple-600 to-accent-600 px-6 py-8">
             <h1 className="text-2xl font-bold text-white">Meu Perfil</h1>
-            <p className="text-indigo-100 mt-1">Gerencie suas informações</p>
+            <p className="text-purple-100 mt-1">Gerencie suas informações</p>
           </div>
 
           <div className="p-6">
@@ -171,9 +171,9 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Informações Pessoais
               </h2>
-              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
+              <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-xl p-6 space-y-4 border border-primary-100">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Nome Completo</p>
+                  <p className="text-sm font-medium text-primary-700">Nome Completo</p>
                   <p className="mt-1 text-lg font-medium text-gray-900">
                     {user.displayName}
                   </p>
@@ -181,27 +181,27 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Nome</p>
+                    <p className="text-sm font-medium text-primary-700">Nome</p>
                     <p className="mt-1 text-gray-900">{user.firstName}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Sobrenome</p>
+                    <p className="text-sm font-medium text-primary-700">Sobrenome</p>
                     <p className="mt-1 text-gray-900">{user.lastName}</p>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Email</p>
+                  <p className="text-sm font-medium text-primary-700">Email</p>
                   <p className="mt-1 text-gray-900">{user.email}</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Provedor</p>
+                    <p className="text-sm font-medium text-primary-700">Provedor</p>
                     <p className="mt-1 capitalize text-gray-900">{user.provider}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Membro desde</p>
+                    <p className="text-sm font-medium text-primary-700">Membro desde</p>
                     <p className="mt-1 text-gray-900">
                       {new Date(user.createdAt).toLocaleDateString('pt-BR')}
                     </p>
@@ -210,12 +210,12 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
                 {user.profileUrl && (
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Perfil do LinkedIn</p>
+                    <p className="text-sm font-medium text-primary-700">Perfil do LinkedIn</p>
                     <a
                       href={user.profileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-1 text-indigo-600 hover:text-indigo-500"
+                      className="mt-1 text-primary-600 hover:text-primary-500 font-medium"
                     >
                       {user.profileUrl}
                     </a>
