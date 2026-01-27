@@ -167,7 +167,7 @@ export default function ProfilePhotoUploader({
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className={`flex-1 px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors ${
+            className={`flex-1 px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors ${
               uploading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
