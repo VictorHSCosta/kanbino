@@ -43,6 +43,9 @@ Kanbino is a professional full-stack application built with modern technologies 
 - ESLint and Prettier for code quality
 - Husky git hooks for automated checks
 - ESM modules for modern JavaScript support
+- OAuth authentication with Google and LinkedIn
+- Profile management with photo upload
+- Session management with secure cookies
 
 ## Tech Stack
 
@@ -53,8 +56,10 @@ Kanbino is a professional full-stack application built with modern technologies 
 | Node.js | >= 20.0.0 | Runtime environment |
 | TypeScript | 5.6+ | Type-safe JavaScript |
 | Express | 4.18+ | Web framework |
+| Passport | 0.7.0+ | Authentication middleware |
 | Jest | 29.7+ | Testing framework |
 | ts-node | 10.9+ | TypeScript execution |
+| Multer | 1.4.5+ | File upload handling |
 
 ### Frontend
 
@@ -162,6 +167,10 @@ npm install
 cp .env.example .env
 cp frontend/.env.example frontend/.env.development
 
+# Optional: Configure OAuth providers
+# Edit .env and add your Google/LinkedIn credentials
+# See "OAuth Setup Guide" below for detailed instructions
+
 # Start both backend and frontend
 npm run dev:all
 ```
@@ -169,6 +178,9 @@ npm run dev:all
 Your application will be available at:
 - **Backend API**: http://localhost:3000
 - **Frontend**: http://localhost:5173
+- **Health Check**: http://localhost:3000/health
+
+**Note**: OAuth authentication is optional. The application will work without OAuth credentials, but login functionality will be disabled.
 
 ## Installation
 
@@ -244,7 +256,72 @@ LOG_LEVEL=info             # debug, info, warn, or error
 # API Configuration
 API_BASE_URL=http://localhost:3000
 API_TIMEOUT=30000          # API timeout in milliseconds
+
+# Google OAuth Configuration (see OAuth Setup below)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+
+# LinkedIn OAuth Configuration (see OAuth Setup below)
+LINKEDIN_CLIENT_ID=your_linkedin_client_id
+LINKEDIN_CLIENT_SECRET=your_linkedin_client_secret
+LINKEDIN_CALLBACK_URL=http://localhost:3000/api/auth/linkedin/callback
+
+# Session Configuration
+SESSION_SECRET=your_secure_session_secret_change_in_production
+SESSION_NAME=kanbino.sid
+SESSION_MAX_AGE=604800000   # 7 days in milliseconds
 ```
+
+### OAuth Setup Guide
+
+#### Google OAuth Configuration
+
+1. **Go to [Google Cloud Console](https://console.cloud.google.com/)**
+2. **Create a new project** or select an existing one
+3. **Enable Google+ API**:
+   - Navigate to "APIs & Services" > "Library"
+   - Search for "Google+ API" and enable it
+4. **Create OAuth 2.0 credentials**:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth client ID"
+   - Application type: "Web application"
+   - Add authorized JavaScript origins:
+     - `http://localhost:5173` (development)
+     - `https://yourdomain.com` (production)
+   - Add authorized redirect URIs:
+     - `http://localhost:3000/api/auth/google/callback` (development)
+     - `https://yourdomain.com/api/auth/google/callback` (production)
+5. **Copy the Client ID and Client Secret** to your `.env` file
+
+#### LinkedIn OAuth Configuration
+
+1. **Go to [LinkedIn Developer Portal](https://www.linkedin.com/developers/)**
+2. **Create a new application**:
+   - Click "Create App"
+   - Fill in the required information
+   - Add `http://localhost:3000/api/auth/linkedin/callback` as a redirect URL (development)
+   - Add `https://yourdomain.com/api/auth/linkedin/callback` for production
+3. **Get your credentials**:
+   - Go to "Auth" tab in your app settings
+   - Copy "Client ID" and "Client Secret"
+4. **Configure permissions**:
+   - Request basic profile permissions: `r_liteprofile`, `r_emailaddress`
+5. **Add credentials to your `.env` file**
+
+### Session Security
+
+For production, generate a secure `SESSION_SECRET`:
+
+```bash
+# Linux/macOS
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+# Windows PowerShell
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+Use the generated string as your `SESSION_SECRET` in the `.env` file.
 
 ### Frontend Environment Variables
 
@@ -253,6 +330,13 @@ Create `frontend/.env.development` with:
 ```bash
 # API Configuration
 VITE_API_BASE_URL=/api     # Proxied to http://localhost:3000/api
+```
+
+For production, create `frontend/.env.production`:
+
+```bash
+# API Configuration
+VITE_API_BASE_URL=https://yourdomain.com/api
 ```
 
 ### Environment-Specific Values
@@ -321,10 +405,66 @@ kanbino/
 ### Key Directories Explained
 
 - **src/**: Backend TypeScript source code with Express server
+- **src/auth/**: Authentication strategies (Google, LinkedIn OAuth)
+- **src/controllers/**: Request handlers and business logic
+- **src/middleware/**: Custom Express middleware (auth, session, etc.)
+- **src/routes/**: API route definitions
+- **src/public/uploads/**: User uploaded files (profile photos, etc.)
 - **frontend/**: React frontend built with Vite
 - **tests/**: Comprehensive test suite organized by type
 - **src/styles/**: Tailwind CSS source files
 - **src/public/**: Static assets served by Express
+
+### API Endpoints
+
+#### Authentication Endpoints
+
+```bash
+# Google OAuth
+GET  /api/auth/google          # Initiate Google OAuth flow
+GET  /api/auth/google/callback # Google OAuth callback
+
+# LinkedIn OAuth
+GET  /api/auth/linkedin          # Initiate LinkedIn OAuth flow
+GET  /api/auth/linkedin/callback # LinkedIn OAuth callback
+
+# Session Management
+GET  /api/auth/session      # Get current session
+POST /api/auth/logout       # Logout user
+```
+
+#### Profile Endpoints
+
+```bash
+GET    /api/profile         # Get user profile
+PUT    /api/profile         # Update user profile
+POST   /api/profile/photo   # Upload profile photo
+DELETE /api/profile/photo   # Delete profile photo
+```
+
+#### Health Check
+
+```bash
+GET /health                 # Server health check
+```
+
+#### API Response Format
+
+Success response:
+```json
+{
+  "status": "success",
+  "data": { ... }
+}
+```
+
+Error response:
+```json
+{
+  "status": "error",
+  "message": "Error description"
+}
+```
 
 ## Development
 
@@ -846,6 +986,100 @@ TS2307: Cannot find module '...'
    # frontend/.env.development
    VITE_API_BASE_URL=/api
    ```
+
+#### Issue: OAuth Callback Errors
+
+**Error:**
+```
+Error: redirect_uri_mismatch
+```
+
+**Solutions:**
+
+1. **Verify callback URL in OAuth provider console**:
+   - For Google: Go to Google Cloud Console > Credentials
+   - For LinkedIn: Go to LinkedIn Developer Portal > Auth
+   - Ensure redirect URI matches exactly: `http://localhost:3000/api/auth/google/callback`
+   - No trailing slashes
+
+2. **Check your `.env` file**:
+   ```bash
+   # Verify exact match
+   GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+   ```
+
+3. **Common URL mistakes**:
+   - Missing `/api` prefix
+   - Wrong port (5173 instead of 3000)
+   - HTTP vs HTTPS mismatch
+   - Trailing slashes
+
+**Error:**
+```
+Invalid client credentials
+```
+
+**Solutions:**
+
+1. **Verify credentials in `.env`**:
+   ```bash
+   # Check for extra spaces or quotes
+   GOOGLE_CLIENT_ID=your_actual_client_id
+   GOOGLE_CLIENT_SECRET=your_actual_client_secret
+   ```
+
+2. **Regenerate credentials**:
+   - Go to OAuth provider console
+   - Delete existing OAuth client
+   - Create new credentials
+   - Update `.env` file
+
+3. **Check for special characters**:
+   - Remove quotes around values
+   - Ensure no spaces around `=` sign
+
+#### Issue: Session Not Persisting
+
+**Symptoms:**
+- User gets logged out after refresh
+- Session data is lost
+
+**Solutions:**
+
+1. **Check session configuration**:
+   ```bash
+   # .env
+   SESSION_SECRET=your_secure_session_secret_change_in_production
+   SESSION_MAX_AGE=604800000  # 7 days
+   ```
+
+2. **Verify session secret is set**:
+   ```bash
+   # Generate secure secret
+   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+   ```
+
+3. **Check CORS configuration** in `src/server.ts:21-26`:
+   - Ensure frontend origin is whitelisted
+   - `credentials: true` must be set
+
+#### Issue: Profile Photo Upload Fails
+
+**Error:**
+```
+Multer Error: File too large
+```
+
+**Solutions:**
+
+1. **Check file size limits** in your upload middleware
+2. **Verify upload directory exists**:
+   ```bash
+   mkdir -p src/public/uploads
+   chmod 755 src/public/uploads
+   ```
+
+3. **Check file type** - ensure it's an image (jpg, png, etc.)
 
 #### Issue: Tests Failing with Import Errors
 
