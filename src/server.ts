@@ -8,6 +8,7 @@ import cors from 'cors';
 import apiRoutes from './routes/api.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import profileRoutes from './routes/profile.routes.js';
+import imageAnalysisRoutes from './routes/image-analysis.routes.js';
 import { logger } from './utils/logger.js';
 import { config } from './config/index.js';
 import { initializePassport, passportSession } from './middleware/auth.middleware.js';
@@ -48,6 +49,9 @@ export function createServer(): Application {
 
   // Profile routes
   app.use('/api/profile', profileRoutes);
+
+  // Image analysis routes
+  app.use('/api/image-analysis', imageAnalysisRoutes);
 
   // Serve static files (uploads)
   app.use('/uploads', express.static('src/public/uploads'));
