@@ -89,7 +89,7 @@ export default function ProfilePhotoUploader({
     <div className="flex flex-col items-center space-y-4">
       {/* Photo preview/current photo */}
       <div className="relative">
-        <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 border-4 border-white shadow-lg">
+        <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 border-4 border-white/30 shadow-xl shadow-tech-cyan/20">
           {displayPhoto ? (
             <img
               src={displayPhoto}
@@ -127,7 +127,7 @@ export default function ProfilePhotoUploader({
         />
         <label
           htmlFor="photo-upload"
-          className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer transition-colors ${
+          className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-tech-blue hover:bg-tech-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tech-cyan cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-tech-blue/20 active:scale-95 ${
             uploading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
@@ -167,7 +167,7 @@ export default function ProfilePhotoUploader({
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className={`flex-1 px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors ${
+            className={`flex-1 px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-400 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95 ${
               uploading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
@@ -176,7 +176,7 @@ export default function ProfilePhotoUploader({
           <button
             onClick={handleCancel}
             disabled={uploading}
-            className={`flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors ${
+            className={`flex-1 px-4 py-2 border border-white/30 rounded-lg shadow-sm text-sm font-medium text-gray-200 bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tech-cyan transition-all duration-300 active:scale-95 ${
               uploading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
@@ -187,13 +187,13 @@ export default function ProfilePhotoUploader({
 
       {/* Error message */}
       {error && (
-        <div className="w-full p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-600">{error}</p>
+        <div className="w-full p-3 bg-red-500/20 border border-red-500/30 rounded-lg backdrop-blur-sm">
+          <p className="text-sm text-red-300">{error}</p>
         </div>
       )}
 
       {/* Info text */}
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-gray-400 text-center">
         Formatos aceitos: JPEG, PNG, WEBP, GIF
         <br />
         Tamanho máximo: 5MB
