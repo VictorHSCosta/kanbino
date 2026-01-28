@@ -49,3 +49,16 @@ export const uploadMiddleware = multer({
 
 // Export single file uploader for profile photos
 export const uploadProfilePhoto = uploadMiddleware.single('photo');
+
+// Memory storage for image analysis (files processed in memory)
+const memoryStorage = multer.memoryStorage();
+
+// Configure upload middleware for image analysis (stores in memory)
+export const uploadAnalysisImage = multer({
+  storage: memoryStorage,
+  fileFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit for analysis
+    files: 1,
+  },
+}).single('image');
