@@ -6,6 +6,7 @@
 [![React](https://img.shields.io/badge/React-18.2-cyan)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.0-646cff)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8)](https://tailwindcss.com/)
+[![OAuth](https://img.shields.io/badge/OAuth-Google%20%7C%20LinkedIn-blue)](#oauth-setup-guide)
 
 Professional full-stack Node.js project with TypeScript, React, Vite, and comprehensive testing suite.
 
@@ -18,6 +19,11 @@ Professional full-stack Node.js project with TypeScript, React, Vite, and compre
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Configuration](#configuration)
+  - [Environment Variables Reference](#environment-variables-reference)
+  - [OAuth Setup Guide](#oauth-setup-guide)
+- [Development Setup](#development-setup)
+- [Configuration Examples](#configuration-examples)
+- [Setup Checklist](#setup-checklist)
 - [Project Structure](#project-structure)
 - [Development](#development)
 - [Available Scripts](#available-scripts)
@@ -25,6 +31,7 @@ Professional full-stack Node.js project with TypeScript, React, Vite, and compre
 - [Building for Production](#building-for-production)
 - [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
+  - [Configuration Issues](#configuration-issues)
 - [Contributing](#contributing)
 - [Additional Resources](#additional-resources)
 - [License](#license)
@@ -38,6 +45,8 @@ Kanbino is a professional full-stack application built with modern technologies 
 - Full-stack TypeScript for type safety across the entire codebase
 - Modern React 18 with Vite for fast development experience
 - Tailwind CSS for utility-first styling
+- OAuth 2.0 authentication (Google and LinkedIn)
+- Profile photo upload functionality
 - Comprehensive testing suite with Jest (unit, integration, e2e)
 - Hot module replacement for rapid development
 - ESLint and Prettier for code quality
@@ -53,6 +62,11 @@ Kanbino is a professional full-stack application built with modern technologies 
 | Node.js | >= 20.0.0 | Runtime environment |
 | TypeScript | 5.6+ | Type-safe JavaScript |
 | Express | 4.18+ | Web framework |
+| Passport.js | 0.7.0 | Authentication middleware |
+| passport-google-oauth20 | 2.0+ | Google OAuth 2.0 |
+| passport-linkedin-oauth2 | 1.0+ | LinkedIn OAuth 2.0 |
+| express-session | 1.18+ | Session management |
+| Multer | 1.4.5+ | File upload handling |
 | Jest | 29.7+ | Testing framework |
 | ts-node | 10.9+ | TypeScript execution |
 
@@ -116,6 +130,15 @@ Before you begin, ensure you have the following installed:
 - **npm** >= 9.0.0 (comes with Node.js)
 - **Git** (for cloning the repository)
 
+### Optional (for OAuth features)
+
+- **Google Account** (for Google OAuth setup)
+- **LinkedIn Account** (for LinkedIn OAuth setup)
+
+### Recommended
+
+- **VS Code** (with extensions: ESLint, Prettier, Tailwind CSS IntelliSense)
+
 ### Installing Node.js
 
 **Linux (Ubuntu/Debian):**
@@ -148,6 +171,8 @@ git --version   # Should show git version
 
 ## Quick Start
 
+> ⏱️ **Estimated setup time:** 15-30 minutes
+
 Get up and running in minutes:
 
 ```bash
@@ -162,13 +187,24 @@ npm install
 cp .env.example .env
 cp frontend/.env.example frontend/.env.development
 
+# Configure minimum required variables in .env
+# (see Configuration section below for details)
+
 # Start both backend and frontend
 npm run dev:all
 ```
 
-Your application will be available at:
+✅ **Your application will be available at:**
 - **Backend API**: http://localhost:3000
 - **Frontend**: http://localhost:5173
+
+📋 **Quick Verification Checklist:**
+- [ ] Backend server starts without errors
+- [ ] Frontend loads in browser
+- [ ] API proxy is working (check browser console for CORS errors)
+- [ ] Health check responds: `curl http://localhost:3000/health`
+
+> **⚠️ Important:** For detailed configuration options, OAuth setup, and troubleshooting, see the [Configuration](#configuration) section below.
 
 ## Installation
 
@@ -179,15 +215,32 @@ git clone https://github.com/VictorHSCosta/kanbino.git
 cd kanbino
 ```
 
-### 2. Install Dependencies
+### 2. Verify Node.js Version
+
+```bash
+# Check Node.js version (must be >= 20.0.0)
+node --version
+
+# Check npm version (must be >= 9.0.0)
+npm --version
+```
+
+If versions are too old, see [Installing Node.js](#installing-nodejs) in Prerequisites.
+
+### 3. Install Dependencies
 
 ```bash
 npm install
 ```
 
-This installs all dependencies for both backend and frontend.
+This installs all dependencies for both backend and frontend, including:
+- Backend dependencies (Express, Passport, TypeScript, etc.)
+- Frontend dependencies (React, Vite, Tailwind CSS, etc.)
+- Development tools (Jest, ESLint, Prettier, Husky, etc.)
 
-### 3. Set Up Environment Variables
+**Expected output:** Creates `node_modules/` directory with ~500+ packages.
+
+### 4. Set Up Environment Variables
 
 #### Backend Environment Variables
 
@@ -195,7 +248,7 @@ This installs all dependencies for both backend and frontend.
 cp .env.example .env
 ```
 
-Edit `.env` and configure the variables (see [Configuration](#configuration)).
+Edit `.env` and configure the variables. For detailed configuration, see [Configuration](#configuration) and [Development Setup](#development-setup).
 
 #### Frontend Environment Variables
 
@@ -205,7 +258,9 @@ cp frontend/.env.example frontend/.env.development
 
 Edit `frontend/.env.development` as needed.
 
-### 4. Verify Installation
+> **Note:** OAuth configuration is optional. The application will run without OAuth credentials, but authentication features will be disabled.
+
+### 5. Verify Installation
 
 ```bash
 # Check TypeScript compilation
@@ -218,50 +273,1063 @@ npm test
 npm run dev
 ```
 
+For more detailed setup guidance, see [Development Setup](#development-setup).
+
 ## Configuration
 
-### Backend Environment Variables
+This section covers all aspects of configuring the Kanbino application, from basic setup to OAuth authentication.
 
-Create a `.env` file in the root directory with the following variables:
+### Overview
 
-```bash
-# Application Environment
-NODE_ENV=development        # development, production, or test
+Kanbino uses environment variables for configuration. You'll need to set up:
 
-# Server Configuration
-PORT=3000                   # HTTP server port
+1. **Backend configuration** (`.env` in root directory)
+2. **Frontend configuration** (`frontend/.env.development`)
+3. **OAuth credentials** (optional, for authentication features)
 
-# Logging Configuration
-LOG_LEVEL=info             # debug, info, warn, or error
+For quick setup examples, see [Configuration Examples](#configuration-examples).
 
-# Database Configuration (Optional - uncomment if needed)
-# DATABASE_HOST=localhost
-# DATABASE_PORT=5432
-# DATABASE_USERNAME=user
-# DATABASE_PASSWORD=
-# DATABASE_NAME=kanbino
+For step-by-step guidance, see [Development Setup](#development-setup).
 
-# API Configuration
-API_BASE_URL=http://localhost:3000
-API_TIMEOUT=30000          # API timeout in milliseconds
-```
+### Environment Variables Reference
 
-### Frontend Environment Variables
+#### Backend Environment Variables
 
-Create `frontend/.env.development` with:
+Create a `.env` file in the root directory based on `.env.example`:
 
-```bash
-# API Configuration
-VITE_API_BASE_URL=/api     # Proxied to http://localhost:3000/api
-```
+| Variable | Type | Default | Required | Description |
+|----------|------|---------|----------|-------------|
+| `NODE_ENV` | string | `development` | No | Environment: `development`, `production`, or `test` |
+| `PORT` | number | `3000` | No | HTTP server port |
+| `LOG_LEVEL` | string | `info` | No | Logging level: `debug`, `info`, `warn`, or `error` |
+| `API_BASE_URL` | string | `http://localhost:3000` | No | Base URL for API calls |
+| `API_TIMEOUT` | number | `30000` | No | API timeout in milliseconds |
+| `SESSION_SECRET` | string | - | Yes* | Secret for session encryption (generate secure random string) |
+| `SESSION_NAME` | string | `kanbino.sid` | No | Name of the session cookie |
+| `SESSION_MAX_AGE` | number | `604800000` | No | Session max age in milliseconds (7 days) |
+| `GOOGLE_CLIENT_ID` | string | - | No† | Google OAuth 2.0 Client ID |
+| `GOOGLE_CLIENT_SECRET` | string | - | No† | Google OAuth 2.0 Client Secret |
+| `GOOGLE_CALLBACK_URL` | string | `http://localhost:3000/api/auth/google/callback` | No† | Google OAuth callback URL |
+| `LINKEDIN_CLIENT_ID` | string | - | No† | LinkedIn OAuth 2.0 Client ID |
+| `LINKEDIN_CLIENT_SECRET` | string | - | No† | LinkedIn OAuth 2.0 Client Secret |
+| `LINKEDIN_CALLBACK_URL` | string | `http://localhost:3000/api/auth/linkedin/callback` | No† | LinkedIn OAuth callback URL |
+| `DATABASE_HOST` | string | - | No‡ | Database host (optional) |
+| `DATABASE_PORT` | number | `5432` | No‡ | Database port (optional) |
+| `DATABASE_USERNAME` | string | - | No‡ | Database username (optional) |
+| `DATABASE_PASSWORD` | string | - | No‡ | Database password (optional) |
+| `DATABASE_NAME` | string | `kanbino` | No‡ | Database name (optional) |
 
-### Environment-Specific Values
+\* Required if using session-based authentication
+† Required only for OAuth features
+‡ Optional database configuration (for future use)
+
+#### Frontend Environment Variables
+
+Create `frontend/.env.development`:
+
+| Variable | Type | Default | Required | Description |
+|----------|------|---------|----------|-------------|
+| `VITE_API_BASE_URL` | string | `/api` | No | API base URL (proxied to backend in development) |
+
+#### Environment-Specific Values
 
 | Variable | Development | Production | Test |
 |----------|-------------|------------|------|
-| NODE_ENV | development | production | test |
-| LOG_LEVEL | debug | warn | error |
-| PORT | 3000 | 80 or 443 | 3001 |
+| `NODE_ENV` | `development` | `production` | `test` |
+| `LOG_LEVEL` | `debug` or `info` | `warn` or `error` | `error` |
+| `PORT` | `3000` | `80` or `443` | `3001` |
+| `API_BASE_URL` | `http://localhost:3000` | `https://yourdomain.com` | `http://localhost:3001` |
+| `VITE_API_BASE_URL` | `/api` | Full production URL | `/api` |
+
+> **⚠️ Security Warning:** Never commit `.env` files to version control. Always use `.env.example` as a template and keep actual credentials secure.
+
+> **💡 Tip:** Generate a secure `SESSION_SECRET` with: `openssl rand -base64 32`
+
+### Environment Variable Categories
+
+#### Core Application Variables
+
+**Required for basic operation:**
+```bash
+NODE_ENV=development
+PORT=3000
+LOG_LEVEL=info
+```
+
+**Required for session management:**
+```bash
+SESSION_SECRET=<generate-with-openssl-rand-base64-32>
+SESSION_NAME=kanbino.sid
+SESSION_MAX_AGE=604800000
+```
+
+#### OAuth Variables (Optional)
+
+**Google OAuth:**
+```bash
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+```
+
+**LinkedIn OAuth:**
+```bash
+LINKEDIN_CLIENT_ID=your-linkedin-client-id
+LINKEDIN_CLIENT_SECRET=your-linkedin-client-secret
+LINKEDIN_CALLBACK_URL=http://localhost:3000/api/auth/linkedin/callback
+```
+
+> **Note:** OAuth credentials are optional. The application will run without them, but authentication features will be disabled. See [OAuth Setup Guide](#oauth-setup-guide) for detailed setup instructions.
+
+#### Database Variables (Optional - Future Use)
+
+```bash
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=user
+DATABASE_PASSWORD=
+DATABASE_NAME=kanbino
+```
+
+#### API Configuration Variables
+
+```bash
+API_BASE_URL=http://localhost:3000
+API_TIMEOUT=30000
+```
+
+### Configuration File Locations
+
+```
+kanbino/
+├── .env                      # Backend environment variables (create from .env.example)
+├── .env.example              # Backend environment template
+├── frontend/
+│   ├── .env.development      # Frontend development variables (create from frontend/.env.example)
+│   └── .env.example          # Frontend environment template
+```
+
+### Loading Order
+
+Environment variables are loaded in this order (later overrides earlier):
+
+1. Default values in `src/config/index.ts`
+2. Variables from `.env` file
+3. System environment variables
+
+This allows you to override specific variables without editing the `.env` file.
+
+### Validating Configuration
+
+After setting up your environment variables, verify they're loaded correctly:
+
+```bash
+# Start the backend
+npm run dev
+
+# Check the console output for configuration logs
+# Should show: "Environment: development", "Port: 3000", etc.
+
+# Test health endpoint
+curl http://localhost:3000/health
+
+# Expected response: {"status":"healthy","timestamp":"..."}
+```
+
+If configuration fails, see [Configuration Issues](#configuration-issues) in Troubleshooting.
+
+## OAuth Setup Guide
+
+This guide provides step-by-step instructions for configuring OAuth 2.0 authentication with Google and LinkedIn.
+
+> **⏱️ Time required:** ~15-30 minutes per provider
+>
+> **Prerequisites:** Google Account or LinkedIn Account (depending on which provider you want to configure)
+
+### Overview
+
+Kanbino supports OAuth 2.0 authentication with:
+- **Google OAuth 2.0** - Users can sign in with their Google account
+- **LinkedIn OAuth 2.0** - Users can sign in with their LinkedIn account
+
+Both providers are **optional**. The application will function without them, but authentication features will be disabled.
+
+### OAuth Flow Architecture
+
+```
+┌─────────────┐         ┌─────────────┐         ┌──────────────┐
+│   Browser   │         │  Kanbino    │         │   OAuth      │
+│  (Frontend) │────────▶│  (Backend)  │────────▶│   Provider   │
+│             │         │   Express    │         │ (Google/     │
+│             │         │   Passport   │         │  LinkedIn)   │
+└─────────────┘         └─────────────┘         └──────────────┘
+       │                       │                        │
+       │  1. Click "Sign in"   │                        │
+       │──────────────────────▶│                        │
+       │                       │                        │
+       │                       │  2. Redirect to OAuth  │
+       │                       │───────────────────────▶│
+       │                       │                        │
+       │                       │  3. User approves      │
+       │                       │◀───────────────────────│
+       │                       │                        │
+       │                       │  4. Exchange code for  │
+       │                       │     access token       │
+       │                       │───────────────────────▶│
+       │                       │                        │
+       │                       │  5. Return user profile │
+       │                       │◀───────────────────────│
+       │                       │                        │
+       │  6. Create session    │                        │
+       │◀──────────────────────│                        │
+       │                       │                        │
+       │  7. Redirect to home  │                        │
+       │◀──────────────────────│                        │
+```
+
+### Google OAuth Setup
+
+#### Step 1: Create Google Cloud Project
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Sign in with your Google account
+3. Click on the project dropdown at the top
+4. Click **"New Project"**
+5. Enter project name (e.g., "Kanbino")
+6. Click **"Create"**
+7. Wait for project to be created (takes ~10-30 seconds)
+
+#### Step 2: Enable Google+ API
+
+1. In the Google Cloud Console, make sure your new project is selected
+2. Navigate to **"APIs & Services"** → **"Library"**
+3. Search for **"Google+ API"** or **"People API"**
+4. Click on it and press **"Enable"**
+
+> **Note:** Google+ API is deprecated, but the API name remains in some documentation. You may need to enable "People API" instead.
+
+#### Step 3: Configure OAuth Consent Screen
+
+1. Navigate to **"APIs & Services"** → **"OAuth consent screen"**
+2. Choose **"External"** user type (for testing) or **"Internal"** (for organization only)
+3. Click **"Create"**
+4. Fill in the required information:
+   - **App name**: Kanbino
+   - **User support email**: Your email
+   - **Developer contact email**: Your email
+5. Click **"Save and Continue"**
+6. Skip the "Scopes" section (click **"Save and Continue"**)
+7. Add test users (your email address) in the "Test users" section
+8. Click **"Save and Continue"**
+9. Review and click **"Back to Dashboard"**
+
+#### Step 4: Create OAuth 2.0 Credentials
+
+1. Navigate to **"APIs & Services"** → **"Credentials"**
+2. Click **"+ Create Credentials"** → **"OAuth 2.0 Client ID"**
+3. Select **"Web application"** as application type
+4. Configure the application:
+   - **Name**: Kanbino Web Client
+   - **Authorized JavaScript origins**:
+     - `http://localhost:5173` (development)
+     - `https://yourdomain.com` (production)
+   - **Authorized redirect URIs**:
+     - `http://localhost:3000/api/auth/google/callback` (development)
+     - `https://yourdomain.com/api/auth/google/callback` (production)
+5. Click **"Create"**
+6. **Copy the Client ID and Client Secret** (you'll need them for the next step)
+
+#### Step 5: Configure Environment Variables
+
+Add the following to your `.env` file:
+
+```bash
+# Google OAuth Configuration
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+```
+
+Replace the placeholder values with:
+- `your-google-client-id.apps.googleusercontent.com` - The Client ID from Google Cloud Console
+- `your-google-client-secret` - The Client Secret from Google Cloud Console
+
+#### Step 6: Test Google OAuth
+
+1. Restart the backend server:
+   ```bash
+   npm run dev
+   ```
+
+2. Visit the authentication URL:
+   ```
+   http://localhost:3000/api/auth/google
+   ```
+
+3. **Expected flow:**
+   - Redirects to Google sign-in page
+   - After signing in, redirects back to `http://localhost:3000/api/auth/google/callback`
+   - Session is created
+   - Redirects to application home page
+
+4. If successful, you should be logged in with your Google account.
+
+#### Troubleshooting Google OAuth
+
+**Error: redirect_uri_mismatch**
+- Cause: The redirect URL in `.env` doesn't match what's configured in Google Cloud Console
+- Solution: Ensure exact match, including protocol (`http` vs `https`) and port number
+
+**Error: unauthorized_client**
+- Cause: OAuth consent screen not set up or app not verified
+- Solution: Complete OAuth consent screen setup and add your email as a test user
+
+**Error: access_denied**
+- Cause: User denied permission or app not in testing list
+- Solution: Add your email to test users in OAuth consent screen
+
+### LinkedIn OAuth Setup
+
+#### Step 1: Create LinkedIn Application
+
+1. Go to [LinkedIn Developer Portal](https://www.linkedin.com/developers/)
+2. Sign in with your LinkedIn account
+3. Click **"Create App"**
+4. Fill in the required information:
+   - **App name**: Kanbino
+   - **LinkedIn Page**: Select your company page (or create a new one)
+   - **App logo**: Upload an app logo (128x128px recommended)
+   - **Description**: Brief description of your application
+5. Check the box to agree to the LinkedIn API Terms of Use
+6. Click **"Create App"**
+
+#### Step 2: Configure OAuth 2.0 Settings
+
+1. In the LinkedIn Developer Portal, select your newly created app
+2. Navigate to **"Auth"** tab
+3. Scroll to **"OAuth 2.0 Redirect URLs"**
+4. Add the following redirect URLs:
+   - `http://localhost:3000/api/auth/linkedin/callback` (development)
+   - `https://yourdomain.com/api/auth/linkedin/callback` (production)
+5. Click **"Update"**
+
+#### Step 3: Configure Permissions
+
+1. In the **"Auth"** tab, scroll to **"Default Application Permissions"**
+2. Add the following scopes:
+   - `r_liteprofile` - Basic profile information
+   - `r_emailaddress` - Email address
+3. Click **"Update"**
+
+> **Note:** LinkedIn may require additional verification steps for production use. During development, you can use the app in "Test Mode" with a limited number of users.
+
+#### Step 4: Get Credentials
+
+1. In the LinkedIn Developer Portal, navigate to your app
+2. Go to the **"Auth"** tab
+3. Copy the **Client ID** and **Client Secret**
+
+#### Step 5: Configure Environment Variables
+
+Add the following to your `.env` file:
+
+```bash
+# LinkedIn OAuth Configuration
+LINKEDIN_CLIENT_ID=your-linkedin-client-id
+LINKEDIN_CLIENT_SECRET=your-linkedin-client-secret
+LINKEDIN_CALLBACK_URL=http://localhost:3000/api/auth/linkedin/callback
+```
+
+Replace the placeholder values with:
+- `your-linkedin-client-id` - The Client ID from LinkedIn Developer Portal
+- `your-linkedin-client-secret` - The Client Secret from LinkedIn Developer Portal
+
+#### Step 6: Test LinkedIn OAuth
+
+1. Restart the backend server:
+   ```bash
+   npm run dev
+   ```
+
+2. Visit the authentication URL:
+   ```
+   http://localhost:3000/api/auth/linkedin
+   ```
+
+3. **Expected flow:**
+   - Redirects to LinkedIn sign-in page
+   - After signing in, asks for permission to access profile
+   - After granting permission, redirects back to `http://localhost:3000/api/auth/linkedin/callback`
+   - Session is created
+   - Redirects to application home page
+
+4. If successful, you should be logged in with your LinkedIn account.
+
+#### Troubleshooting LinkedIn OAuth
+
+**Error: Invalid redirect_uri**
+- Cause: The redirect URL in `.env` doesn't match what's configured in LinkedIn Developer Portal
+- Solution: Ensure exact match, including protocol (`http` vs `https`), port number, and path
+
+**Error: unauthorized_client**
+- Cause: OAuth app not properly configured or not in test mode
+- Solution: Verify app settings and ensure you're using a test account
+
+**Error: access_denied**
+- Cause: User denied permission or invalid scopes
+- Solution: Ensure correct permissions (`r_liteprofile`, `r_emailaddress`) are configured
+
+### Testing OAuth Locally
+
+#### Manual Testing with Browser
+
+1. Start the application:
+   ```bash
+   npm run dev:all
+   ```
+
+2. Open your browser and navigate to the frontend:
+   ```
+   http://localhost:5173
+   ```
+
+3. Test Google OAuth:
+   - Click "Sign in with Google" button (or navigate to `/api/auth/google`)
+   - Complete the OAuth flow
+   - Verify you're redirected back to the application
+   - Check browser console for any errors
+
+4. Test LinkedIn OAuth:
+   - Click "Sign in with LinkedIn" button (or navigate to `/api/auth/linkedin`)
+   - Complete the OAuth flow
+   - Verify you're redirected back to the application
+   - Check browser console for any errors
+
+#### Testing with cURL
+
+You can test OAuth endpoints directly:
+
+```bash
+# Test Google OAuth initiation
+curl -I http://localhost:3000/api/auth/google
+
+# Test LinkedIn OAuth initiation
+curl -I http://localhost:3000/api/auth/linkedin
+
+# Test callback endpoint (should redirect if not authenticated)
+curl -I http://localhost:3000/api/auth/google/callback
+curl -I http://localhost:3000/api/auth/linkedin/callback
+```
+
+#### Verifying Session
+
+After successful OAuth, verify the session is created:
+
+```bash
+# Check session cookie
+curl -v http://localhost:3000/api/auth/check 2>&1 | grep -i "cookie"
+
+# Should show: Set-Cookie: kanbino.sid=...
+```
+
+### OAuth in Production
+
+When deploying to production, update your OAuth configuration:
+
+#### 1. Update Callback URLs
+
+**Google Cloud Console:**
+- Add production redirect URI: `https://yourdomain.com/api/auth/google/callback`
+- Remove or keep development URLs for testing
+
+**LinkedIn Developer Portal:**
+- Add production redirect URL: `https://yourdomain.com/api/auth/linkedin/callback`
+- Remove or keep development URLs for testing
+
+#### 2. Update Environment Variables
+
+```bash
+# Production .env
+GOOGLE_CALLBACK_URL=https://yourdomain.com/api/auth/google/callback
+LINKEDIN_CALLBACK_URL=https://yourdomain.com/api/auth/linkedin/callback
+```
+
+#### 3. Security Best Practices
+
+- **Use HTTPS in production** - OAuth providers require HTTPS for production apps
+- **Set cookie security flags** - Ensure `secure: true` and `httpOnly: true` for cookies in production
+- **Rotate secrets regularly** - Change `CLIENT_SECRET` values periodically
+- **Monitor OAuth usage** - Set up alerts for suspicious authentication activity
+- **Limit redirect URIs** - Only add necessary and trusted redirect URLs
+
+#### 4. Domain Verification
+
+Some OAuth providers require domain verification:
+
+- **Google**: Verify domain in Google Search Console
+- **LinkedIn**: Add domain verification in LinkedIn Developer Portal
+
+#### 5. App Verification (For Public Apps)
+
+For production apps accessible to the public:
+
+- **Google**: Submit app for verification if accessing sensitive scopes
+- **LinkedIn**: Apply for production access and complete verification process
+
+> **⚠️ Warning:** Unverified apps have usage limits (usually 100 test users). For public deployment, complete the verification process.
+
+### Disabling OAuth
+
+If you don't need OAuth authentication, simply:
+
+1. Leave OAuth environment variables empty or remove them from `.env`
+2. The application will run without authentication features
+3. Users will access the application without login requirements
+
+### OAuth Configuration Summary
+
+| Provider | Client ID | Client Secret | Callback URL | Scopes |
+|----------|-----------|---------------|--------------|--------|
+| Google | `GOOGLE_CLIENT_ID` | `GOOGLE_CLIENT_SECRET` | `/api/auth/google/callback` | profile, email |
+| LinkedIn | `LINKEDIN_CLIENT_ID` | `LINKEDIN_CLIENT_SECRET` | `/api/auth/linkedin/callback` | r_liteprofile, r_emailaddress |
+
+### Additional Resources
+
+- [Google OAuth 2.0 Documentation](https://developers.google.com/identity/protocols/oauth2)
+- [LinkedIn Authentication Guide](https://learn.microsoft.com/en-us/linkedin/shared/references/v2/authentication/)
+- [Passport.js Documentation](http://www.passportjs.org/)
+- [OAuth 2.0 Simplified](https://oauth2simplified.com/)
+
+## Development Setup
+
+This section provides detailed, step-by-step instructions for setting up a complete development environment for Kanbino.
+
+> **⏱️ Estimated time:** 20-40 minutes
+>
+> **Difficulty:** Beginner-friendly
+
+### Prerequisites Checklist
+
+Before starting, ensure you have:
+
+- [ ] **Node.js** >= 20.0.0 installed
+- [ ] **npm** >= 9.0.0 available
+- [ ] **Git** installed and configured
+- [ ] **Code editor** (VS Code recommended)
+- [ ] **Terminal/Command Prompt** access
+- [ ] (Optional) **Google Account** for Google OAuth
+- [ ] (Optional) **LinkedIn Account** for LinkedIn OAuth
+
+### Step 1: Verify System Requirements
+
+#### Check Node.js Version
+
+```bash
+node --version
+# Expected output: v20.0.0 or higher
+
+npm --version
+# Expected output: 9.0.0 or higher
+```
+
+**If Node.js is not installed or version is too old:**
+
+<details>
+<summary><strong>Install Node.js on Linux (Ubuntu/Debian)</strong></summary>
+
+```bash
+# Remove old versions (if any)
+sudo apt-get remove nodejs npm
+
+# Add NodeSource repository for Node.js 20 LTS
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+
+# Install Node.js
+sudo apt-get install -y nodejs
+
+# Verify installation
+node --version
+npm --version
+```
+
+</details>
+
+<details>
+<summary><strong>Install Node.js on macOS</strong></summary>
+
+**Using Homebrew (recommended):**
+```bash
+# Install Homebrew if not already installed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Node.js 20
+brew install node@20
+
+# Link the installation
+brew link node@20
+
+# Verify installation
+node --version
+npm --version
+```
+
+**Using official installer:**
+Download from [nodejs.org](https://nodejs.org/)
+
+</details>
+
+<details>
+<summary><strong>Install Node.js on Windows</strong></summary>
+
+1. Download the Windows installer from [nodejs.org](https://nodejs.org/)
+2. Run the installer with default options
+3. Restart your terminal/command prompt
+4. Verify installation:
+   ```cmd
+   node --version
+   npm --version
+   ```
+
+</details>
+
+#### Check Git Installation
+
+```bash
+git --version
+# Expected output: git version 2.x.x or higher
+```
+
+**If Git is not installed:**
+
+<details>
+<summary><strong>Install Git</strong></summary>
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt-get update
+sudo apt-get install git
+```
+
+**macOS:**
+```bash
+# macOS usually comes with Git pre-installed
+# Or install via Homebrew:
+brew install git
+```
+
+**Windows:**
+Download from [git-scm.com](https://git-scm.com/downloads)
+
+</details>
+
+### Step 2: Clone the Repository
+
+```bash
+# Clone the repository
+git clone https://github.com/VictorHSCosta/kanbino.git
+
+# Navigate into the project directory
+cd kanbino
+
+# Verify you're in the right directory
+pwd
+# Expected: .../kanbino
+```
+
+### Step 3: Install Dependencies
+
+```bash
+# Install all dependencies (backend and frontend)
+npm install
+```
+
+**What happens during `npm install`:**
+- Downloads and installs ~500+ packages
+- Creates `node_modules/` directory
+- Generates `package-lock.json` for reproducible builds
+- Installs backend dependencies (Express, Passport, TypeScript, etc.)
+- Installs frontend dependencies (React, Vite, Tailwind CSS, etc.)
+- Installs development tools (Jest, ESLint, Prettier, Husky, etc.)
+
+**Expected time:** 1-3 minutes (depending on internet connection)
+
+**Verify installation:**
+```bash
+# Check node_modules exists
+ls node_modules | wc -l
+# Expected: 500+ directories
+
+# Check package versions
+npm list --depth=0
+```
+
+**Troubleshooting:**
+
+If installation fails, try:
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Remove node_modules and package-lock.json
+rm -rf node_modules package-lock.json
+
+# Reinstall
+npm install
+```
+
+### Step 4: Create Environment Files
+
+#### Backend Environment File
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Verify the file was created
+ls -la .env
+# Expected: -rw-r--r-- ... .env
+```
+
+#### Frontend Environment File
+
+```bash
+# Create frontend directory if it doesn't exist
+mkdir -p frontend
+
+# Copy the example file
+cp frontend/.env.example frontend/.env.development
+
+# Verify the file was created
+ls -la frontend/.env.development
+# Expected: -rw-r--r-- ... frontend/.env.development
+```
+
+### Step 5: Configure Environment Variables
+
+#### Minimum Required Configuration
+
+For a basic development setup, configure these variables in `.env`:
+
+```bash
+# .env - Minimum configuration
+NODE_ENV=development
+PORT=3000
+LOG_LEVEL=info
+SESSION_SECRET=dev-secret-change-in-production
+```
+
+**Explanation:**
+- `NODE_ENV`: Set to `development` for verbose logging
+- `PORT`: Backend server port (default: 3000)
+- `LOG_LEVEL`: Logging verbosity (`debug`, `info`, `warn`, `error`)
+- `SESSION_SECRET`: Secret for session encryption (change for production)
+
+#### Generate Secure Session Secret
+
+For development, you can use a simple secret. For production, generate a secure one:
+
+```bash
+# Generate a secure random secret
+openssl rand -base64 32
+
+# Copy the output to your .env file
+# Example output: xK9mN2pQ4rT7vY1zA3bC5dE6fG8hJ0kL=
+```
+
+#### Optional: Configure OAuth (for authentication features)
+
+If you want to enable OAuth authentication, see [OAuth Setup Guide](#oauth-setup-guide) for detailed instructions.
+
+For now, you can leave OAuth variables empty or commented out.
+
+### Step 6: Configure Frontend
+
+The frontend configuration is minimal:
+
+```bash
+# frontend/.env.development
+VITE_API_BASE_URL=/api
+```
+
+**Explanation:**
+- `VITE_API_BASE_URL`: API base URL (uses Vite proxy in development)
+- `/api` proxies to `http://localhost:3000/api` via Vite
+
+### Step 7: Verify Project Structure
+
+After completing the above steps, your project structure should look like this:
+
+```bash
+# Verify important files exist
+ls -la
+
+# Expected output should include:
+# .env                  (your environment configuration)
+# .env.example          (environment template)
+# package.json          (backend dependencies)
+# tsconfig.json         (TypeScript config)
+# vite.config.ts        (Vite build config)
+# src/                  (backend source code)
+# frontend/             (frontend source code)
+# tests/                (test files)
+```
+
+```bash
+# Verify frontend structure
+ls -la frontend/
+
+# Expected output should include:
+# .env.development      (frontend environment config)
+# .env.example          (frontend environment template)
+# src/                  (React source code)
+# index.html            (HTML template)
+# package.json          (frontend dependencies)
+# tsconfig.json         (frontend TypeScript config)
+```
+
+### Step 8: Verify TypeScript Configuration
+
+```bash
+# Check backend TypeScript
+npm run type-check
+
+# Expected output: No errors
+# Should show: "✓ TypeScript compilation successful"
+
+# Check frontend TypeScript
+npm run type-check:frontend
+
+# Expected output: No errors
+# Should show: "✓ Frontend TypeScript compilation successful"
+```
+
+**If TypeScript errors occur:**
+
+<details>
+<summary><strong>Common TypeScript issues</strong></summary>
+
+**Issue: TS2307 Cannot find module**
+- **Cause:** Missing `.js` extension in imports (ESM requirement)
+- **Solution:** Add `.js` extension to all relative imports
+  ```typescript
+  // Correct
+  import { myFunc } from './utils.js';
+
+  // Incorrect
+  import { myFunc } from './utils';
+  ```
+
+**Issue: Cannot find type definitions**
+- **Solution:** Install missing type definitions
+  ```bash
+  npm install --save-dev @types/node
+  ```
+
+</details>
+
+### Step 9: Run Linter and Formatter
+
+```bash
+# Check for linting issues
+npm run lint
+
+# Expected output: No errors or warnings
+
+# Format code
+npm run format
+
+# Expected output: No errors
+```
+
+### Step 10: Start Development Servers
+
+#### Option 1: Start Both Backend and Frontend (Recommended)
+
+```bash
+npm run dev:all
+```
+
+This starts:
+- Backend on http://localhost:3000
+- Frontend on http://localhost:5173
+- Vite proxy for `/api` → `http://localhost:3000/api`
+
+#### Option 2: Start Backend Only
+
+```bash
+npm run dev
+```
+
+Backend runs on http://localhost:3000 with hot reload (Nodemon).
+
+#### Option 3: Start Frontend Only
+
+```bash
+npm run dev:frontend
+```
+
+Frontend runs on http://localhost:5173 with API proxy to backend.
+
+### Step 11: Verify Setup
+
+#### Check Backend Health
+
+```bash
+# In a new terminal, test the backend
+curl http://localhost:3000/health
+
+# Expected response:
+# {"status":"healthy","timestamp":"2024-01-15T10:30:00.000Z"}
+```
+
+#### Check Frontend
+
+1. Open your browser
+2. Navigate to: http://localhost:5173
+3. Verify the application loads
+4. Open browser DevTools (F12)
+5. Check console for errors (should be none)
+
+#### Check API Proxy
+
+```bash
+# Test API proxy through frontend
+curl http://localhost:5173/api/health
+
+# Expected response:
+# {"status":"healthy","timestamp":"2024-01-15T10:30:00.000Z"}
+```
+
+### Step 12: Run Tests (Optional but Recommended)
+
+```bash
+# Run all tests
+npm test
+
+# Expected: All tests pass
+# Should see: "Test Suites: X passed, X total"
+```
+
+### Common Setup Issues and Solutions
+
+<details>
+<summary><strong>Issue: Port already in use (EADDRINUSE)</strong></summary>
+
+**Error message:**
+```
+Error: listen EADDRINUSE: address already in use :::3000
+```
+
+**Solutions:**
+
+**Option 1: Kill process on port**
+```bash
+# Linux/macOS
+lsof -ti:3000 | xargs kill -9
+
+# Windows (Command Prompt)
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# Windows (PowerShell)
+Get-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess | Stop-Process -Force
+```
+
+**Option 2: Change port in .env**
+```bash
+# Edit .env
+PORT=3001
+```
+
+</details>
+
+<details>
+<summary><strong>Issue: Module not found</strong></summary>
+
+**Error message:**
+```
+Cannot find module 'express'
+```
+
+**Solution:**
+```bash
+# Clear cache and reinstall
+rm -rf node_modules package-lock.json
+npm install
+```
+
+</details>
+
+<details>
+<summary><strong>Issue: Environment variables not loading</strong></summary>
+
+**Symptoms:** Configuration shows default values
+
+**Solution:**
+```bash
+# Verify .env file exists
+cat .env
+
+# Check file is named correctly (not .env.example)
+ls -la | grep "\.env$"
+
+# Restart the server after changing .env
+npm run dev
+```
+
+</details>
+
+### Development Setup Verification Checklist
+
+After completing the setup, verify:
+
+- [ ] Node.js version is >= 20.0.0
+- [ ] npm version is >= 9.0.0
+- [ ] Repository cloned successfully
+- [ ] Dependencies installed (`node_modules/` exists)
+- [ ] `.env` file created and configured
+- [ ] `frontend/.env.development` file created
+- [ ] TypeScript compiles without errors (`npm run type-check`)
+- [ ] Linter passes (`npm run lint`)
+- [ ] Backend starts on port 3000
+- [ ] Frontend starts on port 5173
+- [ ] Health check endpoint responds: `curl http://localhost:3000/health`
+- [ ] Frontend loads in browser
+- [ ] API proxy works (no CORS errors in console)
+
+### What's Next?
+
+After completing the development setup:
+
+1. **Configure OAuth** (optional) - See [OAuth Setup Guide](#oauth-setup-guide)
+2. **Explore the codebase** - See [Project Structure](#project-structure)
+3. **Start development** - See [Development](#development)
+4. **Write tests** - See [Testing](#testing)
+5. **Build for production** - See [Building for Production](#building-for-production)
+
+### Recommended VS Code Extensions
+
+For the best development experience, install these extensions:
+
+- **[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)** - JavaScript/TypeScript linting
+- **[Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)** - Code formatting
+- **[TypeScript Importer](https://marketplace.visualstudio.com/items?itemName=pmneo.tsimporter)** - Auto-import TypeScript modules
+- **[Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)** - Tailwind CSS autocompletion
+- **[Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)** - Auto rename paired HTML tags
+- **[Bracket Pair Colorizer](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)** - Colorize matching brackets
+
+### Getting Help
+
+If you encounter issues during setup:
+
+1. Check the [Troubleshooting](#troubleshooting) section
+2. Review the [Configuration Issues](#configuration-issues) subsection
+3. Search existing [GitHub Issues](https://github.com/VictorHSCosta/kanbino/issues)
+4. Create a new issue with:
+   - Error message
+   - Steps to reproduce
+   - System information (OS, Node version, npm version)
+   - What you expected vs what actually happened
 
 ## Project Structure
 
