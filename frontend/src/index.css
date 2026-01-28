@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .tech-background {
+    @apply bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900;
+    background-size: 200% 200%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .tech-background {
+      animation: gradient 8s ease infinite;
+    }
+  }
+
+  .tech-card {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+
+  .tech-card-solid {
+    @apply bg-white/95 backdrop-blur-sm border border-white/20;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+}
+
+/* Accessibility: High contrast mode support */
+@media (prefers-contrast: high) {
+  .tech-card {
+    @apply border-white/40;
+  }
+
+  .tech-card-solid {
+    @apply border-white/40 bg-white;
+  }
+}
+
+/* Print styles for better readability */
+@media print {
+  .tech-background {
+    background: white !important;
+    animation: none !important;
+  }
+
+  .tech-card,
+  .tech-card-solid {
+    background: white !important;
+    border: 1px solid #000 !important;
+  }
+}

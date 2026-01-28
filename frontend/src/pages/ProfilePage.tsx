@@ -55,10 +55,10 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen tech-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando perfil...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-tech-accent mx-auto"></div>
+          <p className="mt-4 text-gray-300">Carregando perfil...</p>
         </div>
       </div>
     );
@@ -66,11 +66,11 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+      <div className="min-h-screen tech-background flex items-center justify-center p-4">
+        <div className="max-w-md w-full tech-card-solid rounded-lg shadow-2xl p-8">
           <div className="text-center">
             <svg
-              className="mx-auto h-12 w-12 text-red-500"
+              className="mx-auto h-12 w-12 text-red-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -82,11 +82,11 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
-            <h2 className="mt-4 text-xl font-semibold text-gray-900">Erro</h2>
-            <p className="mt-2 text-gray-600">{error}</p>
+            <h2 className="mt-4 text-xl font-semibold text-white">Erro</h2>
+            <p className="mt-2 text-gray-300">{error}</p>
             <button
               onClick={onBack}
-              className="mt-6 w-full inline-flex justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-6 w-full inline-flex justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-tech-blue hover:bg-tech-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tech-cyan transition-all duration-300"
             >
               Voltar
             </button>
@@ -101,13 +101,13 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen tech-background py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Header with back button */}
         <div className="mb-6">
           <button
             onClick={onBack}
-            className="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+            className="inline-flex items-center text-sm font-medium text-tech-cyan hover:text-tech-blue transition-colors"
           >
             <svg
               className="mr-2 h-5 w-5"
@@ -128,10 +128,10 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
         {/* Success message */}
         {successMessage && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-emerald-500/20 border border-emerald-500/30 rounded-lg backdrop-blur-sm">
             <div className="flex">
               <svg
-                className="h-5 w-5 text-green-400"
+                className="h-5 w-5 text-emerald-400"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -141,7 +141,7 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
                   clipRule="evenodd"
                 />
               </svg>
-              <p className="ml-3 text-sm font-medium text-green-800">
+              <p className="ml-3 text-sm font-medium text-emerald-400">
                 {successMessage}
               </p>
             </div>
@@ -149,17 +149,17 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
         )}
 
         {/* Profile card */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="tech-card-solid rounded-lg shadow-2xl overflow-hidden hover:shadow-tech-blue/20 transition-all duration-300">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-8">
-            <h1 className="text-2xl font-bold text-white">Meu Perfil</h1>
-            <p className="text-indigo-100 mt-1">Gerencie suas informações</p>
+          <div className="bg-gradient-to-r from-tech-blue via-tech-purple to-tech-cyan px-6 py-8">
+            <h1 className="text-2xl font-bold text-white drop-shadow-lg">Meu Perfil</h1>
+            <p className="text-gray-200 mt-1">Gerencie suas informações</p>
           </div>
 
           <div className="p-6">
             {/* Photo section */}
             <div className="mb-8">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Foto de Perfil</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">Foto de Perfil</h2>
               <ProfilePhotoUploader
                 currentPhoto={user.photo}
                 onPhotoUpdated={handlePhotoUpdated}
@@ -168,41 +168,41 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
             {/* User info section */}
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              <h2 className="text-lg font-semibold text-white mb-4">
                 Informações Pessoais
               </h2>
-              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
+              <div className="tech-card rounded-lg p-6 space-y-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Nome Completo</p>
-                  <p className="mt-1 text-lg font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-400">Nome Completo</p>
+                  <p className="mt-1 text-lg font-medium text-gray-200">
                     {user.displayName}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Nome</p>
-                    <p className="mt-1 text-gray-900">{user.firstName}</p>
+                    <p className="text-sm font-medium text-gray-400">Nome</p>
+                    <p className="mt-1 text-gray-200">{user.firstName}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Sobrenome</p>
-                    <p className="mt-1 text-gray-900">{user.lastName}</p>
+                    <p className="text-sm font-medium text-gray-400">Sobrenome</p>
+                    <p className="mt-1 text-gray-200">{user.lastName}</p>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Email</p>
-                  <p className="mt-1 text-gray-900">{user.email}</p>
+                  <p className="text-sm font-medium text-gray-400">Email</p>
+                  <p className="mt-1 text-gray-200">{user.email}</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Provedor</p>
-                    <p className="mt-1 capitalize text-gray-900">{user.provider}</p>
+                    <p className="text-sm font-medium text-gray-400">Provedor</p>
+                    <p className="mt-1 capitalize text-gray-200">{user.provider}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Membro desde</p>
-                    <p className="mt-1 text-gray-900">
+                    <p className="text-sm font-medium text-gray-400">Membro desde</p>
+                    <p className="mt-1 text-gray-200">
                       {new Date(user.createdAt).toLocaleDateString('pt-BR')}
                     </p>
                   </div>
@@ -210,12 +210,12 @@ export default function ProfilePage({ onBack }: ProfilePageProps) {
 
                 {user.profileUrl && (
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Perfil do LinkedIn</p>
+                    <p className="text-sm font-medium text-gray-400">Perfil do LinkedIn</p>
                     <a
                       href={user.profileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-1 text-indigo-600 hover:text-indigo-500"
+                      className="mt-1 text-tech-cyan hover:text-tech-blue transition-colors"
                     >
                       {user.profileUrl}
                     </a>
