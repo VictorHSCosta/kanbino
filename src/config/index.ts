@@ -7,6 +7,7 @@ interface AppConfig {
   env: string;
   port: number;
   logLevel: string;
+  frontendUrl: string;
   database?: {
     host: string;
     port: number;
@@ -40,6 +41,7 @@ function loadConfig(): AppConfig {
     env: process.env.NODE_ENV || 'development',
     port: parseInt(process.env.PORT || '3000', 10),
     logLevel: process.env.LOG_LEVEL || 'info',
+    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
     database: process.env.DATABASE_HOST
       ? {
           host: process.env.DATABASE_HOST || 'localhost',
