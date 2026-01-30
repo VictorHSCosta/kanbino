@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import ExampleComponent from './components/ExampleComponent'
 import ProfilePage from './pages/ProfilePage'
+import TextDisplayDemo from './pages/TextDisplayDemo'
 import { apiService } from './services/api'
 import type { StatusResponse, DataResponse } from './types/api.types'
 
@@ -9,7 +10,7 @@ function App() {
   const [status, setStatus] = useState<StatusResponse | null>(null)
   const [data, setData] = useState<DataResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState<'home' | 'profile'>('home')
+  const [currentPage, setCurrentPage] = useState<'home' | 'profile' | 'textDemo'>('home')
 
   useEffect(() => {
     const fetchApiData = async () => {
@@ -37,6 +38,11 @@ function App() {
     return <ProfilePage onBack={() => setCurrentPage('home')} />
   }
 
+  // Show text display demo page
+  if (currentPage === 'textDemo') {
+    return <TextDisplayDemo onBack={() => setCurrentPage('home')} />
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="min-h-screen flex items-center justify-center p-4">
@@ -61,6 +67,22 @@ function App() {
               {error && (
                 <p className="text-sm text-red-600 mt-1">{error}</p>
               )}
+            </div>
+
+            {/* Navigation buttons */}
+            <div className="mt-6 flex flex-wrap gap-4">
+              <button
+                onClick={() => setCurrentPage('profile')}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors"
+              >
+                Ver Perfil
+              </button>
+              <button
+                onClick={() => setCurrentPage('textDemo')}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
+              >
+                Ver Demo TextDisplay
+              </button>
             </div>
 
             {status && (
