@@ -101,7 +101,7 @@ function App() {
               </div>
             )}
 
-            <ExampleComponent />
+            <ExampleComponent onNavigateHome={() => setCurrentPage('home')} />
           </div>
         </div>
       </div>
